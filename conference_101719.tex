@@ -55,14 +55,41 @@ email address or ORCID}
 \maketitle
 
 \begin{abstract}
-\input{sections/abstract}
+% DRAFT: Experimental performance, energy-efficiency, and bus-availability figures are provisional pending final evaluation.
+% Source: latest saved 文章_bu1110.docx.
+% Author confirmed: retain the source code URL placeholder "xxxx".
+Vision-Language-Action (VLA) models are a core paradigm for embodied AI, but meeting strict real-time inference on resource-limited edge platforms remains challenging. A typical VLA model cascades a relatively compute-intensive Vision-Language Model (VLM) and a memory-bound Action Expert (AE), motivating heterogeneous hardware. In this work, we propose \emph{ActPIM}, a heterogeneous GPU-LPDDR5X-PIM system for edge VLA inference through architecture-dataflow co-design. ActPIM uses rank-level partitioning to execute the VLM on GPU while concurrently offloading AE to LPDDR-PIM. However, shared-bus contention limits GPU-PIM concurrency, as PIM execution leaves fragmented bus idle windows and incurs frequent inter-rank and KV cache transfer. To resolve this, we design an input-preloading microarchitecture and dataflow, while optimizing the operator-aware data layout and KV cache management, increasing bus availability to the GPU from 10\% to 90\%. Ramulator-based cycle-accurate simulations demonstrate 1.4\texttimes{}/1.3\texttimes{} speedups and 1.3\texttimes{}/1.2\texttimes{} higher energy efficiency over the GPU baseline and AttAcc PIM. Our code is open-sourced at xxxx.
 \end{abstract}
 
 \begin{IEEEkeywords}
 component, formatting, style, styling, insert
 \end{IEEEkeywords}
 
-\input{sections/introduction}
+% DRAFT: Experimental performance, energy-efficiency, and bus-availability figures are provisional pending final evaluation.
+\section{Introduction}
+\label{sec:introduction}
+
+Vision-Language-Action (VLA) models directly map multimodal perception information and natural language instructions into robot control policies, becoming a core paradigm for general-purpose embodied AI. VLA inference must meet strict real-time constraints, since slow responses can easily cause task failure. However, limited by the physical form of embodied robot, VLA models are usually deployed on edge platforms with highly constrained power, compute, and memory bandwidth, such as the LPDDR-equipped NVIDIA Orin and Thor. Thus, achieving low-latency inference is very challenging. Taking the representative model $\pi_{0.5}$ as an example, when deployed on the NVIDIA Thor with optimized vLLM framework, its single-inference latency is still up to \textcolor[HTML]{EE0000}{200~ms,} which severely limits the closed-loop control frequency of robots.
+
+% REVIEW: "Section II-A" is retained from Word; update the cross-reference when the target section is in place.
+From a workload perspective, VLA models show heterogeneity in computation and memory access. A typical VLA model cascades a Vision-Language Model (VLM, comprising a ViT and an LLM backbone) and an Action Expert (AE). The execution time ratio between the VLM and AE is about 1:1 to 1:2. Meanwhile, since embodied inference is typically constrained to single-batch execution, the large differences in input token lengths across these sub-networks directly lead to completely different arithmetic intensities. Our profiling on the NVIDIA Thor shows that the AE is severely memory-bound, while the VLM lies near the boundary between compute-bound and memory-bound regions. A detailed performance analysis is provided in Section II-A.
+
+The intrinsic heterogeneity of VLA workloads requires the support of heterogeneous hardware. DRAM Processing-in-Memory (PIM) can efficiently offload memory-bound workloads by computing near the memory arrays. Therefore, constructing a GPU-LPDDR-PIM heterogeneous system is a promising solution: the GPU executes the compute-intensive VLM, and the LPDDR-PIM concurrently executes the memory-bound AE, theoretically minimizing the end-to-end inference latency.
+
+However, in practical execution, efficient GPU-PIM concurrency is severely limited by shared memory bus contention from two aspects. First, the bus idle windows released during PIM computation are highly fragmented due to PIM's streaming input and execution. Overly short windows prevent full GPU memory accesses, while fragmented windows force frequent PIM-to-GPU rank switching, incurring high switching turnaround overhead. Second, massive PIM inter-bank/rank data movements and KV cache transfers heavily occupy the bus. When PIM executes the AE, operations such as matrix transposition, data rearrangement, broadcast, and partial-sum reduction require frequent inter-bank/rank communication.
+
+Existing works typically add a global scheduler (e.g., AHASD) or memory controller (e.g., LP-Spec) outside the ranks to coordinate GPU--PIM accesses and inter-rank data transfers. However, these modules require a \emph{logic die} to connect all ranks, which LPDDR and Samsung's latest LPDDR-PIM lacks due to edge power and cost constraints, limiting their applicability. Other works (e.g., NeuPIM) modify internal bank circuits on the DRAM die to support concurrent PIM computation and external memory access. Yet, since adding circuits on a DRAM die incurs over $10\times$ higher overhead than on a logic die, such invasive bank modifications require careful evaluation.
+
+In this work, we present ActPIM, a heterogeneous GPU-LPDDR5X-PIM system that accelerates edge VLA inference through architecture-dataflow co-design. To the best of our knowledge, ActPIM is the first work to implement heterogeneous VLA onto a GPU-LPDDR-PIM architecture. ActPIM applies rank-level partitioning for concurrent VLM execution on the GPU and AE offloading on LPDDR-PIM. It further integrates an input-preloading microarchitecture and dataflow with operator-aware data layout and KV cache management to maximize bus availability to the GPU. Meanwhile, ActPIM keeps the PIM compute resources and local-buffer capacity comparable to Samsung's published LPDDR-PIM design, ensuring practical feasibility.
+
+The contributions of our work are summarized as follows:
+
+\begin{itemize}
+    \item We analyze the distinct arithmetic intensities of the VLM and AE, and propose a heterogeneous paradigm that runs the VLM on the GPU and the AE on PIM in parallel.
+    \item We propose ActPIM, which uses rank-level resource partitioning to isolate GPU memory accesses for the VLM from in-situ PIM execution for the AE.
+    \item To reduce shared bus contention, we design an input-preloading microarchitecture and dataflow, while optimizing the operator-aware data layout and KV cache management, increasing the bus time available to the GPU from 10\% to 90\%.
+    \item We build and open-source a Ramulator-based cycle-accurate simulator. ActPIM achieves a $1.4\times$/$1.3\times$ speedup and $1.3\times$/$1.2\times$ higher energy efficiency over the GPU and AttAcc.
+\end{itemize}
 
 \section{Ease of Use}
 
