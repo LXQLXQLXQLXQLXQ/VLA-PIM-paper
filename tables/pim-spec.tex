@@ -1,0 +1,20 @@
+% Source caption: 表 IV：PIM rank 关键规格
+\begin{table}[t]
+\centering
+\caption{PIM rank 关键规格}
+\label{tab:pim-spec}
+\footnotesize
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.23\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.23\linewidth}@{}}
+\toprule
+项目 & VLA-PIM & Samsung LPDDR5X-PIM[4] \\
+\midrule
+接口 & LPDDR5X-8533，x16，BG 模式 & 【待核】 \\
+每 rank bank 数 & 16（4 BG \(\times\) 4） & 【待核】 \\
+每 bank 计算单元 & 16 \(\times\) BF16 MAC（FP32 累加），256-bit & 【待核】 \\
+每 bank 输入缓冲 & 1 KiB & 【待核】 \\
+每 bank 输出缓冲 & 2 KiB（FP32） & 【待核】 \\
+本地 RoPE & 每 bank 1 个 & 无 \\
+新增数据通路 & Row Buffer \(\rightarrow\) Input Buffer 广播（输入预装载） & 无 \\
+\bottomrule
+\end{tabularx}
+\end{table}

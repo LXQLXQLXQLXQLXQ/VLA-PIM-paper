@@ -1,0 +1,105 @@
+% Source: ## V 评估
+% Template-neutral migration fragment; original wording retained.
+\section{评估}
+\label{sec:evaluation}
+
+\subsection{实验设置}
+\label{sec:evaluation-a}
+
+
+我们采用“Thor 实测校准 VLM 访存模型 + Ramulator2 周期精确仿真 PIM”的评估方法。GPU 侧，在 NVIDIA Thor 上用 OpenPI 的 PyTorch 实现实测 \(\pi_{0.5}\)（MHA8 配置，BF16，batch=1，动作块长度 H=16，10 个去噪步，3 路相机加 200 个文本 token），得到 VLM 各 kernel 的时长与读写字节，以及 AE 非线性算子的时长。PIM 侧，基于 Ramulator2 构建周期精确仿真器，在同一个内存控制器中同时模拟 VLM 访存与 PIM 命令；DRAM 时序取自 JEDEC JESD209-5C 的 LPDDR5X-8533 速档[待引用]。VLM 访存模型以 Thor 实测的 66.80 ms 为目标校准，仿真结果为 65.94 ms（误差 \(-\)1.30\%）。主要参数见表~\ref{tab:sim-params}。
+
+面积评估方面，每个 PIM bank 新增 1 KiB Input Buffer、2 KiB Output Buffer、MAC 单元与 RoPE 单元，以及 Row Buffer \(\rightarrow\) Input Buffer 的广播通路。我们沿用 AttAcc 的方法估计面积：先在逻辑工艺下综合新增单元，再按 DRAM 工艺相对逻辑工艺的面积代价折算到 DRAM 裸片上【待核：AttAcc 原文采用的工艺节点、折算系数及其引用来源】。【待补-M11：面积数值】
+
+\input{tables/sim-params}
+
+\subsection{总体性能}
+\label{sec:evaluation-b}
+
+
+VLA-PIM 的目标是提高 AE 的推理频率。若每次 AE 推理都使用最新的 VLM KV cache，第 n 帧的 AE 就必须等待第 n 帧的 VLM 完成，因此相邻两次 AE 的间隔为
+
+\begin{equation}
+t_{\mathrm{AE\text{-}AE}} = t_{\mathrm{AE,solo}} + t_{\mathrm{VLM,solo}} - t_{\mathrm{overlap}}.
+\label{eq:ae-interval}
+\end{equation}
+
+其中 \(t_{\mathrm{overlap}}\) 是 VLM 与（上一帧）AE 真正重叠执行的时间。串行执行时 \(t_{\mathrm{overlap}}\) = 0；\(t_{\mathrm{overlap}}\) 越大，AE 的推理频率 1/\(t_{\mathrm{AE\text{-}AE}}\) 越高。表~\ref{tab:performance} 给出各配置的结果。仿真配置的 \(t_{\mathrm{AE,solo}}\) 与 \(t_{\mathrm{VLM,solo}}\) 均取同一设计单独运行的仿真结果（\(t_{\mathrm{VLM,solo}}\) = 65.94 ms）。
+
+\input{tables/performance}
+
+注：a-dual 的 \(t_{\mathrm{overlap}}\) 用 Thor 实测的 AE（73.98 ms）与 VLM（67.40 ms）单独时长计算。“AE 结束前 VLM 进度”已扣除 VLM 因 AE 抢占而暂停的时间。
+
+主要观察如下：
+
+\begin{enumerate}
+\item 异构本身的收益。 把 AE 的线性层搬到 PIM 后，即使串行执行（b），\(t_{\mathrm{AE\text{-}AE}}\) 也比 a-serial 缩短到 1/1.15：AE 完成时间为 56.95 ms，而 Thor 上 compile 后的 AE 实测为 73.98 ms；其中 PIM 部分 46.01 ms，占 AE 时间的 80.8\%。
+\item rank 划分带来的并发收益。 让 VLM 与 AE 并发（c），\(t_{\mathrm{overlap}}\) 达到 36.12 ms，\(t_{\mathrm{AE\text{-}AE}}\) 从 122.88 ms 降到 86.77 ms（1.42\(\times\)）。AE 本身只慢了 3.38 ms（5.9\%），其中 PIM 阶段因 GPU 并发只被拉长 0.51 ms，说明 rank 划分确实为两者提供了相对独立的资源。
+\item 布局与 RoPE。 在流式数据流下，token-wise 布局（d）比 feature-wise（c）快 2.73 ms（3.1\%），片内 RoPE（e）再快 0.47 ms。收益主要来自 AE 侧：DQ 流量减少，GPU 非线性工作从 10.93 ms 降到 8.11 ms。
+\item 输入预装载。 预装载（g）让 AE 的 PIM 部分变长，AE 完成时间增加 11.8 ms；但 AE 结束时 VLM 已完成 60.30 ms 的工作（流式只有 47.16 ms，+27.8\%），\(t_{\mathrm{overlap}}\) 从 36.35 ms 增加到 54.96 ms（+51.2\%）；1416 个 VLM kernel 中完成了 1366 个（流式为 1271 个），剩余的 VLM 尾部从 26.74 ms 缩短到 9.03 ms。最终 \(t_{\mathrm{AE\text{-}AE}}\) 从 83.57 ms 降到 77.68 ms（\(-\)7.0\%），AE 推理频率达到 a-serial 的 1.82\(\times\)、a-dual 的 1.76\(\times\)。
+
+\end{enumerate}
+
+GPU 在 PIM 计算期间获得的带宽。 我们统计所有 PIM 阶段内（16 通道合计）GPU 获得的 DQ 带宽。VLM 单独运行时，GPU 平均获得 221.6 GB/s。流式供数下，PIM 阶段内 GPU 只能获得 173–175 GB/s，保持率为 78.2\%–78.9\%；预装载后提高到 204.2 GB/s，保持率为 92.2\%。同时，PIM 阶段内 GPU 搬运的数据从 7.53 GiB 增加到 11.35 GiB（+50.7\%）。这说明预装载把原本碎片化、GPU 无法利用的 DQ 空隙合并成了 GPU 可以连续使用的窗口。
+
+DQ 空隙分布。 图~\ref{fig:gaps} 统计了完整 18 层 \(\times\) 10 步调度中，物理通道 0 上 PIM 相邻数据突发之间的间隔。流式供数（e）下共有 126 万个间隔，其中 52.9\% 短于 15 CK，按 DQ 时序无法插入任何一次 GPU 读；按时间计，只有 38.8\% 的间隔时间落在长于 1024 CK 的窗口中。预装载（g）后，间隔数减少到 77 万个（\(-\)38.7\%）。虽然按数量计 97.2\% 的间隔短于 15 CK，但它们都是 I/O epoch 内连续传输之间的间隔，而 GPU 在 epoch 内本就不发请求；在 epoch 之外，99.8\% 的间隔时间落在长于 1024 CK 的窗口中。需要说明的是，这些间隔中可能已经包含 GPU 的传输，因此“无法插入 GPU 读”只是基于 DQ 时序的几何判断，并非实测的 GPU 不可用时间。
+
+% Source figure 8: source image is unavailable.
+\begin{figure*}[t]
+\centering
+\IfFileExists{figures/fig_dq_gap_distribution.png}{
+  \includegraphics[width=\textwidth]{figures/fig_dq_gap_distribution.png}
+}{
+  \fbox{\parbox{0.9\textwidth}{\centering\strut
+  Missing source image: \texttt{figures/fig\_dq\_gap\_distribution.png}\strut}}
+}
+\caption{PIM 相邻数据突发间隔的分布（物理通道 0，完整 18 \(\times\) 10 调度）。(a) 按数量；(b) 按时间，斜线部分为位于 I/O epoch 内的间隔。虚线左侧（< 15 CK）的间隔无法插入一次 GPU 读。}
+\label{fig:gaps}
+\end{figure*}
+
+
+C/A 占用。 在 PIM 阶段内，PIM rank 占用的外部 C/A 周期比例为：c 14.2\%、d 16.2\%、e 16.2\%、f 14.4\%、g 14.4\%。g 中加上 GPU 的 C/A 占用（40.0\%），C/A 总占用为 54.4\%，C/A 总线仍有余量。预装载在为 GPU 释放 DQ 的同时，并未增加 C/A 负担。
+
+仲裁策略消融。 为说明粗粒度 epoch 调度相对细粒度仲裁的优势，我们在流式配置 e 上比较四种请求级仲裁，并与预装载（g）对照（图~\ref{fig:arbitration}）：
+
+\begin{itemize}
+\item FR-FCFS（不区分来源）：PIM 请求失去优先级，PIM 阶段因 GPU 竞争被拉长 61.36 ms，AE 成为瓶颈，\(t_{\mathrm{AE\text{-}AE}}\) 升至 115.54 ms，GPU 带宽保持率也只有 61.3\%。
+\item Gap batch（只在 PIM 程序的长空档内放行 GPU）：AE 不受干扰（56.45 ms），但 GPU 带宽保持率降到 19.0\%，VLM 尾部长达 54.43 ms，\(t_{\mathrm{AE\text{-}AE}}\) 为 110.88 ms。
+\item Lookahead（为未来的 PIM 突发预留 DQ 时隙）与 PIM head（PIM 队首优先）：分别为 85.05 ms / 75.3\% 与 83.57 ms / 78.9\%。
+
+\end{itemize}
+
+可见，在流式供数下，请求级仲裁只能在“AE 变慢”与“VLM 变慢”之间取舍；预装载配合 epoch 调度无需请求级仲裁，同时取得最短的 \(t_{\mathrm{AE\text{-}AE}}\)（77.68 ms）和最高的 GPU 带宽保持率（92.2\%）。
+
+% Source figure 9: source image is unavailable.
+\begin{figure*}[t]
+\centering
+\IfFileExists{figures/fig_arbitration.png}{
+  \includegraphics[width=\textwidth]{figures/fig_arbitration.png}
+}{
+  \fbox{\parbox{0.9\textwidth}{\centering\strut
+  Missing source image: \texttt{figures/fig\_arbitration.png}\strut}}
+}
+\caption{流式供数下的四种请求级仲裁与输入预装载 + epoch 调度（VLA-PIM）的对比。左：\(t_{\mathrm{AE\text{-}AE}}\)；右：PIM 阶段内的 GPU 带宽保持率。}
+\label{fig:arbitration}
+\end{figure*}
+
+
+\subsection{讨论：VLM 与 AE 的解耦}
+\label{sec:evaluation-c}
+
+
+VLA-PIM 的异构结构天然支持 VLM 与 AE 解耦。配合合适的异步算法，VLM 可以较慢地更新 KV cache，PIM 则以更高的频率执行 AE 推理，实现真正的异步执行。单 GPU 上则很难做到：Thor 双 stream 连续运行时，AE 只有 5.13 Hz，VLM 刷新频率为 10.13 Hz。增加 GPU 算力也无法缓解 AE 的访存受限：即使让 AE 独占 Thor GPU，其频率也只有 13.57 Hz。在 VLA-PIM 中，AE 与 VLM 解耦运行时，AE 频率约为 14.57 Hz，是 Thor 双流的 2.84\(\times\)，并超过 AE 独占 GPU 的频率；同时 VLM 刷新频率约为 12.56 Hz，只比 VLM 独占 GPU（14.97 Hz）低 16.1\%，比 Thor 双流高 24.0\%（图~\ref{fig:decoupled}）。也就是说，VLA-PIM 只让 GPU 上 VLM 的更新频率下降约 1/6，就使 AE 推理频率达到双流 GPU 基线的近 3 倍。这里的频率由单个重叠窗口外推得到：AE 频率取 1/AE 完成时间，VLM 频率按窗口内完成的 VLM 工作量折算，尚未做多帧连续仿真。
+
+% Source figure 10: source image is unavailable.
+\begin{figure*}[t]
+\centering
+\IfFileExists{figures/fig_decoupled_rate.png}{
+  \includegraphics[width=\textwidth]{figures/fig_decoupled_rate.png}
+}{
+  \fbox{\parbox{0.9\textwidth}{\centering\strut
+  Missing source image: \texttt{figures/fig\_decoupled\_rate.png}\strut}}
+}
+\caption{VLM 与 AE 解耦运行时的 AE 动作块频率与 VLM KV 刷新频率。虚线和点线分别为 Thor 上 VLM、AE 各自独占 GPU 时的频率。}
+\label{fig:decoupled}
+\end{figure*}

@@ -1,0 +1,22 @@
+原稿待核事项（迁移未擅自补全）
+
+1. 带宽保持率：摘要/Introduction 为 92.1%，评估/结论为 92.2%；原值均保留。
+2. 系统名称：Google Doc 文件名为 ActPIM，正文为 VLA-PIM。当前正文保留 VLA-PIM；标题保留用户模板中的 VLA inference with LPDDR PIM。
+3. 源稿结论从 V 跳到 VII。已改为自动连续编号，未编造一个缺失章节。
+4. 源稿表 IV/V/VII/IX 已变为四张连续编号表；已存在的引用改为自动引用。
+   表 I 缺失，原文中的这处引用明确标为待补，以免误指当前第一张表。
+5. 源稿图 1/4/5/6 未提供对应图片。相关文本明确标为原稿图待补。
+6. 源稿图 7–10 导出后均为同一张 1×1 空白 PNG，显示尺寸为零，无法提取有效图像。
+   已保留四处插图框和全部原始图注，并自动编号。应补入：
+   figures/fig7_step_timeline.png
+   figures/fig_dq_gap_distribution.png
+   figures/fig_arbitration.png
+   figures/fig_decoupled_rate.png
+7. 本地现有的其他版本图没有足够证据与这份初稿逐项匹配，未代替上述原图使用。
+8. 引文 [4]、[待引用] 和 micron.com/arxiv.org/git.zx2c4.com 等仅域名引用，没有完整书目信息，待补正式 BibTeX 条目。
+9. Samsung 对照规格、Micron 器件型号、AttAcc 面积折算方法与最终面积数值仍有待核项。
+10. 源稿中解耦频率明确来自单窗口外推、尚未多帧仿真；该限制原样保留。
+11. 作者、单位、邮箱及具体投稿会议的匿名/版权要求未提供，保留明确提示。
+
+原始资料留存在工作目录 output/overleaf-migration-20261116/source/。
+本次更新使用用户指定的 GitHub 仓库；Google Docs 原稿未改动。Overleaf 需手动拉取 GitHub 更新。

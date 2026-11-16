@@ -1,0 +1,12 @@
+## 附录：数字出处（不进论文）
+
+| 数字 | 出处 |
+| :---- | :---- |
+| 表 IX、仲裁消融、C/A 占用、带宽保持率 | experiments/2026-11-16/results/summary/experiments.csv（total\_ms、ae\_ms、ae\_solo\_ms、pim\_interference\_ms、vlm\_tail\_ms、gpu\_bandwidth\_retention、rank0/1\_ca\_fraction、gpu\_bytes\_during\_pim） |
+| t\_overlap | ae\_solo\_ms \+ 65.936 − total\_ms；a-dual 为 73.98 \+ 67.40 − 137.07 |
+| AE 结束前 VLM 进度、完成 kernel 数 | reference/2026-11-15/simulation/cg-single-read-compiled-vlm.csv |
+| 间隔分布（52.9%、38.8%、99.8%、126 万 → 77 万） | results/summary/gap-analysis.json；运行 plot\_paper\_figures.py 时会打印 |
+| 图 7 | results/combined-{e,g}/repeat-1/ 下的 dq-timeline.json、dq-epochs.csv、dq-bursts.csv、raw.json |
+| 解耦频率（14.57 / 12.56 Hz） | 由 combined-g 与 vlm-solo 的 raw.json 重新计算，与 1115 的 compiled-continuous-rate-estimate.json 一致；Thor 数值见脚本注释 |
+| DQ 流量（2704 → 1960、5352 → 5224 KiB） | 发布版 gen\_pim\_program.py \--mc-control 的逐阶段 expected\_dq\_bytes |
+| 跨 rank DQ 边界（11/2/2/1 CK）、15 CK 门限 | experiments/2026-11-16/METRICS.md |

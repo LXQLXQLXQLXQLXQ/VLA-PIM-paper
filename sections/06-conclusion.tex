@@ -1,0 +1,6 @@
+% Source: ## VII 结论
+% Template-neutral migration fragment; original wording retained.
+\section{结论}
+\label{sec:conclusion}
+
+本文提出 VLA-PIM，在边端 LPDDR 存储体系内协同组织 VLM 的 GPU 访存与 AE 的 PIM 计算。Rank 划分保留了全部通道为 GPU 供数的能力；面向共享总线的 token-wise 布局与生命周期感知的片内 RoPE，使 AE 每层经 DQ 的数据减少 14.3\%（与输入预装载合计减少 21.7\%）；输入预装载与 kernel 粒度的协同调度把剩余传输集中起来，使 GPU 在 PIM 计算期间保持单独运行时 92.2\% 的带宽。这套设计把“减少传输量”与“组织传输时序”结合起来，使异构执行的目标从单纯加速 AE，扩展为在维持 GPU 访存服务的同时与 PIM 计算有效重叠。在 Thor 实测与周期精确仿真下，VLA-PIM 的 AE 推理频率达到 Thor 串行执行的 1.82\(\times\)、双流 GPU 基线的 1.76\(\times\)。

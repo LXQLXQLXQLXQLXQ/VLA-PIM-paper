@@ -1,0 +1,53 @@
+% Source: ## III 架构设计
+% Template-neutral migration fragment; original wording retained.
+\section{架构设计}
+\label{sec:architecture}
+
+\subsection{系统概览}
+\label{sec:architecture-a}
+
+
+VLA-PIM 是面向并行 VLA 推理的 GPU–LPDDR5X-PIM 异构系统，整体架构如\draftnote{原稿图 4 待补} 所示。GPU 执行 VLM，以及 AE 中的归一化、softmax 等非线性算子；PIM 承担 AE 的线性算子，并在本地执行 RoPE。
+
+为使 VLM 与 AE 并行执行，VLA-PIM 以 rank 为粒度划分存储资源：每个 LPDDR5X 通道中的一个 DRAM rank 服务 GPU 上 VLM 的访存，另一个 PIM rank 执行 AE。选择 rank 粒度的原因在于 LPDDR 的存储层次。Channel 是 LPDDR 的最高层级，一个封装内的两个 channel 各有独立的 C/A 与 DQ 接口；若按 channel 划分，交给 PIM 的通道不再为 GPU 供数，GPU 可用带宽随之减半。Rank 则是存储与计算能够时分复用的最高层级：同一 channel 的两个 rank 拥有独立的存储阵列，由各自的 CS 选通，但共享该 channel 的 DQ 与 C/A 总线。因此，PIM rank 利用 bank 内部带宽计算时，全部通道仍可通过 DRAM rank 向 GPU 供数，外部传输带宽与内部计算带宽可以同时得到利用。若继续下探到 bank group 或 bank 粒度，同一 rank 内的 bank 需要分别维持常规访存与 PIM 执行两种状态，并同时处理两类命令，控制逻辑明显更复杂。综上，rank 划分是额外开销最小的方案；它的代价是两个 rank 争用共享的 DQ 总线，这正是后文要解决的问题。
+
+具体配置上，VLA-PIM 采用 8 个 LPDDR5X-8533 封装（参考美光【待核：型号】），每个封装为四裸片、双通道、双 rank，共提供 16 个独立的 x16 通道，峰值带宽 273 GB/s。
+
+每个 PIM rank 包含 4 个 bank group，每组 4 个 bank。其计算组织参考 Samsung 公布的 LPDDR5X-PIM[4]：每个 bank 配一个 16 \(\times\) BF16 MAC 单元（FP32 累加）和一个 RoPE 单元，并配备 1 KiB 输入缓冲（Input Buffer）和 2 KiB 输出缓冲（Output Buffer）；BG 级与 rank 级累加器逐级汇聚各层级的求和结果。与 Samsung 器件的关键规格比较见表~\ref{tab:pim-spec}。
+
+\input{tables/pim-spec}
+
+在这一结构上，VLA-PIM 从“组织传输时序”和“减少传输量”两个方面缓解共享总线争用。在微架构层面，VLA-PIM 增加一条从 Row Buffer 到 Input Buffer 的通路：输入先集中写入 PIM rank 的 DRAM，再在 rank 内广播给各 bank，从而把计算阶段的逐片供数留在 rank 内，为 GPU 形成连续的访存窗口（第~\ref{sec:architecture-b}~节）；相应的命令以 JEDEC 兼容的方式编码（第~\ref{sec:architecture-c}~节）。在数据流层面，VLA-PIM 采用面向共享总线的 token-wise 布局，并在 bank 内完成 RoPE，以减少必须经过 DQ 的数据（第~\ref{sec:dataflow-a}~节）。最后，GPU–PIM 协同调度在 kernel 粒度上划分两者对 DQ 的所有权，把上述机制组合成并行执行（第~\ref{sec:dataflow-b}~节）。
+
+\subsection{输入预装载微架构}
+\label{sec:architecture-b}
+
+
+已有 LPDDR5X-PIM 等设计把输入从主机流式送入，使 DQ 总线在整个算子执行期间被间歇占用。这对 VLA-PIM 中频繁的 rank 切换并不友好：要么以高频数据时钟空转的功耗为代价，让两个 rank 的 WCK 保持同步；要么为每次切换付出 WCK 同步与总线读写转向（R/W turnaround）的时间。按 JEDEC LPDDR5X-8533 时序，PIM 写之后接 GPU 读、再回到 PIM 写，DQ 边界开销合计 13 CK；再加上一次 2 CK 的读突发，至少需要 15 CK 的间隔，才能插入一次 GPU 读。Ramulator 仿真显示，在流式供数下，PIM 相邻数据突发之间的间隔有 52.9\% 短于 15 CK（图~\ref{fig:gaps}(a)），无法用于发射任何 GPU 访存请求。若要利用剩余较长的间隔，MC 还需要 DQ lookahead，预判每个间隔能否容纳一次 GPU 访存的 DQ 突发，仲裁逻辑因此变得复杂。
+
+因此，VLA-PIM 提出一种对 rank 划分更友好的微架构：在每个 bank 内增加一条从 Row Buffer 到 Input Buffer 的通路，支持输入预装载（input-preloaded）数据流（\draftnote{原稿图 5 待补}）：
+
+\begin{enumerate}
+\item 集中装载。 PIM rank 处于 DRAM 模式时，主机用普通 WR 以满带宽把一个算子的全部输入一次性写入 PIM rank 的输入区（Row I）。
+\item 本地广播。 PIM rank 切换到 PIM 模式后，MC 对 Row I 发出 ACT，随后 RD 读出的列数据被广播到全部 16 个 bank 的 Input Buffer。
+\item 本地计算与写回。 MAC 结果写回 DRAM 的结果区；计算结束后，主机在 DRAM 模式下一次性读出结果。
+
+\end{enumerate}
+
+这样做有两点好处。（a）DQ 空隙融合。 原本分散在整个算子中的输入传输被集中到算子开头，PIM 计算期间 DQ 完全交还 GPU，GPU 获得长而连续的访存窗口。（b）免去细粒度仲裁。 输入提前就绪后，MC 不再需要用 DQ lookahead 判断空隙能否插入 GPU 指令。
+
+C/A 占用。 AE 是 skinny GEMM，一条列命令即可驱动 16 个 bank 对 M 行输入完成 MAC，命令密度不高。仿真中，PIM 阶段内 PIM rank 只占外部 C/A 周期的 14.4\%，与 GPU 的 C/A 合计 54.4\%，C/A 总线并未饱和。预装载也没有增加 C/A 负担：流式供数下 PIM rank 的 C/A 占用为 16.2\%（第~\ref{sec:evaluation-b}~节）。
+
+\subsection{PIM 命令接口与 ISA 扩展}
+\label{sec:architecture-c}
+
+
+VLA-PIM 在 JEDEC LPDDR5X 命令集上扩展出 PIM 模式，并设计了存储侧的命令译码状态机与 ISA。
+
+在 LPDDR 初始化阶段，主机通过模式寄存器写（Mode Register Write, MRW）配置各功能行，包括模式切换行和输入缓存行。此后，MC 只需激活指定的功能行，即可在 rank 的 DRAM 模式与 PIM 模式之间切换。
+
+在 PIM 模式下，同一条 RD/WR 由 16 个 bank 并行执行，原本用于选择 bank group 和 bank 的 4 个地址位因此空闲。VLA-PIM 用这 4 位编码计算类型（表~\ref{tab:isa}），并指定结果从哪个模块写回 DRAM【微架构图待画】。所有命令都保持 JEDEC 的时序与引脚语义，因此与标准 MC 兼容。
+
+\input{tables/isa}
+
+【\draftnote{原稿图 6 待补}：RD 命令格式示意，标出被复用的 BG/BA 四位与列地址位】

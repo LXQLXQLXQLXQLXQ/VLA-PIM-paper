@@ -1,0 +1,22 @@
+% Source caption: 表 V：PIM 模式下 RD/WR 的 BG/BA 操作码
+\begin{table*}[t]
+\centering
+\caption{PIM 模式下 RD/WR 的 BG/BA 操作码}
+\label{tab:isa}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.09\textwidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\toprule
+BG/BA & RD & WR \\
+\midrule
+0000 & MAC：累加到当前累加器 & WB\_\allowbreak{}ACC \\
+0001 & MAC\_\allowbreak{}INIT：覆盖累加器 & WB\_\allowbreak{}MAC（旁路，保留） \\
+0010 & MAC\_\allowbreak{}RED（多 MAC 归约，保留） & 保留 \\
+0011 & MAC\_\allowbreak{}INIT\_\allowbreak{}RED：单 MAC 点积并归约 & WB\_\allowbreak{}OBUF：输出缓冲写回 \\
+0100 & MAC\_\allowbreak{}INIT\_\allowbreak{}RED，K 的 BF16 lane 0–7 & 保留 \\
+0101 & MAC\_\allowbreak{}INIT\_\allowbreak{}RED，K 的 BF16 lane 8–15 & 保留 \\
+0110 & RD\_\allowbreak{}ROPE：加载 sin/cos 系数列到 RoPE 寄存器 & 保留 \\
+0111 & RD\_\allowbreak{}ROPE\_\allowbreak{}Q：加载 Q 向量并旋转 & 保留 \\
+1000 & RD\_\allowbreak{}ROPE\_\allowbreak{}K：加载 K 向量并旋转 & 保留 \\
+\bottomrule
+\end{tabularx}
+\end{table*}

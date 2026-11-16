@@ -1,0 +1,7 @@
+figures/fig7_step_timeline.png
+figures/fig_dq_gap_distribution.png
+figures/fig_arbitration.png
+figures/fig_decoupled_rate.png
+
+The DOCX export stores the four figures as one 1x1 PNG with zero display dimensions.
+No usable figure pixels were available in the source export.
