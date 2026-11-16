@@ -1,9 +1,12 @@
 {
   "date": "2026-11-16",
   "main_document": "conference_101719.tex",
-  "scope": "original English/Chinese text, tables and equations; no figures; no page limit",
-  "template": "supplied IEEEtran conference, unchanged class",
-  "source_sha256": "15c7e2559230f902dd30699c34107b0087ebe4be3c5bc8c4ed561115e4750193",
+  "scope": "Anonymous author block added to the current upstream manuscript; upstream text, references, and figures preserved.",
+  "upstream_commit": "28d1fb5400d1775581ba36a99e821558aac22d3b",
+  "author_block": [
+    "Anonymous Authors",
+    "Paper under double-blind review"
+  ],
   "pdfLaTeX_validation": {
     "engine": "pdfTeX 1.40.29 / TeX Live 2026",
     "passes": 2,
@@ -12,16 +15,9 @@
     "undefined_controls": 0,
     "missing_characters": 0,
     "overfull_boxes": 0,
-    "nonfatal_font_fallback_warnings": true,
-    "nonfatal_underfull_boxes": 14
+    "nonfatal_underfull_boxes": 4
   },
-  "XeTeX_validation": {
-    "engine": "Tectonic",
-    "exit_code": 0
-  },
-  "rendered_images": 0,
-  "missing_internal_refs": [],
-  "visual_review": "all rendered pages inspected; Chinese and English text visible; no clipping or overlapping elements",
-  "pdf_sha256": "f79f9d5434cb19b2f0a0ac47b5fdbe8bf1b7f8571b7164b81d777c545f3af2fb",
-  "english_format_matches_original_template": true
+  "pdf_sha256": "9d76ba78a8a92e7e373038f26001f4013626f79ae23f7a278a8629b2b5d750e2",
+  "template_class": "Original supplied IEEEtran.cls unchanged",
+  "visual_review": "Rendered manuscript reviewed after author-block integration."
 }
