@@ -1,0 +1,21 @@
+% English version translated from essay/ActPIM_初稿_v3.md.
+\begin{table}[!t]
+\caption{Compared Configurations}
+\label{tab:configs}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Config} & \textbf{Layout} & \textbf{RoPE} & \textbf{Dataflow} & \textbf{Execution} \\
+\midrule
+a-serial/-dual & --- & GPU & --- & Thor, serial / dual-stream \\
+b & feature & GPU & streaming & serial GPU--PIM \\
+c & feature & GPU & streaming & concurrent, PIM-head \\
+d & token & GPU & streaming & concurrent, PIM-head \\
+e & token & local & streaming & concurrent, PIM-head \\
+f & token & GPU & preloaded & concurrent, epoch-exclusive \\
+\textbf{g (\sys{})} & token & local & preloaded & concurrent, epoch-exclusive \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,5 +1,5 @@
 % !TeX encoding = UTF-8
-% IEEE conference draft: original English/Chinese content; no figures.
+% IEEE conference draft: Sections I--II as migrated; Sections III--VII in English with figures.
 \RequirePackage{iftex}
 % Preserve the original class's pdfLaTeX layout calculation before changing
 % only the text encoding needed for the bilingual draft.
@@ -16,6 +16,12 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+\newcommand{\sys}{VLA-PIM}
+\newcommand{\todo}[1]{[TBD: #1]}
+\newcommand{\hcell}[1]{\begin{tabular}[b]{@{}r@{}}#1\end{tabular}}
 
 % Keep the default pdfLaTeX workflow working. Select Chinese support
 % according to the active engine instead of unconditionally loading xeCJK.
@@ -50,5 +56,6 @@
 \input{sections/04-dataflow}
 \input{sections/05-evaluation}
 \input{sections/06-conclusion}
+\input{sections/99-references}
 \StopChinese
 \end{document}
