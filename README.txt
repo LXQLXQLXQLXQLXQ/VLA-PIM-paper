@@ -1,19 +1,23 @@
-VLA-PIM 论文初稿
+VLA-PIM 论文初稿（中文 Methodology 及之后）
 
 主文件：conference_101719.tex
-编译器：默认 pdfLaTeX 即可；源码同时保留 XeLaTeX/LuaLaTeX 的按引擎加载分支。
-格式：用户提供的 IEEEtran conference 双栏模板，类文件未修改。
+编译器：默认 pdfLaTeX；也支持 XeLaTeX/LuaLaTeX。
+格式：原版 IEEEtran conference 双栏，IEEEtran.cls 未修改。
 
-已按 Google Docs 原稿填入摘要、Introduction、背景与动机、架构设计、数据流与调度、评估和结论。
-原有中英文内容、数据、表格、公式及待核标记保留。
-第 III–VII 节（架构设计至结论）已按 essay/ActPIM_初稿_v3.md 改写为英文，并排入图片（figures/）：
-输入预装载微架构图、单步执行时间线、DQ 空隙分布、解耦频率；数据图由 essay/figures/plot_paper_figures.py 生成，图内系统名为 VLA-PIM。
-第 I–II 节保持此前迁移的内容。尚无图像的系统概览图与 RD 命令格式图以 [TBD] 标注，不放缺图框。
-作者区按用户要求列出 Anonymous Authors 和 Paper under double-blind review。
-没有额外添加关键词或红色 Draft 提示；没有限制页数。sections/99-references.tex 列出第 III–V 节引用的文献，Samsung LPDDR5X-PIM 一项待补。
+第 III 节至结论恢复为 essay/ActPIM_初稿_v3.md 的中文内容。
+methodology-zh-v3.md 保存对应文字稿；Google Docs 的批注锚点和传输元数据未排入论文。
+摘要、第 I–II 节、匿名作者栏及原有参考文献保留当前上游版本。
 
-Overleaf 同步：Integrations → GitHub → Pull GitHub changes into Overleaf，然后重新编译。
-sections/：按章节拆分的正文。
-tables/：原生 LaTeX 表格（第 III–V 节五张，英文）。
-figures/：第 III–V 节用图。
-notes/numeric-provenance.txt：原稿注明“不进论文”的数字出处。
+图片：
+- 输入预装载微架构（figures/microarchitecture.tex）；
+- 单步执行时间线（figures/timeline.tex）；
+- DQ 空隙分布（figures/dq-gaps.tex）；
+- 解耦频率（figures/decoupled-rates.tex）。
+数据图使用上游 PDF 矢量版本，中文图注与正文对应。
+正文仍保留待核项；不据批注推断新数据或修改实验结论。
+表格和章节采用原有的自动编号，图片保留原稿 5、7、8、10 的编号。
+
+英文版备份：backup/english-2026-11-16-7e7442d 分支（7e7442db239df98b82a372167e82c4453d1ecb74）。
+本地 ZIP：essay/backups/VLA-PIM-paper_英文版_2026-11-16_7e7442d.zip。
+
+Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然后重新编译。

@@ -1,23 +1,33 @@
 {
   "date": "2026-11-16",
   "main_document": "conference_101719.tex",
-  "scope": "Anonymous author block added to the current upstream manuscript; upstream text, references, and figures preserved.",
-  "upstream_commit": "28d1fb5400d1775581ba36a99e821558aac22d3b",
-  "author_block": [
-    "Anonymous Authors",
-    "Paper under double-blind review"
-  ],
-  "pdfLaTeX_validation": {
-    "engine": "pdfTeX 1.40.29 / TeX Live 2026",
-    "passes": 2,
-    "exit_code_each": 0,
-    "unicode_errors": 0,
-    "undefined_controls": 0,
-    "missing_characters": 0,
-    "overfull_boxes": 0,
-    "nonfatal_underfull_boxes": 4
+  "scope": "Restore Chinese methodology through conclusion and supplied figures from local v3; preserve upstream front matter and author block.",
+  "english_backup_commit": "7e7442db239df98b82a372167e82c4453d1ecb74",
+  "english_backup_branch": "backup/english-2026-11-16-7e7442d",
+  "source_sha256": "7797a97b88e6f6741ad653d3dfd1f41655b1c012523862b22f87fab931e899fb",
+  "validation": {
+    "pdfLaTeX": {
+      "exit_code": 0,
+      "passes": 2,
+      "missing_characters": 0,
+      "overfull_boxes": 0,
+      "undefined_references": false,
+      "underfull_boxes": 9
+    },
+    "XeLaTeX": {
+      "exit_code": 0,
+      "passes": 2,
+      "missing_characters": 0,
+      "overfull_boxes": 0,
+      "undefined_references": false,
+      "underfull_boxes": 0
+    }
   },
-  "pdf_sha256": "9d76ba78a8a92e7e373038f26001f4013626f79ae23f7a278a8629b2b5d750e2",
-  "template_class": "Original supplied IEEEtran.cls unchanged",
-  "visual_review": "Rendered manuscript reviewed after author-block integration."
+  "local_runtime_note": "TeX Live 2020; standard Times, Courier and CJK packages installed in scratch. Standard cm/cmextra/latxfont/symbols/pdftex35/gbsnu font maps explicitly initialized for the incomplete local pdfLaTeX runtime. No workaround added to manuscript.",
+  "missing_internal_refs": [],
+  "figures": 4,
+  "pages": 7,
+  "pdf_sha256": "6876152ede06c193817bbd6385c71a97db1b5741041c3ac756663825539cb5bc",
+  "template_class": "Original IEEEtran.cls unchanged",
+  "visual_review": "Front page, architecture figure, timeline, result table and gap/rate plots inspected; no clipping or overlap observed."
 }
