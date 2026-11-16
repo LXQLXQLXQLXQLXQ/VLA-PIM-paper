@@ -7,7 +7,7 @@
 \label{sec:architecture-a}
 
 
-VLA-PIM 是面向并行 VLA 推理的 GPU–LPDDR5X-PIM 异构系统，整体架构如\draftnote{原稿图 4 待补} 所示。GPU 执行 VLM，以及 AE 中的归一化、softmax 等非线性算子；PIM 承担 AE 的线性算子，并在本地执行 RoPE。
+VLA-PIM 是面向并行 VLA 推理的 GPU–LPDDR5X-PIM 异构系统，整体架构如图 4 所示。GPU 执行 VLM，以及 AE 中的归一化、softmax 等非线性算子；PIM 承担 AE 的线性算子，并在本地执行 RoPE。
 
 为使 VLM 与 AE 并行执行，VLA-PIM 以 rank 为粒度划分存储资源：每个 LPDDR5X 通道中的一个 DRAM rank 服务 GPU 上 VLM 的访存，另一个 PIM rank 执行 AE。选择 rank 粒度的原因在于 LPDDR 的存储层次。Channel 是 LPDDR 的最高层级，一个封装内的两个 channel 各有独立的 C/A 与 DQ 接口；若按 channel 划分，交给 PIM 的通道不再为 GPU 供数，GPU 可用带宽随之减半。Rank 则是存储与计算能够时分复用的最高层级：同一 channel 的两个 rank 拥有独立的存储阵列，由各自的 CS 选通，但共享该 channel 的 DQ 与 C/A 总线。因此，PIM rank 利用 bank 内部带宽计算时，全部通道仍可通过 DRAM rank 向 GPU 供数，外部传输带宽与内部计算带宽可以同时得到利用。若继续下探到 bank group 或 bank 粒度，同一 rank 内的 bank 需要分别维持常规访存与 PIM 执行两种状态，并同时处理两类命令，控制逻辑明显更复杂。综上，rank 划分是额外开销最小的方案；它的代价是两个 rank 争用共享的 DQ 总线，这正是后文要解决的问题。
 
@@ -23,9 +23,9 @@ VLA-PIM 是面向并行 VLA 推理的 GPU–LPDDR5X-PIM 异构系统，整体架
 \label{sec:architecture-b}
 
 
-已有 LPDDR5X-PIM 等设计把输入从主机流式送入，使 DQ 总线在整个算子执行期间被间歇占用。这对 VLA-PIM 中频繁的 rank 切换并不友好：要么以高频数据时钟空转的功耗为代价，让两个 rank 的 WCK 保持同步；要么为每次切换付出 WCK 同步与总线读写转向（R/W turnaround）的时间。按 JEDEC LPDDR5X-8533 时序，PIM 写之后接 GPU 读、再回到 PIM 写，DQ 边界开销合计 13 CK；再加上一次 2 CK 的读突发，至少需要 15 CK 的间隔，才能插入一次 GPU 读。Ramulator 仿真显示，在流式供数下，PIM 相邻数据突发之间的间隔有 52.9\% 短于 15 CK（图~\ref{fig:gaps}(a)），无法用于发射任何 GPU 访存请求。若要利用剩余较长的间隔，MC 还需要 DQ lookahead，预判每个间隔能否容纳一次 GPU 访存的 DQ 突发，仲裁逻辑因此变得复杂。
+已有 LPDDR5X-PIM 等设计把输入从主机流式送入，使 DQ 总线在整个算子执行期间被间歇占用。这对 VLA-PIM 中频繁的 rank 切换并不友好：要么以高频数据时钟空转的功耗为代价，让两个 rank 的 WCK 保持同步；要么为每次切换付出 WCK 同步与总线读写转向（R/W turnaround）的时间。按 JEDEC LPDDR5X-8533 时序，PIM 写之后接 GPU 读、再回到 PIM 写，DQ 边界开销合计 13 CK；再加上一次 2 CK 的读突发，至少需要 15 CK 的间隔，才能插入一次 GPU 读。Ramulator 仿真显示，在流式供数下，PIM 相邻数据突发之间的间隔有 52.9\% 短于 15 CK（图 8(a)），无法用于发射任何 GPU 访存请求。若要利用剩余较长的间隔，MC 还需要 DQ lookahead，预判每个间隔能否容纳一次 GPU 访存的 DQ 突发，仲裁逻辑因此变得复杂。
 
-因此，VLA-PIM 提出一种对 rank 划分更友好的微架构：在每个 bank 内增加一条从 Row Buffer 到 Input Buffer 的通路，支持输入预装载（input-preloaded）数据流（\draftnote{原稿图 5 待补}）：
+因此，VLA-PIM 提出一种对 rank 划分更友好的微架构：在每个 bank 内增加一条从 Row Buffer 到 Input Buffer 的通路，支持输入预装载（input-preloaded）数据流（图 5）：
 
 \begin{enumerate}
 \item 集中装载。 PIM rank 处于 DRAM 模式时，主机用普通 WR 以满带宽把一个算子的全部输入一次性写入 PIM rank 的输入区（Row I）。
@@ -50,4 +50,4 @@ VLA-PIM 在 JEDEC LPDDR5X 命令集上扩展出 PIM 模式，并设计了存储�
 
 \input{tables/isa}
 
-【\draftnote{原稿图 6 待补}：RD 命令格式示意，标出被复用的 BG/BA 四位与列地址位】
+% 【图 6：RD 命令格式示意，标出被复用的 BG/BA 四位与列地址位】

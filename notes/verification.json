@@ -1,31 +1,26 @@
 {
   "date": "2026-11-16",
-  "template_archive": "VLA_PIM.zip",
-  "template_sha256": "339ae923e15e97c99b12777fc22c36ddefde5aadb252f5c6114dd3ab1b529c5e",
-  "IEEEtran_class_unchanged": true,
-  "document_class": "IEEEtran",
-  "options": [
-    "conference"
-  ],
-  "compiler": "XeLaTeX",
-  "source_language_preserved": true,
-  "sections_including_abstract": 7,
-  "native_tables": 4,
-  "figure_placeholders": 4,
-  "unique_labels": 26,
-  "resolved_refs": 15,
-  "missing_internal_refs": [],
-  "compile_via_desktop_editor": "success",
-  "visual_review": "passed: all six rendered pages inspected; no clipped text, overlapping elements, or table overflow",
-  "status": "editable working draft; content gaps retained",
   "main_document": "conference_101719.tex",
-  "github_repository": "LXQLXQLXQLXQLXQ/VLA-PIM-paper",
-  "branch": "main",
-  "compile_engine": "Tectonic (XeTeX)",
-  "compile_status": "success",
-  "pdf_pages": 6,
-  "compile_warnings": 0,
-  "overfull_boxes": 0,
-  "underfull_boxes": 0,
-  "pdf_sha256": "366c494650976fcf66a15da623b5f75f7ea197f228fe9ec09bee74f4b39ec123"
+  "scope": "original English/Chinese text, tables and equations; no figures; no page limit",
+  "template": "supplied IEEEtran conference, unchanged class",
+  "source_sha256": "15c7e2559230f902dd30699c34107b0087ebe4be3c5bc8c4ed561115e4750193",
+  "pdfLaTeX_validation": {
+    "engine": "pdfTeX 1.40.29 / TeX Live 2026",
+    "passes": 2,
+    "exit_code_each": 0,
+    "unicode_errors": 0,
+    "undefined_controls": 0,
+    "missing_characters": 0,
+    "overfull_boxes": 0,
+    "nonfatal_font_fallback_warnings": true,
+    "nonfatal_underfull_boxes": 14
+  },
+  "XeTeX_validation": {
+    "engine": "Tectonic",
+    "exit_code": 0
+  },
+  "rendered_images": 0,
+  "missing_internal_refs": [],
+  "visual_review": "all rendered pages inspected; Chinese and English text visible; no clipping or overlapping elements",
+  "pdf_sha256": "ad4e2b7149a7238bda96e8c0d9d5a8529f15d810894669c434c09afc04208b42"
 }

@@ -42,25 +42,15 @@ t_{\mathrm{AE\text{-}AE}} = t_{\mathrm{AE,solo}} + t_{\mathrm{VLM,solo}} - t_{\m
 
 GPU 在 PIM 计算期间获得的带宽。 我们统计所有 PIM 阶段内（16 通道合计）GPU 获得的 DQ 带宽。VLM 单独运行时，GPU 平均获得 221.6 GB/s。流式供数下，PIM 阶段内 GPU 只能获得 173–175 GB/s，保持率为 78.2\%–78.9\%；预装载后提高到 204.2 GB/s，保持率为 92.2\%。同时，PIM 阶段内 GPU 搬运的数据从 7.53 GiB 增加到 11.35 GiB（+50.7\%）。这说明预装载把原本碎片化、GPU 无法利用的 DQ 空隙合并成了 GPU 可以连续使用的窗口。
 
-DQ 空隙分布。 图~\ref{fig:gaps} 统计了完整 18 层 \(\times\) 10 步调度中，物理通道 0 上 PIM 相邻数据突发之间的间隔。流式供数（e）下共有 126 万个间隔，其中 52.9\% 短于 15 CK，按 DQ 时序无法插入任何一次 GPU 读；按时间计，只有 38.8\% 的间隔时间落在长于 1024 CK 的窗口中。预装载（g）后，间隔数减少到 77 万个（\(-\)38.7\%）。虽然按数量计 97.2\% 的间隔短于 15 CK，但它们都是 I/O epoch 内连续传输之间的间隔，而 GPU 在 epoch 内本就不发请求；在 epoch 之外，99.8\% 的间隔时间落在长于 1024 CK 的窗口中。需要说明的是，这些间隔中可能已经包含 GPU 的传输，因此“无法插入 GPU 读”只是基于 DQ 时序的几何判断，并非实测的 GPU 不可用时间。
+DQ 空隙分布。 图 8 统计了完整 18 层 \(\times\) 10 步调度中，物理通道 0 上 PIM 相邻数据突发之间的间隔。流式供数（e）下共有 126 万个间隔，其中 52.9\% 短于 15 CK，按 DQ 时序无法插入任何一次 GPU 读；按时间计，只有 38.8\% 的间隔时间落在长于 1024 CK 的窗口中。预装载（g）后，间隔数减少到 77 万个（\(-\)38.7\%）。虽然按数量计 97.2\% 的间隔短于 15 CK，但它们都是 I/O epoch 内连续传输之间的间隔，而 GPU 在 epoch 内本就不发请求；在 epoch 之外，99.8\% 的间隔时间落在长于 1024 CK 的窗口中。需要说明的是，这些间隔中可能已经包含 GPU 的传输，因此“无法插入 GPU 读”只是基于 DQ 时序的几何判断，并非实测的 GPU 不可用时间。
 
-% Source figure 8: source image is unavailable.
-\begin{figure*}[t]
-\centering
-\IfFileExists{figures/fig_dq_gap_distribution.png}{
-  \includegraphics[width=\textwidth]{figures/fig_dq_gap_distribution.png}
-}{
-  \fbox{\parbox{0.9\textwidth}{\centering\strut
-  Missing source image: \texttt{figures/fig\_dq\_gap\_distribution.png}\strut}}
-}
-\caption{PIM 相邻数据突发间隔的分布（物理通道 0，完整 18 \(\times\) 10 调度）。(a) 按数量；(b) 按时间，斜线部分为位于 I/O epoch 内的间隔。虚线左侧（< 15 CK）的间隔无法插入一次 GPU 读。}
-\label{fig:gaps}
-\end{figure*}
+% Figure omitted at user request.
+% Original caption: PIM 相邻数据突发间隔的分布（物理通道 0，完整 18 \(\times\) 10 调度）。(a) 按数量；(b) 按时间，斜线部分为位于 I/O epoch 内的间隔。虚线左侧（< 15 CK）的间隔无法插入一次 GPU 读。
 
 
 C/A 占用。 在 PIM 阶段内，PIM rank 占用的外部 C/A 周期比例为：c 14.2\%、d 16.2\%、e 16.2\%、f 14.4\%、g 14.4\%。g 中加上 GPU 的 C/A 占用（40.0\%），C/A 总占用为 54.4\%，C/A 总线仍有余量。预装载在为 GPU 释放 DQ 的同时，并未增加 C/A 负担。
 
-仲裁策略消融。 为说明粗粒度 epoch 调度相对细粒度仲裁的优势，我们在流式配置 e 上比较四种请求级仲裁，并与预装载（g）对照（图~\ref{fig:arbitration}）：
+仲裁策略消融。 为说明粗粒度 epoch 调度相对细粒度仲裁的优势，我们在流式配置 e 上比较四种请求级仲裁，并与预装载（g）对照（图 9）：
 
 \begin{itemize}
 \item FR-FCFS（不区分来源）：PIM 请求失去优先级，PIM 阶段因 GPU 竞争被拉长 61.36 ms，AE 成为瓶颈，\(t_{\mathrm{AE\text{-}AE}}\) 升至 115.54 ms，GPU 带宽保持率也只有 61.3\%。
@@ -71,35 +61,15 @@ C/A 占用。 在 PIM 阶段内，PIM rank 占用的外部 C/A 周期比例为�
 
 可见，在流式供数下，请求级仲裁只能在“AE 变慢”与“VLM 变慢”之间取舍；预装载配合 epoch 调度无需请求级仲裁，同时取得最短的 \(t_{\mathrm{AE\text{-}AE}}\)（77.68 ms）和最高的 GPU 带宽保持率（92.2\%）。
 
-% Source figure 9: source image is unavailable.
-\begin{figure*}[t]
-\centering
-\IfFileExists{figures/fig_arbitration.png}{
-  \includegraphics[width=\textwidth]{figures/fig_arbitration.png}
-}{
-  \fbox{\parbox{0.9\textwidth}{\centering\strut
-  Missing source image: \texttt{figures/fig\_arbitration.png}\strut}}
-}
-\caption{流式供数下的四种请求级仲裁与输入预装载 + epoch 调度（VLA-PIM）的对比。左：\(t_{\mathrm{AE\text{-}AE}}\)；右：PIM 阶段内的 GPU 带宽保持率。}
-\label{fig:arbitration}
-\end{figure*}
+% Figure omitted at user request.
+% Original caption: 流式供数下的四种请求级仲裁与输入预装载 + epoch 调度（VLA-PIM）的对比。左：\(t_{\mathrm{AE\text{-}AE}}\)；右：PIM 阶段内的 GPU 带宽保持率。
 
 
 \subsection{讨论：VLM 与 AE 的解耦}
 \label{sec:evaluation-c}
 
 
-VLA-PIM 的异构结构天然支持 VLM 与 AE 解耦。配合合适的异步算法，VLM 可以较慢地更新 KV cache，PIM 则以更高的频率执行 AE 推理，实现真正的异步执行。单 GPU 上则很难做到：Thor 双 stream 连续运行时，AE 只有 5.13 Hz，VLM 刷新频率为 10.13 Hz。增加 GPU 算力也无法缓解 AE 的访存受限：即使让 AE 独占 Thor GPU，其频率也只有 13.57 Hz。在 VLA-PIM 中，AE 与 VLM 解耦运行时，AE 频率约为 14.57 Hz，是 Thor 双流的 2.84\(\times\)，并超过 AE 独占 GPU 的频率；同时 VLM 刷新频率约为 12.56 Hz，只比 VLM 独占 GPU（14.97 Hz）低 16.1\%，比 Thor 双流高 24.0\%（图~\ref{fig:decoupled}）。也就是说，VLA-PIM 只让 GPU 上 VLM 的更新频率下降约 1/6，就使 AE 推理频率达到双流 GPU 基线的近 3 倍。这里的频率由单个重叠窗口外推得到：AE 频率取 1/AE 完成时间，VLM 频率按窗口内完成的 VLM 工作量折算，尚未做多帧连续仿真。
+VLA-PIM 的异构结构天然支持 VLM 与 AE 解耦。配合合适的异步算法，VLM 可以较慢地更新 KV cache，PIM 则以更高的频率执行 AE 推理，实现真正的异步执行。单 GPU 上则很难做到：Thor 双 stream 连续运行时，AE 只有 5.13 Hz，VLM 刷新频率为 10.13 Hz。增加 GPU 算力也无法缓解 AE 的访存受限：即使让 AE 独占 Thor GPU，其频率也只有 13.57 Hz。在 VLA-PIM 中，AE 与 VLM 解耦运行时，AE 频率约为 14.57 Hz，是 Thor 双流的 2.84\(\times\)，并超过 AE 独占 GPU 的频率；同时 VLM 刷新频率约为 12.56 Hz，只比 VLM 独占 GPU（14.97 Hz）低 16.1\%，比 Thor 双流高 24.0\%（图 10）。也就是说，VLA-PIM 只让 GPU 上 VLM 的更新频率下降约 1/6，就使 AE 推理频率达到双流 GPU 基线的近 3 倍。这里的频率由单个重叠窗口外推得到：AE 频率取 1/AE 完成时间，VLM 频率按窗口内完成的 VLM 工作量折算，尚未做多帧连续仿真。
 
-% Source figure 10: source image is unavailable.
-\begin{figure*}[t]
-\centering
-\IfFileExists{figures/fig_decoupled_rate.png}{
-  \includegraphics[width=\textwidth]{figures/fig_decoupled_rate.png}
-}{
-  \fbox{\parbox{0.9\textwidth}{\centering\strut
-  Missing source image: \texttt{figures/fig\_decoupled\_rate.png}\strut}}
-}
-\caption{VLM 与 AE 解耦运行时的 AE 动作块频率与 VLM KV 刷新频率。虚线和点线分别为 Thor 上 VLM、AE 各自独占 GPU 时的频率。}
-\label{fig:decoupled}
-\end{figure*}
+% Figure omitted at user request.
+% Original caption: VLM 与 AE 解耦运行时的 AE 动作块频率与 VLM KV 刷新频率。虚线和点线分别为 Thor 上 VLM、AE 各自独占 GPU 时的频率。

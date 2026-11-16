@@ -1,50 +1,47 @@
-% !TeX program = xelatex
 % !TeX encoding = UTF-8
-% Working draft migrated from the supplied Google Doc, 2026-11-16.
-% The supplied IEEEtran conference class is preserved without modification.
+% IEEE conference draft: original English/Chinese content; no figures.
 \RequirePackage[T1]{fontenc}
 \documentclass[conference]{IEEEtran}
+\usepackage{iftex}
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
-\usepackage{graphicx}
 \usepackage{textcomp}
-\usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{array}
-\usepackage{xeCJK}
-\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
-\setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
-\setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
-\setCJKmainfont{FandolSong-Regular.otf}[BoldFont=FandolSong-Bold.otf,ItalicFont=FandolKai-Regular.otf,SmallCapsFont=FandolSong-Regular.otf]
-\setCJKsansfont{FandolHei-Regular.otf}[BoldFont=FandolHei-Bold.otf]
-\setCJKmonofont{FandolFang-Regular.otf}
-\newcommand{\draftnote}[1]{\textcolor{red!65!black}{\textbf{[Draft: #1]}}}
+
+% Keep the default pdfLaTeX workflow working. Select Chinese support
+% according to the active engine instead of unconditionally loading xeCJK.
+\ifPDFTeX
+  \usepackage{CJKutf8}
+  \newcommand{\StartChinese}{\begin{CJK*}{UTF8}{gbsn}}
+  \newcommand{\StopChinese}{\clearpage\end{CJK*}}
+\else
+  % ctex selects xeCJK for XeLaTeX and luatexja for LuaLaTeX.
+  % scheme=plain preserves the IEEE heading and layout definitions.
+  \usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+  \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+  \newcommand{\StartChinese}{}
+  \newcommand{\StopChinese}{}
+\fi
+
 \begin{document}
+\StartChinese
 \title{VLA inference with LPDDR PIM}
-% The supplied template contains six example author blocks, not real authors.
-% Replace this draft marker with the final author/affiliation block or the
-% venue's anonymous-submission front matter before submission.
-\author{\IEEEauthorblockN{Authors and affiliations to be added}}
+\author{}
 \maketitle
+
 \begin{abstract}
 \input{sections/00-abstract}
 \end{abstract}
-\begin{IEEEkeywords}
-Vision-language-action models, processing-in-memory, LPDDR5X, heterogeneous computing
-\end{IEEEkeywords}
+
 \input{sections/01-introduction}
 \input{sections/02-background}
 \input{sections/03-architecture}
 \input{sections/04-dataflow}
 \input{sections/05-evaluation}
 \input{sections/06-conclusion}
-% The source has incomplete citations and no bibliography. Do not replace
-% them with the unrelated IEEE example references from the original template.
-\section*{References}
-\draftnote{Bibliographic entries pending.}
-% Once verified entries and citation keys are supplied, replace the draft
-% note above with:
-% \bibliographystyle{IEEEtran}
-% \bibliography{references}
+\StopChinese
 \end{document}

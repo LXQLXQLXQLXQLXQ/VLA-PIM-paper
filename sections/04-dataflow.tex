@@ -21,17 +21,7 @@ Token-wise 布局。 注意力相关张量有两种切分方式：feature-wise �
 \label{sec:dataflow-b}
 
 
-在上述微架构与数据流的基础上，VLA-PIM 通过 GPU–PIM 协同调度实现并行计算。调度的核心原则是：在 kernel 粒度上划分 GPU 与 PIM 对 DQ 的所有权，而不是在 memory request 粒度上做细粒度仲裁。 这样可以避免主机与 PIM 命令交替发射带来的复杂仲裁、频繁的 rank 切换和总线反向延迟。一个去噪步内的执行顺序如图~\ref{fig:timeline} 所示：PIM 的输入装载与结果导出集中在少数 I/O epoch 内，epoch 期间 DQ 归 PIM 所有；epoch 结束后 DQ 交还 GPU，VLM kernel 跨越 PIM 计算阶段连续执行；PIM 阶段结束、AE 需要执行非线性算子时，GPU 在 kernel 边界上切换给 AE。
+在上述微架构与数据流的基础上，VLA-PIM 通过 GPU–PIM 协同调度实现并行计算。调度的核心原则是：在 kernel 粒度上划分 GPU 与 PIM 对 DQ 的所有权，而不是在 memory request 粒度上做细粒度仲裁。 这样可以避免主机与 PIM 命令交替发射带来的复杂仲裁、频繁的 rank 切换和总线反向延迟。一个去噪步内的执行顺序如图 7 所示：PIM 的输入装载与结果导出集中在少数 I/O epoch 内，epoch 期间 DQ 归 PIM 所有；epoch 结束后 DQ 交还 GPU，VLM kernel 跨越 PIM 计算阶段连续执行；PIM 阶段结束、AE 需要执行非线性算子时，GPU 在 kernel 边界上切换给 AE。
 
-% Source figure 7: source image is unavailable.
-\begin{figure*}[t]
-\centering
-\IfFileExists{figures/fig7_step_timeline.png}{
-  \includegraphics[width=\textwidth]{figures/fig7_step_timeline.png}
-}{
-  \fbox{\parbox{0.9\textwidth}{\centering\strut
-  Missing source image: \texttt{figures/fig7\_step\_timeline.png}\strut}}
-}
-\caption{第 0 个去噪步第 0 层的执行时间线（物理通道 0）。(a) 流式供数：PIM 的 DQ 突发散布在 QKV、O、Gate/Up、Down 的整个计算过程中。(b) 输入预装载（VLA-PIM）：PIM 的 DQ 传输集中在 7 个 I/O epoch（灰色）内，其余时间 DQ 全部归 GPU；VLM kernel 跨越多个 PIM 阶段连续执行，AE 的非线性算子只在阶段边界插入。}
-\label{fig:timeline}
-\end{figure*}
+% Figure omitted at user request.
+% Original caption: 第 0 个去噪步第 0 层的执行时间线（物理通道 0）。(a) 流式供数：PIM 的 DQ 突发散布在 QKV、O、Gate/Up、Down 的整个计算过程中。(b) 输入预装载（VLA-PIM）：PIM 的 DQ 传输集中在 7 个 I/O epoch（灰色）内，其余时间 DQ 全部归 GPU；VLM kernel 跨越多个 PIM 阶段连续执行，AE 的非线性算子只在阶段边界插入。
