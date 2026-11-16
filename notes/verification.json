@@ -22,5 +22,6 @@
   "rendered_images": 0,
   "missing_internal_refs": [],
   "visual_review": "all rendered pages inspected; Chinese and English text visible; no clipping or overlapping elements",
-  "pdf_sha256": "ad4e2b7149a7238bda96e8c0d9d5a8529f15d810894669c434c09afc04208b42"
+  "pdf_sha256": "f79f9d5434cb19b2f0a0ac47b5fdbe8bf1b7f8571b7164b81d777c545f3af2fb",
+  "english_format_matches_original_template": true
 }

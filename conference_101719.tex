@@ -1,8 +1,15 @@
 % !TeX encoding = UTF-8
 % IEEE conference draft: original English/Chinese content; no figures.
-\RequirePackage[T1]{fontenc}
+\RequirePackage{iftex}
+% Preserve the original class's pdfLaTeX layout calculation before changing
+% only the text encoding needed for the bilingual draft.
+\ifPDFTeX\else
+  \RequirePackage[T1]{fontenc}
+\fi
 \documentclass[conference]{IEEEtran}
-\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+\fi
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{textcomp}
