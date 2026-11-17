@@ -6,14 +6,15 @@ VLA-PIM 论文
 格式：用户提供的 IEEEtran conference 双栏模板，IEEEtran.cls 未修改。
 作者栏：Anonymous Authors / Paper under double-blind review。
 
-当前只排入用户提供的 figures1107 四张图：
+当前排入四张图，其中图2已替换为用户新上传的高清版本：
 1. 幻燈片1.tif → figures/execution-overview.tex：Introduction 结束处。
-2. 幻燈片2.tif → figures/vla-characterization.tex：Background and Motivation。
+2. 用户新上传的高清 PNG → figures/vla-characterization.tex：Background and Motivation（已替换原幻燈片2）。
 3. 幻燈片3.tif → figures/system-overview.tex：Architecture Design / System Overview（双栏）。
 4. 幻燈片4.tif → figures/microarchitecture.tex：Architecture Design / Input-preloaded microarch（单栏）。
 
-TIFF 无损转换为全分辨率 PNG，图中内容与像素未重画、未缩放。
-原幻灯片的大块白边仅由 LaTeX 的 trim/clip 裁去；PNG 本身保留完整画布。
+图1、3、4由 TIFF 无损转换为全分辨率 PNG，大块白边仅由 LaTeX 的 trim/clip 裁去。
+图2直接使用用户新上传的 1474×1119 PNG，逐字节复制原图，不缩放或裁切。
+所有图像内容均未重画。
 源文件映射、校验和、裁切坐标见 notes/figures1107-manifest.json。
 图片采用自动编号，正文相应引用已更新。
 

@@ -1,8 +1,8 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Requested title, four figures from figures1107, and repair of missing figure dependencies.",
-  "base_commit": "cbc5382d9cb841ae663ada698f0fb7ca6e71fa59",
+  "scope": "Replace Fig. 2 with the user-supplied high-resolution PNG; preserve placement, caption, and other manuscript content.",
+  "base_commit": "aa8887d3549a278e92b94b85953d69f5afc9acfa",
   "title": "VLA-PIM: LPDDR-PIM Architecture–Dataflow Co-Design for Heterogeneous Acceleration of Edge VLA Inference",
   "author_block_preserved": true,
   "validation": {
@@ -20,7 +20,13 @@
     "image_objects": 4,
     "title_text_matches_user": true,
     "template_class_unchanged": true,
-    "source_image_rgb_pixels_preserved": true
+    "source_image_rgb_pixels_preserved": true,
+    "fig2_native_pixels": [
+      1474,
+      1119
+    ],
+    "fig2_source_byte_preserved": true,
+    "fig2_no_crop_or_resample": true
   },
   "figures": [
     {
@@ -52,8 +58,8 @@
     "figures/async-vla-performance",
     "figures/decoupled-rates"
   ],
-  "visual_review": "All seven pages reviewed. Figures 1/2 occupy the intro/background boundary and motivation section on page 2; figures 3/4 are within Architecture Design on page 4. No content clipping or figure/text overlap.",
-  "pdf_sha256": "469156ad7e09a7fa7a6b97b47fe55be10ddb83720ea6c49a9c9e041614c4fce2",
+  "visual_review": "Fig. 2 page rendered and checked after replacement; full image visible with original caption and single-column placement.",
+  "pdf_sha256": "c1bb6b5804af88cd3f66ecf80be4cac51876cfef83332aa57101eb4e328f8933",
   "manifest": "notes/figures1107-manifest.json",
   "remaining_author_items": "Existing TBD entries for Samsung bibliography and area results remain as supplied; not LaTeX errors."
 }

@@ -27,31 +27,34 @@
     "float_environment": "figure"
   },
   {
-    "original_file": "幻燈片2.tif",
-    "source_sha256": "5c982eb78cdd767fb81368e07e9da77310e0ace910a61db2daaec841d69fec7e",
+    "original_file": "codex-clipboard-125c7ccf-563e-40c4-823c-fefb74a536ad.png",
+    "source_sha256": "60729f03dfd6515b2830cf4bf34d358cd4102be6f665e6f621ce4c7192389c4d",
     "png_file": "figures/vla-characterization.png",
-    "png_sha256": "2e942d51d25a069369b1d9bd545fccc58ee3ca75bce83109e857a8999e291e45",
+    "png_sha256": "60729f03dfd6515b2830cf4bf34d358cd4102be6f665e6f621ce4c7192389c4d",
     "full_raster_size": [
-      1030,
-      1246
+      1474,
+      1119
     ],
     "png_pixels_identical_to_original_rgb": true,
     "visible_box_pixels": [
-      37,
-      40,
-      468,
-      360
+      0,
+      0,
+      1474,
+      1119
     ],
     "latex_trim_bp": [
-      37,
-      886,
-      562,
-      40
+      0,
+      0,
+      0,
+      0
     ],
     "latex_input": "figures/vla-characterization.tex",
     "label": "fig:vla-characterization",
     "placement": "Background and Motivation, execution characteristics",
-    "float_environment": "figure"
+    "float_environment": "figure",
+    "previous_source": "figures1107/幻燈片2.tif",
+    "source_kind": "user-supplied high-resolution PNG replacement",
+    "file_byte_identical_to_source": true
   },
   {
     "original_file": "幻燈片3.tif",
