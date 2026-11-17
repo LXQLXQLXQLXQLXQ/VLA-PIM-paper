@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Performance chart follow-up: single-column Figure 9, narrow bars with identical spacing, configuration IDs only; explain cumulative additions in caption and Overall Performance. Display async VLA with a space in the axis label and all manuscript equations/text.",
+  "scope": "Figure 7 follow-up: remove panel (c) and horizontal axes in (a)/(b); identify native 14 CK streaming-input gaps that exclude VLM reads.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -14,7 +14,7 @@
       "passes_after_final_edits": 2,
       "exit_code_each": 0,
       "overfull_boxes": 0,
-      "underfull_boxes": 8,
+      "underfull_boxes": 7,
       "missing_characters": 0,
       "undefined_references": false,
       "duplicate_labels": false
@@ -60,18 +60,40 @@
       "methods_explained_as_cumulative_additions": true,
       "async_and_vla_separated_by_space": true
     },
-    "original_english_policy": "Overall Performance intentionally revised at user request; other source-English body retained apart from the performance figure cross-reference."
+    "original_english_policy": "Overall Performance intentionally revised at user request; other source-English body retained apart from the performance figure cross-reference.",
+    "figure7": {
+      "panel_count": 2,
+      "horizontal_ticks": false,
+      "horizontal_labels": false,
+      "bottom_spines": false,
+      "full_vlm_kernel_lanes": false,
+      "native_gap_ck": 14,
+      "native_gap_ns": 13.132,
+      "minimum_vlm_read_window_ck": 15,
+      "minimum_vlm_write_window_ck": 4,
+      "claim": "VLM RD excluded; WR not excluded by DQ timing alone; no measured GPU SM pause claimed",
+      "longest_input_gap_excluding_both_directions_ck": 3,
+      "first_layer_qkv_14ck_gap_count": 99,
+      "vector_pdf": true,
+      "png_dpi": 600,
+      "native_trace_checksum_verified": true,
+      "native_matrix_verified": true,
+      "experiment_modified": false,
+      "manuscript_body_modified_by_this_revision": false,
+      "figure10_modified_by_this_revision": false
+    }
   },
   "pages": 8,
   "figures": 6,
   "tables": 3,
   "template_class_unchanged": true,
-  "visual_review": "Figure 9 inspected on rendered page 7 after replacing async_VLA with async VLA. Single-column narrow bars, equal spacing, rate arrow, and labels fit without overlap. Figure 6 retained.",
-  "pdf_sha256": "4d622039c60292250c2d60a14ff56123b97545ed2da6caa45e9804a0b6b3b81d",
+  "visual_review": "Figure 7 inspected standalone and on rendered page 7: two panels, no horizontal axes, native 14 CK RD-exclusion annotation, retained 71.3 us preloading DQ window. Figure 9/10 layout fits below.",
+  "pdf_sha256": "d107abc075a440c2e6136e2734d4b4fc7c0a0f52995ef6f91457c5da505c9423",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
-  "revision_notes": "notes/performance-chart-revision-2026-11-17.txt",
+  "revision_notes": "notes/fig7-no-axes-2026-11-17.txt",
   "previous_figure_revision_notes": "notes/figure-revision-2026-11-17.txt",
-  "previous_verification_archive": "../essay/backups/Table6_before_single_column_20261117.tar.gz:notes/verification.json",
-  "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript."
+  "previous_verification_archive": "../essay/backups/Fig7_no_axes_before_20261117_fe76366.tar.gz:notes/verification.json",
+  "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
+  "previous_revision_notes": "notes/performance-chart-revision-2026-11-17.txt"
 }

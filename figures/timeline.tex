@@ -2,5 +2,5 @@
 \centering
 \includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
 \setcounter{figure}{6}
-\caption{Layer~0 of denoising step~0 (physical channel~0): (a) streaming input and (b) input preloading. The full timelines show PIM phases and DQ burst starts; gray bands mark I/O epochs. (c) Native input WR bursts from the circled region in (a), expanded in CK. The 2-CK gaps cannot accommodate a VLM read or write: even the minimum write window requires 4 CK, including turnaround on both sides. Pending VLM memory requests must wait; the lower strip illustrates this timing constraint.}\label{fig:timeline}
+\caption{Layer~0 of denoising step~0 (physical channel~0): (a) streaming input and (b) input preloading. The timelines show PIM phases and DQ burst starts; gray bands mark I/O epochs. Streaming input includes 14-CK gaps between WR bursts, shorter than the 15 CK required to insert a VLM RD with turnaround on both sides. This excludes reads; a write requires only 4 CK. Input preloading provides a 71.3-\textmu s window without PIM DQ traffic.}\label{fig:timeline}
 \end{figure*}

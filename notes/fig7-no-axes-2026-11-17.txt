@@ -1,0 +1,47 @@
+2026-11-17 — Figure 7: two panels, no horizontal axes, longer input gap
+
+This revision supersedes the panel-(c) design recorded in
+fig7-streaming-gap-2026-11-17.txt. Panel (c), its waiting strip, and all
+horizontal ticks, labels, and bottom spines in (a)/(b) are removed.
+The complete VLM kernel lanes remain removed.
+
+The native combined-e trace contains a 14 CK gap between qkv input WRs:
+  left burst:  CK 52394–52396
+  gap:         CK 52396–52410 = 14 CK = 13.132 ns
+  right burst: CK 52410–52412
+The gap starts 3.554082 us after layer 0 of denoising step 0 starts.
+The orange circle is a locator; this gap cannot be resolved at overview scale.
+
+There are 99 such gaps in first-layer qkv input (511 positive WR-to-WR
+gaps total), 100 across all first-layer inputs, and 8,744 across the
+complete 18-layer x 10-step streaming trace on physical channel 0.
+
+Native different-rank DQ guards: RR=2, RW=2, WR=11, WW=1 CK.
+With the recorded PIM burst times fixed, inserting a 2 CK VLM burst needs:
+  RD between WRs: 11 + 2 + 2 = 15 CK
+  WR between WRs:  1 + 2 + 1 =  4 CK
+Thus the 14 CK gap excludes a VLM RD, but does not exclude a VLM WR by
+DQ timing alone. The figure and caption explicitly say RD, avoiding a
+claim that every memory request or GPU kernel execution must pause.
+The longest observed input gap excluding both directions is only 3 CK
+(2.814 ns); no longer universally unusable input gap exists in this trace.
+Other scheduling constraints are not tested by this DQ-only analysis.
+
+Reproduce the audit with the original experiment directory available:
+  python3 figures/analyze-streaming-gaps.py
+Render the figure from the committed audit and timeline snapshots:
+  python3 figures/plot-timeline-rates.py --figure timeline
+Audit verifies native trace/raw checksums against experiment verification,
+reads the native command-pair matrix, and preserves all experiment data.
+
+Validation: vector PDF and 600 dpi PNG visually inspected standalone and
+on manuscript page 7. Structural render check confirmed exactly two axes,
+no x ticks/labels/bottom spines, and no panel (c). Two final isolated
+pdfLaTeX passes succeeded: 8 pages, 6 figures, 3 tables, no overfull boxes,
+missing characters, undefined references, or duplicate labels.
+The build overlays only this revision on fe76366 so concurrent changes
+to evaluation prose and specification tables are excluded from this commit.
+No manuscript body paragraph or Figure 10 was changed by this revision.
+
+Pre-edit source backup, relative to the parent PIM_for_VLA workspace:
+  essay/backups/Fig7_no_axes_before_20261117_fe76366.tar.gz

@@ -2,8 +2,8 @@
 """Render Figures 7 and 10 from the committed native-result snapshot.
 
 PDFs are vector graphics; PNG previews use 600 dpi. No simulation is rerun.
-Figure 7 shows PIM phases and DQ burst starts, with a native streaming-input
-burst segment expanded below to explain DQ timing exclusion.
+Figure 7 shows PIM phases and DQ burst starts in two panels without x axes.
+A native streaming-input gap is identified using its DQ timing constraints.
 """
 import argparse
 import json
@@ -12,7 +12,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import Patch, Ellipse, Rectangle
+from matplotlib.patches import Patch, Ellipse
 
 BLUE, ORANGE = '#2a78d6', '#eb6834'
 GREENS = ('#1baf7a', '#12734f')
@@ -27,13 +27,15 @@ def save(fig, out, name):
 
 def timeline(data, out, detail):
     tick = data['clock_ps'] / 1e6
-    fig = plt.figure(figsize=(7.2, 3.85))
-    grid = fig.add_gridspec(3, 2, width_ratios=(4.5, 1.4),
-                           height_ratios=(0.85, 0.85, 1.0), hspace=0.75, wspace=0.15)
-    selected_start = detail['bursts'][0]['start_ck']
-    selected_end = detail['bursts'][-1]['end_ck']
+    fig = plt.figure(figsize=(7.2, 2.25))
+    grid = fig.add_gridspec(2, 1, hspace=0.46)
+    example = detail['read_excluded_example']
+    selected_start = example['left']['end_ck']
+    selected_end = example['right']['start_ck']
+    assert selected_end-selected_start == example['gap_ck']
+    assert example['gap_ck'] < detail['required_vlm_window_ck']['R']
     for index, case in enumerate(data['timeline_cases']):
-        ax = fig.add_subplot(grid[index, :])
+        ax = fig.add_subplot(grid[index])
         us = lambda ck: (ck-case['lo_ck']) * tick
         for start, end in case['io_epochs_ck']:
             ax.axvspan(us(start), us(end), color=EPOCH, lw=0, zorder=0)
@@ -50,11 +52,13 @@ def timeline(data, out, detail):
                   colors=INK, linewidth=0.22, zorder=3)
         if index == 0:
             middle = us((selected_start+selected_end)/2)
-            # Locator circle; exact native timestamps are expanded below.
+            # Locator circle; the 14 CK interval is too short to resolve here.
             ax.add_patch(Ellipse((middle, 0), 6.3, 0.85, fill=False,
                                  edgecolor=ORANGE, linewidth=1.1, zorder=5))
-            ax.annotate('Input burst train → (c)', xy=(middle+2.8, 0.23),
-                        xytext=(21, 0.50), fontsize=6.8, color=ORANGE,
+            ax.annotate(f'Streaming input: {example["gap_ck"]} CK gaps; VLM RD needs '
+                        f'{detail["required_vlm_window_ck"]["R"]} CK',
+                        xy=(middle+2.8, 0.23),
+                        xytext=(21, 0.50), fontsize=6.6, color=ORANGE,
                         arrowprops={'arrowstyle':'->', 'color':ORANGE, 'lw':0.8},
                         ha='left', va='center', zorder=6)
         else:
@@ -75,53 +79,13 @@ def timeline(data, out, detail):
         ax.set_yticklabels(['PIM DQ bursts (ch 0)', 'PIM stages'])
         ax.set_ylim(-0.57, 1.40)
         ax.set_xlim(0, us(case['hi_ck']))
+        ax.set_xticks([])
+        ax.spines['bottom'].set_visible(False)
         ax.grid(axis='y', visible=False)
         ax.set_title(case['title'], loc='left', pad=4)
-        if index == 1:
-            ax.set_xlabel('Time since layer 0 of denoising step 0 starts (µs)', labelpad=2)
-
-    zoom = fig.add_subplot(grid[2, 0])
-    origin = selected_start
-    length = selected_end-origin
-    for b in detail['bursts']:
-        start, end = b['start_ck']-origin, b['end_ck']-origin
-        zoom.broken_barh([(start, end-start)], (0.70, 0.60),
-                         facecolor=INK, linewidth=0, zorder=3)
-        zoom.text((start+end)/2, 1, 'WR', ha='center', va='center',
-                  fontsize=6.5, color='white', zorder=4)
-    for left, right in zip(detail['bursts'], detail['bursts'][1:]):
-        start, end = left['end_ck']-origin, right['start_ck']-origin
-        assert end-start < min(detail['required_vlm_window_ck'].values())
-        zoom.add_patch(Rectangle((start, 0.70), end-start, 0.60,
-                                 facecolor='#ffdfca', edgecolor=ORANGE,
-                                 hatch='///', linewidth=0.35, zorder=2))
-    zoom.annotate('', xy=(2, 1.48), xytext=(4, 1.48),
-                  arrowprops={'arrowstyle':'<->', 'color':ORANGE, 'lw':0.7})
-    zoom.text(3, 1.62, '2 CK', fontsize=6.4, ha='center', color=ORANGE)
-    zoom.add_patch(Rectangle((0, -0.25), length, 0.50,
-                             facecolor='#ffefe5', edgecolor=ORANGE,
-                             hatch='////', linewidth=0.45, zorder=2))
-    zoom.text(length/2, 0, 'VLM memory requests wait', fontsize=7.0,
-              ha='center', va='center', color='#9f3d13',
-              bbox={'facecolor':'#ffefe5', 'edgecolor':'none', 'pad':0.8}, zorder=4)
-    zoom.set_xlim(-0.3, length+0.3)
-    zoom.set_ylim(-0.48, 1.85)
-    zoom.set_yticks([0, 1])
-    zoom.set_yticklabels(['VLM DQ access', 'PIM input'])
-    zoom.set_xticks(range(0, length+1, 4))
-    zoom.set_xlabel('Time from the first burst (CK)', labelpad=2)
-    zoom.set_title('(c) Magnified streaming inputs: unusable gaps', loc='left', pad=4, fontsize=7.6)
-    zoom.grid(axis='y', visible=False)
-
-    note = fig.add_subplot(grid[2, 1])
-    note.axis('off')
-    note.text(0.02, 0.85, 'Gap: 2 CK\nMinimum VLM WR: 4 CK',
-              color='#9f3d13', fontsize=7.0, va='top', linespacing=1.5)
-    note.text(0.02, 0.37, '1 + 2 + 1 = 4 CK\nswitch + burst + switch',
-              color=INK, fontsize=6.4, va='top', linespacing=1.5)
     fig.legend(handles=[Patch(facecolor=EPOCH, label='I/O epoch (DQ owned by PIM)')],
                loc='upper right', bbox_to_anchor=(0.99, 1.01), fontsize=7)
-    fig.subplots_adjust(left=0.165, right=0.99, top=0.94, bottom=0.10)
+    fig.subplots_adjust(left=0.165, right=0.99, top=0.86, bottom=0.04)
     save(fig, out, 'fig7_step_timeline')
 
 

@@ -4,82 +4,44 @@
   "channel": 0,
   "step": 0,
   "layer": 0,
-  "layer_start_ck": 48607,
-  "bursts": [
-    {
-      "start_ck": 52251,
-      "end_ck": 52253,
-      "stage_id": 0,
+  "read_excluded_example": {
+    "left": {
       "direction": "W",
       "stage": "qkv",
-      "command": "WR"
+      "command": "WR",
+      "start_ck": 52394,
+      "end_ck": 52396,
+      "stage_id": 0
     },
-    {
-      "start_ck": 52255,
-      "end_ck": 52257,
-      "stage_id": 0,
+    "right": {
       "direction": "W",
       "stage": "qkv",
-      "command": "WR"
+      "command": "WR",
+      "start_ck": 52410,
+      "end_ck": 52412,
+      "stage_id": 0
     },
-    {
-      "start_ck": 52259,
-      "end_ck": 52261,
-      "stage_id": 0,
+    "gap_ck": 14
+  },
+  "both_excluded_example": {
+    "left": {
       "direction": "W",
       "stage": "qkv",
-      "command": "WR"
+      "command": "WR",
+      "start_ck": 52566,
+      "end_ck": 52568,
+      "stage_id": 0
     },
-    {
-      "start_ck": 52263,
-      "end_ck": 52265,
-      "stage_id": 0,
+    "right": {
       "direction": "W",
       "stage": "qkv",
-      "command": "WR"
+      "command": "WR",
+      "start_ck": 52571,
+      "end_ck": 52573,
+      "stage_id": 0
     },
-    {
-      "start_ck": 52267,
-      "end_ck": 52269,
-      "stage_id": 0,
-      "direction": "W",
-      "stage": "qkv",
-      "command": "WR"
-    },
-    {
-      "start_ck": 52271,
-      "end_ck": 52273,
-      "stage_id": 0,
-      "direction": "W",
-      "stage": "qkv",
-      "command": "WR"
-    },
-    {
-      "start_ck": 52275,
-      "end_ck": 52277,
-      "stage_id": 0,
-      "direction": "W",
-      "stage": "qkv",
-      "command": "WR"
-    },
-    {
-      "start_ck": 52279,
-      "end_ck": 52281,
-      "stage_id": 0,
-      "direction": "W",
-      "stage": "qkv",
-      "command": "WR"
-    }
-  ],
-  "gap_ck": [
-    2,
-    2,
-    2,
-    2,
-    2,
-    2,
-    2
-  ],
+    "gap_ck": 3
+  },
   "cross_rank_dq_edges_ck": {
     "RR": 2,
     "RW": 2,
@@ -91,7 +53,75 @@
     "R": 15,
     "W": 4
   },
-  "definition": "DQ-only exclusion with the recorded PIM burst times fixed. Every 2 CK gap is shorter than both the read and write requirements; no VLM RD/WR burst can be inserted. The lower lane is timing feasibility, not an SM activity trace.",
+  "scopes": {
+    "all_input_WW": {
+      "positive_gap_count": 1240200,
+      "gap_counts_up_to_15_ck": {
+        "1": 0,
+        "2": 607454,
+        "3": 12153,
+        "4": 16428,
+        "5": 3115,
+        "6": 228,
+        "7": 26,
+        "8": 26,
+        "9": 40,
+        "10": 37,
+        "11": 14,
+        "12": 27,
+        "13": 911,
+        "14": 8744,
+        "15": 19599
+      },
+      "longest_gap_excluding_both_ck": 3,
+      "longest_gap_excluding_read_ck": 14
+    },
+    "first_layer_input_WW": {
+      "positive_gap_count": 6890,
+      "gap_counts_up_to_15_ck": {
+        "1": 0,
+        "2": 3383,
+        "3": 56,
+        "4": 22,
+        "5": 11,
+        "6": 8,
+        "7": 3,
+        "8": 13,
+        "9": 8,
+        "10": 3,
+        "11": 3,
+        "12": 10,
+        "13": 13,
+        "14": 100,
+        "15": 108
+      },
+      "longest_gap_excluding_both_ck": 3,
+      "longest_gap_excluding_read_ck": 14
+    },
+    "qkv_stage0_WW": {
+      "positive_gap_count": 511,
+      "gap_counts_up_to_15_ck": {
+        "1": 0,
+        "2": 15,
+        "3": 36,
+        "4": 22,
+        "5": 10,
+        "6": 8,
+        "7": 3,
+        "8": 13,
+        "9": 8,
+        "10": 2,
+        "11": 3,
+        "12": 10,
+        "13": 13,
+        "14": 99,
+        "15": 106
+      },
+      "longest_gap_excluding_both_ck": 3,
+      "longest_gap_excluding_read_ck": 14
+    }
+  },
+  "definition": "Native PIM burst times held fixed. A 14 CK WR-to-WR gap excludes a VLM RD (15 CK minimum), but permits a WR by DQ timing alone (4 CK minimum). This is not a measured GPU SM pause.",
   "source_trace": "experiments/2026-11-16/results/combined-e/repeat-1/dq-bursts.csv",
   "source_trace_sha256": "29a409a3350516f86757cd53d514d2a640f127b7cd4c9cf5ae57d6786ba59ca9",
   "source_matrix": "experiments/2026-11-16/source/reference/spec/command-pair-matrix.json",
