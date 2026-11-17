@@ -1,6 +1,0 @@
-\begin{figure}[!t]
-\centering
-\includegraphics[width=\columnwidth]{figures/fig_layout_dq.pdf}
-\caption{Feature-wise and token-wise KV partitioning and their external DQ traffic. Rank A/B are the two PIM ranks assigned to one head; bank boundaries are shown sparsely. Traffic covers Q exchange, QK$^{T}$, and PV per layer and denoising step, summed over 16 channels with GPU RoPE. QKV/O projections are excluded. Token-wise Q exchange reuses the Q export from GPU RoPE and adds only a $64\,\mathrm{KiB}$ import.}
-\label{fig:layout-dq}
-\end{figure}
