@@ -20,3 +20,6 @@ We present VLA-PIM, a GPU–LPDDR5X-PIM system that enables concurrent VLM and A
 \item We design an input-preloading microarchitecture that creates contiguous GPU access windows, together with communication-efficient layouts and in-PIM RoPE that reduce external transfers.
 \item We evaluate VLA-PIM using NVIDIA Thor measurements and a Ramulator-based cycle-accurate simulator. On the evaluated \(\pi_{0.5}\) configuration, VLA-PIM achieves a 1.76\(\times\) speedup over the dual-stream GPU baseline while retaining 92.1\% of standalone VLM bandwidth during PIM execution.
 \end{itemize}
+
+Figure~\ref{fig:intro-overlap} summarizes these execution paradigms.
+\input{figures/execution-overview}

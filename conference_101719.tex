@@ -17,8 +17,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,fit}
+\usepackage{placeins}
 \usepackage{bm}
 \usepackage{url}
 \newcommand{\sys}{VLA-PIM}
@@ -34,7 +33,7 @@
 \fi
 
 \begin{document}
-\title{VLA inference with LPDDR PIM}
+\title{VLA-PIM: LPDDR-PIM Architecture--Dataflow Co-Design for Heterogeneous Acceleration of Edge VLA Inference}
 \author{\IEEEauthorblockN{Anonymous Authors}
 \IEEEauthorblockA{Paper under double-blind review}}
 \maketitle
@@ -44,8 +43,11 @@
 \end{abstract}
 
 \input{sections/01-introduction}
+\FloatBarrier
 \input{sections/02-background}
+\FloatBarrier
 \input{sections/03-architecture}
+\FloatBarrier
 \input{sections/04-dataflow}
 \input{sections/05-evaluation}
 \input{sections/06-conclusion}

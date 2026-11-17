@@ -73,7 +73,7 @@ t_{XY}=L_X+\tfrac{BL}{n_{\max}}
 \endgroup
 where $t_{\mathrm{WCKPST}}$ represents the WCK postamble, $t_{\mathrm{WCKENL},Y}$ denotes the synchronization preparation latency for the corresponding read or write operation, and the trailing $1\,\mathrm{CK}$ accounts for the interval between the CAS synchronization command and the immediately following RD/WR command. Under this scenario, $t_{X-Y-Z}$ significantly increases to $24\text{--}40\,\mathrm{CK}$.
 % END-SOURCE-EN: 127
-\href{\href{}{}}{}
+
 % SOURCE-EN: 128
 Ramulator simulation of streaming inputs (assuming maintained WCK synchronization) reveals a severe limitation. By evaluating each interval between adjacent PIM data bursts, we find that approximately $50.6\%$ of these gaps are too narrow to accommodate a single GPU read or write without postponing the subsequent PIM transfer. Exploiting the remaining intervals would require the memory controller (MC) to implement a "DQ lookahead" mechanism. Based on the R/W direction and data return timing, the MC would have to proactively predict whether a GPU data burst can completely fit within the available window while satisfying the bidirectional timing constraints, which drastically increases the complexity of the arbitration logic.
 % END-SOURCE-EN: 128

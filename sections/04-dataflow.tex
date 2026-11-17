@@ -14,9 +14,10 @@ Attention tensors can be partitioned across ranks in two manners: feature-wise, 
 % END-SOURCE-EN: 191
 
 % USER-ADDED: approved layout/DQ figure and cross-reference, 2026-11-17.
-Figure~\ref{fig:layout-dq} illustrates both layouts and isolates the DQ traffic of Q exchange, QK$^{T}$, and PV.
+% Deferred until the replacement layout figure is supplied.
+% Figure~\ref{fig:layout-dq} illustrates both layouts and isolates the DQ traffic of Q exchange, QK$^{T}$, and PV.
 
-\input{figures/layout-dq}
+% Deferred: \input{figures/layout-dq}
 
 % SOURCE-EN: 192
 Consequently, an optimal layout must confine the reduction dimension within the rank and partition only the independent dimensions across ranks. Based on a quantitative evaluation of external DQ traffic, \sys{} adopts the token-wise layout. This structural decision successfully reduces the total DQ traffic for the AE's attention mechanism from 2704 KiB to 1960 KiB (a 27.5\% reduction).
@@ -30,7 +31,8 @@ Furthermore, we observe that the prefix KV and suffix KV in the AE exhibit disti
 \label{sec:dataflow-b}
 
 % SOURCE-EN: 215
-Building upon the proposed microarchitecture and dataflow, \sys{} achieves parallel execution via GPU--PIM co-scheduling. The core scheduling principle is to partition the ownership of the DQ bus between the GPU and the PIM at the kernel granularity, rather than relying on fine-grained arbitration at the memory request level. This coarse-grained allocation successfully avoids the complex arbitration, frequent rank switching, and bus turnaround latencies inherently caused by interleaving host and PIM commands. The overall execution sequence within a single denoising step is illustrated in Figure~\ref{fig:timeline}.
+Building upon the proposed microarchitecture and dataflow, \sys{} achieves parallel execution via GPU--PIM co-scheduling. The core scheduling principle is to partition the ownership of the DQ bus between the GPU and the PIM at the kernel granularity, rather than relying on fine-grained arbitration at the memory request level. This coarse-grained allocation successfully avoids the complex arbitration, frequent rank switching, and bus turnaround latencies inherently caused by interleaving host and PIM commands.
+% Deferred figure callout: The overall execution sequence within a single denoising step is illustrated in Figure~\ref{fig:timeline}.
 % END-SOURCE-EN: 215
 
-\input{figures/timeline}
+% Deferred: \input{figures/timeline}
