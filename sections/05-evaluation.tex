@@ -26,10 +26,10 @@ T_{\text{async VLA}}=t_{\text{AE,solo}}+t_{\text{VLM,solo}}-t_{\text{overlap}}
 =\frac{1}{f_{\text{AE}}}
 \label{eq:ae-interval}
 \end{equation}
- where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ denote the standalone execution times of the AE and the VLM, respectively, and $t_{\mathrm{overlap}}$ represents the effective overlapping time between the current VLM frame and the preceding AE frame. We compare $T_{\mathrm{async\ VLA}}$ across configurations a--e. Configuration a includes the serial and dual-stream Thor GPU baselines. Starting from the serial baseline, configurations b--e cumulatively enable PIM offloading, rank-partitioned GPU--PIM concurrency, token-wise layout with in-bank RoPE, and input preloading with epoch-exclusive scheduling, respectively. Configuration e is the full \sys{} design.
+ where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ denote the standalone execution times of the AE and the VLM, respectively, and $t_{\mathrm{overlap}}$ represents the effective overlapping time between the current VLM frame and the preceding AE frame. Figure~\ref{fig:async-vla-performance} compares $T_{\mathrm{async\ VLA}}$ across configurations a--e. Configuration a includes the serial and dual-stream Thor GPU baselines. Starting from the serial baseline, configurations b--e cumulatively enable PIM offloading, rank-partitioned GPU--PIM concurrency, token-wise layout with in-bank RoPE, and input preloading with epoch-exclusive scheduling, respectively. Configuration e is the full \sys{} design.
 % END-USER-REVISED from SOURCE-EN 247
 
-% Deferred: \input{figures/async-vla-performance}
+\input{figures/async-vla-performance}
 
 % USER-REVISED from SOURCE-EN 248--253: retained configurations a--e.
 We make the following key observations: \begin{enumerate} \item \textbf{PIM Acceleration:} Offloading the AE's linear operators to the PIM architecture achieves an AE output frequency $1.15\times$ that of the GPU-only serial baseline, even under strictly serialized execution (Configuration b).
@@ -38,7 +38,7 @@ We make the following key observations: \begin{enumerate} \item \textbf{PIM Acce
 
 \item \textbf{Data Layout and In-Bank RoPE:} Combining the token-wise data layout with in-bank RoPE (Configuration d) reduces external data traffic and shortens the output cycle from $86.77\,\mathrm{ms}$ to $83.57\,\mathrm{ms}$. Together, these changes provide a further $3.20\,\mathrm{ms}$ reduction relative to c.
 
-\item \textbf{Input Preloading:} Input preloading with epoch-exclusive scheduling (Configuration e) expands the effective execution overlap between the VLM and the AE, further reducing the output cycle by $5.89\,\mathrm{ms}$ to $77.68\,\mathrm{ms}$. This corresponds to an AE output rate of $12.87\,\mathrm{Hz}$, or $1.82\times$ and $1.76\times$ the serial and dual-stream GPU baselines, respectively.
+\item \textbf{Input Preloading:} Input preloading with epoch-exclusive scheduling (Configuration e) expands the effective execution overlap between the VLM and the AE, further reducing the output cycle by $5.89\,\mathrm{ms}$ to $77.68\,\mathrm{ms}$. This corresponds to an AE output rate of $12.87\,\mathrm{Hz}$, or $1.82\times$ and $1.76\times$ the serial and dual-stream GPU baselines, respectively, as indicated by the arrow in Figure~\ref{fig:async-vla-performance}.
 
 \end{enumerate}
 % END-USER-REVISED from SOURCE-EN 248--254
@@ -46,7 +46,7 @@ We make the following key observations: \begin{enumerate} \item \textbf{PIM Acce
 \subsection{Discussion: Decoupling the VLM and AE}
 \label{sec:evaluation-c}
 
-% Deferred: \input{figures/decoupled-rates}
+\input{figures/decoupled-rates}
 
 % SOURCE-EN: 273
 The heterogeneous architecture of \sys{} inherently supports the decoupling of the VLM and the AE. When paired with appropriate action fine-tuning algorithms [TBD: Cite action fine-tuning algorithms], the VLM can update the KV cache at a lower frequency while the PIM executes AE inference at a significantly higher frequency, thereby achieving true asynchronous execution.
@@ -57,7 +57,7 @@ Achieving this on a single GPU proves highly inefficient. Under continuous dual-
 % END-SOURCE-EN: 274
 
 % SOURCE-EN: 275
-In contrast, when the AE and VLM run decoupled in \sys{}, the AE achieves an inference frequency of approximately $14.57\,\mathrm{Hz}$---$2.84\times$ that of the single-Thor dual-stream baseline, and even surpassing the dedicated-GPU scenario. Simultaneously, the VLM update rate is maintained at approximately $12.56\,\mathrm{Hz}$, which is only $16.1\%$ lower than a VLM running in isolation on the GPU ($14.97\,\mathrm{Hz}$) and $24.0\%$ higher than the single-Thor dual-stream baseline. Essentially, by trading off a mere one-sixth of the VLM's update rate on the GPU, \sys{} amplifies the AE inference frequency to nearly $3\times$ that of the dual-stream GPU baseline.
+In contrast, when the AE and VLM run decoupled in \sys{}, the AE achieves an inference frequency of approximately $14.57\,\mathrm{Hz}$---$2.84\times$ that of the single-Thor dual-stream baseline, and even surpassing the dedicated-GPU scenario. Simultaneously, the VLM update rate is maintained at approximately $12.56\,\mathrm{Hz}$, which is only $16.1\%$ lower than a VLM running in isolation on the GPU ($14.97\,\mathrm{Hz}$) and $24.0\%$ higher than the single-Thor dual-stream baseline (Figure~\ref{fig:decoupled-rates}). Essentially, by trading off a mere one-sixth of the VLM's update rate on the GPU, \sys{} amplifies the AE inference frequency to nearly $3\times$ that of the dual-stream GPU baseline.
 % END-SOURCE-EN: 275
 
 % SOURCE-EN: 276

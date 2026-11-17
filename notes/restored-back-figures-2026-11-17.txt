@@ -1,0 +1,24 @@
+2026-11-17 — Restore missing dataflow/evaluation figures
+
+The latest source deferred four historical figures despite available originals.
+Restored the exact PDF/PNG image bytes from c8e45c5 for KV layout/DQ traffic,
+step timeline, asynchronous VLA performance, and decoupled execution rates.
+Also restored the KV layout SVG and the four LaTeX figure wrappers.
+Re-enabled all corresponding inputs and prose cross-references.
+
+Removed the historical hard-coded figure counters from the restored wrappers;
+all eight figures now use automatic numbering in manuscript order (1–8).
+The timeline remains double-column; the other restored figures are single-column.
+
+The current title, first four figures including the high-resolution Fig. 2,
+other prose, and end-of-document preliminary power estimate are preserved.
+The main TeX file and all eight files for the first four figures are byte-identical
+to the latest base 215a0ec. The original workspace's uncommitted edits were not
+changed; recovery was done in a separate source checkout.
+
+Validation: two successful pdfLaTeX passes, 8 pages, 8 figures, 2 tables,
+no missing images/characters, undefined references, duplicate labels, or overfull
+boxes. Pages 6 and 7 rendered and visually inspected. See verification.json
+for restored-asset checksums and figure numbers/pages.
+
+Overleaf: Integrations > GitHub > Pull GitHub changes into Overleaf, then Recompile.
