@@ -1,0 +1,18 @@
+2026-11-17 — Move selected memory timing parameters below Table I
+
+User request: remove the Table III memory configuration table and put a
+small selection of important timings below Table I as parameter=value.
+
+- Remove tables/sim-params.tex and its inclusion in Experimental Setup.
+- Add one compact, left-aligned note below Table I (units: CK):
+  tFAW=16, tRAS=45, tRCD,RD=20, tRPpb=20, tCCD_L=4.
+- Timing values come from the removed LPDDR5X-8533 table; RD and per-bank
+  qualifiers avoid conflating read/write activation or pb/ab precharge.
+- Format and parameter selection reference LP-Spec Table II:
+  https://arxiv.org/html/2508.07227v1#S6.T2
+- The existing System Overview retains the channel/rank organization.
+
+Validation: two final pdfLaTeX passes succeeded; 8 pages, 2 tables.
+No overfull boxes, missing characters, undefined references, or duplicate
+labels. Table I visually reviewed on page 3: the note fits on one line.
+Rendered paper has no Table III. No experiments were rerun.

@@ -1,4 +1,4 @@
-% Existing data retained; English captions and references synchronized with the 2026-11-17 source.
+% PIM specifications with selected LPDDR5X timing parameters in the table note.
 \begin{table}[!t]
 \caption{Key Specifications of a PIM Rank}
 \label{tab:pim-spec}
@@ -18,4 +18,10 @@ Local RoPE & 1 per bank & None \\
 New datapath & Row Buffer $\rightarrow$ Input Buffer broadcast (input preloading) & None \\
 \bottomrule
 \end{tabular}
+\par\smallskip
+\parbox{\columnwidth}{\scriptsize\raggedright
+\textit{Timing (CK):}
+$t_{\mathrm{FAW}}{=}16$, $t_{\mathrm{RAS}}{=}45$,
+$t_{\mathrm{RCD,RD}}{=}20$, $t_{\mathrm{RPpb}}{=}20$,
+$t_{\mathrm{CCD\_L}}{=}4$.}
 \end{table}
