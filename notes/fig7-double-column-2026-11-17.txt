@@ -1,0 +1,28 @@
+2026-11-17 — Figure 7 restored to a double-column float
+
+Changed figure to figure* and columnwidth to textwidth. The vector
+canvas is 7.2 x 2.15 inches; cropped PDF is 517.770 x 137.756 pt.
+White stage labels retain their 7.5 pt size. The wider blue bars allow
+all stage labels, including gate/up, to be displayed horizontally.
+
+The current panel titles remain (a) Streaming input and (b) Input
+preloading, without configuration suffixes. Native DQ still aligns
+with panel (a) DQ; VLM Request aligns with panel (b) PIM stages.
+The native WR timings, 14 CK gap, 15 CK request window, orange locator,
+dashed connector, and omitted horizontal axes/gray bands are retained.
+Figure 10 and trace snapshots are unchanged.
+
+Validation: standalone figure and double-column manuscript page 7
+reviewed. Two pdfLaTeX passes succeeded: 8 pages, 6 figures, 2 tables,
+zero overfull boxes, missing characters, undefined references, or
+duplicate labels. Committed PDF is built from tracked base 20b46b7
+plus this figure revision, preserving the latest Overleaf background
+updates. The separate uncommitted evaluation-area edit is retained
+in the working tree and its working PDF is rebuilt separately.
+
+Reproduction:
+  python3 figures/plot-timeline-rates.py --figure timeline
+
+Pre-edit backups relative to the parent PIM_for_VLA workspace:
+  essay/backups/Fig7_double_column_before_20261117_20b46b7.tar.gz
+  essay/backups/Fig7_double_column_working_edits_before_20261117_20b46b7.patch

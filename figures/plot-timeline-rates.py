@@ -27,9 +27,9 @@ def save(fig, out, name):
 
 def timeline(data, out, detail):
     tick = data['clock_ps'] / 1e6
-    fig = plt.figure(figsize=(3.5, 2.15))
+    fig = plt.figure(figsize=(7.2, 2.15))
     grid = fig.add_gridspec(2, 2, width_ratios=(1.85, 1), hspace=0.40, wspace=0.18)
-    fig.subplots_adjust(left=0.17, right=0.99, top=0.88, bottom=0.08)
+    fig.subplots_adjust(left=0.08, right=0.99, top=0.88, bottom=0.08)
     example = detail['zoom']
     selected_start = example['left']['end_ck']
     selected_end = example['right']['start_ck']
@@ -50,8 +50,6 @@ def timeline(data, out, detail):
                            facecolor=BLUE, edgecolor='white', linewidth=0.5, zorder=3)
             if hi-lo > 14:
                 label = e['name'].replace('_', '/')
-                if label == 'gate/up':
-                    label = 'gate/\nup'
                 text = ax.text((lo+hi)/2, 1, label, ha='center', va='center',
                                fontsize=7.5, linespacing=0.95, color='white', zorder=4)
                 renderer = fig.canvas.get_renderer()
