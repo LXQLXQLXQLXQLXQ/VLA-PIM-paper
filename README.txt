@@ -32,3 +32,10 @@ Table II 采用已确认的 v3：BG/BA、Cmd.、Operation、Function 四列，RD
 图 9 的矢量 PDF 与 600 dpi PNG 可用 figures/plot-async-vla-performance.py 从原性能表数值重绘。
 图 6 的 PDF/SVG 与 PNG 可用 figures/plot-layout-dq.py 从已提交字节计数快照重绘；插入与核验记录见 notes/layout-dq-insertion-2026-11-17.txt。
 Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然后重新编译。
+
+图 7 绘图源码与原数据已按类别整理到 figures/fig7/，详见其中 README.md：
+- scripts/：绘图、原数据校验与处理脚本，以及依赖版本；
+- data/raw/：Streaming input / Input preloading 两组完整原始实验输出的无损压缩包、时序矩阵和 SHA-256 清单；
+- data/processed/：从原数据重建的绘图 JSON。PDF/PNG 成图仍位于 figures/。
+可直接执行 figures/fig7/scripts/plot_figure.py 绘图；rebuild_data.py 可在不依赖仓库外文件的情况下重新生成输入数据。
+原 figures/plot-timeline-rates.py 和 figures/analyze-streaming-gaps.py 入口继续保留。
