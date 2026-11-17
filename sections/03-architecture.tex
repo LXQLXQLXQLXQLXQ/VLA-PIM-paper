@@ -13,7 +13,7 @@ To enable the parallel execution of VLM and AE, \sys{} partitions memory resourc
 % END-SOURCE-EN: 23
 
 % SOURCE-EN: 46
-\sys{} is configured with eight LPDDR5X-8533 packages (e.g., Micron MT62F2G64D8). Each package features a quad-die, dual-channel, and dual-rank architecture, collectively providing 16 independent x16 channels with a peak bandwidth of 273 GB/s. Each PIM rank comprises four bank groups (BGs), with four banks per BG. Each bank is equipped with a $16\times$BF16 MAC unit (with FP32 accumulation) and a dedicated RoPE unit, alongside a 1 KiB input buffer and a 2 KiB output buffer. Furthermore, BG-level and rank-level accumulators hierarchically aggregate the partial sums across their respective levels. A detailed comparison of key specifications with the Samsung LPDDR5X-PIM device is summarized in Table~\ref{tab:pim-spec}.
+\sys{} is configured with eight LPDDR5X-8533 packages (e.g., Micron MT62F2G64D8). Each package features a quad-die, dual-channel, and dual-rank architecture, collectively providing 16 independent x16 channels with a peak bandwidth of 273 GB/s. Each PIM rank comprises four bank groups (BGs), with four banks per BG. Each bank is equipped with a $16\times$BF16 MAC unit (with FP32 accumulation) and a dedicated RoPE unit, alongside a 1 KiB input buffer and a 2 KiB output buffer. Furthermore, BG-level and rank-level accumulators hierarchically aggregate the partial sums across their respective levels. A package-level comparison of key specifications with LP-Spec, AHASD, and Samsung LPDDR5X-PIM is summarized in Table~\ref{tab:pim-spec}.
 % END-SOURCE-EN: 46
 
 \input{figures/system-overview}

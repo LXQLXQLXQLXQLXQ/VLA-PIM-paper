@@ -26,6 +26,10 @@ VLA-PIM 论文
 所有图统一自动编号为 1–8；时间线仍采用已确认的双栏版本。
 恢复记录见 notes/restored-back-figures-2026-11-17.txt。
 
+Table I 已按每个 x64 PIM 封装补齐 VLA-PIM、LP-Spec、AHASD 和 Samsung 四种方案。
+保留 BF16-equivalent 折算、AHASD 统计范围假设、缓冲区来源和时序说明；引用改为正式文献。
+详见 notes/tableI-completion-2026-11-17.txt。
+
 已移除 Architecture 中意外残留的空嵌套 href 命令。
 正文论述、实验数值及已有待补条目保留；只调整与图片绑定的交叉引用。
 构建验证记录见 notes/verification.json。

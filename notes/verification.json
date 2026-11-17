@@ -1,8 +1,8 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Restore the four missing dataflow/evaluation figures and their callouts; retain latest first four figures, title, prose, and end-of-document power estimate.",
-  "base_commit": "215a0ec70e5beebd3fc150d7b4dfbca63d260548",
+  "scope": "Complete Table I with the supplied package-level VLA-PIM / LP-Spec / AHASD / Samsung comparison, footnotes, timing and resolved bibliography.",
+  "base_commit": "c7211e4076fa1fee0b7ae8ba5d77194461b0f3ca",
   "restored_from": "c8e45c5",
   "validation": {
     "engine": "pdfLaTeX / TeX Live 2020",
@@ -19,7 +19,10 @@
     "main_document_byte_preserved": true,
     "first_four_figure_sources_byte_preserved": true,
     "restored_image_bytes_match_history": true,
-    "continuous_figure_numbering": true
+    "continuous_figure_numbering": true,
+    "all_eight_figure_sources_byte_preserved": true,
+    "table_I_no_placeholders": true,
+    "table_I_single_column": true
   },
   "figures": [
     {
@@ -113,7 +116,27 @@
       "matches_original": true
     }
   ],
-  "visual_review": "Pages 6 and 7 rendered and inspected. KV layout appears on page 6; double-column timeline and the two performance charts appear fully on page 7 without clipping or overlaps.",
-  "pdf_sha256": "8b606f35ce6a269276ef6937e55f37216f11cf18b7cb7450e5da95501c0081d5",
-  "remaining_author_items": "Existing editorial TBD entries retained from the latest upstream source."
+  "visual_review": "Table I on page 3 rendered and checked: all five columns, seven parameter rows, normalization/scope footnotes and timing notes fit within one column without overlaps or clipping. All eight figure numbers/pages match the previous revision.",
+  "pdf_sha256": "8b68875e184c00935d6e4d11f0d1d334793e1ac4bade422089697f48931bf779",
+  "remaining_author_items": "Existing editorial TBD entries retained from the latest upstream source.",
+  "table_I": {
+    "caption": "Key Specifications per PIM Package",
+    "page": 3,
+    "number": "I",
+    "values_source": "User-supplied table in this conversation",
+    "columns": [
+      "Item",
+      "VLA-PIM",
+      "LP-Spec",
+      "AHASD",
+      "Samsung"
+    ],
+    "citations": {
+      "lp_spec": "4",
+      "ahasd": "10",
+      "samsung_lpddr5x_pim": "2"
+    },
+    "AHASD_scope_assumption_explicit": true,
+    "BF16_equivalent_normalization_explicit": true
+  }
 }
