@@ -1,19 +1,21 @@
-% Source: methodology-zh-v3.md, section IV
-% Chinese text retained; Drive comment metadata is kept only in the local backup.
-\section{数据流与调度}\label{sec:dataflow}
+% Source: Google Docs "Methodology 翻译", 2026-11-17; English paragraphs.
 
-\subsection{面向共享总线的数据布局与片内 RoPE}\label{sec:dataflow-a}
+\section{Dataflow and Scheduling}
+\label{sec:dataflow}
+\subsection{DQ-Aware Data Layout and On-Die RoPE}
+\label{sec:dataflow-a}
 
-GPU 与 PIM 共享 LPDDR 通道的外部接口，因此 AE 的数据布局既影响 PIM 内部的执行，也决定 AE 与 VLM 竞争多少 DQ 带宽。VLA-PIM 把共享通道上的通信代价纳入布局选择，在计算与存储容量的约束下，尽量减少 AE 对外部带宽的需求。
+Since the GPU and PIM share the external interface of the LPDDR channel, the AE's data layout affects not only the internal PIM execution efficiency but also the extent of DQ contention with the GPU. \sys{} integrates the shared-channel communication overhead into its layout exploration to minimize the AE's external bandwidth demand under computation and storage capacity constraints.
 
-注意力张量在 rank 间有两种切分方式：feature-wise 让每个 rank 持有全部 token、一半特征维；token-wise 让每个 rank 持有一半 token 的全部特征。PIM 的通信代价是分层的：在 rank 内，输入可以经广播通路一次写入所有 bank，部分和也由片上加法树归约，都不占用 DQ；在 rank 间，由于没有 logic die，跨 rank 的复制和归约都要经 MC 中转，占用外部 DQ。因此，布局应把归约维留在 rank 内，只在 rank 间切独立维。Feature-wise 把 \(QK^{\mathsf{T}}\) 的 head 维切到两个 rank 上，partial score 要导出给 GPU 相加，QKV 输入也要写两遍。Token-wise 在 rank 内完成整个点积，每个 key 的 score 只导出一次；代价是 Q 要在两个 rank 间交换一次，PV 的部分和也推迟到 O 之后由 GPU 相加。\textbf{综合这两方面，token-wise 省下的 QKV 输入、\(QK^{\mathsf{T}}\) 输出和 PV 流量（共 936 KiB），远多于 Q 交换和 O 多出的流量（共 192 KiB）。因此，VLA-PIM 采用 token-wise 布局后，AE 注意力部分的 DQ 总流量从 2704 KiB 降到 1960 KiB（-27.5\%）。}
+Attention tensors can be partitioned across ranks in two manners: feature-wise, where each rank stores all tokens but only half of the feature dimensions; or token-wise, where each rank stores half of the tokens across all feature dimensions. The communication cost within the LPDDR-PIM architecture is fundamentally hierarchical. Within a rank, communication bypasses the DQ bus entirely, as inputs can be simultaneously written to all banks via the broadcast datapath, and partial sums are reduced via the on-chip adder tree. Conversely, inter-rank communication consumes external DQ bandwidth, as cross-rank data duplication and reduction must be routed through the MC due to the lack of a logic die.
 
-同时，我们观察到，AE 中 prefix KV 与 suffix KV 的生命周期不同。Prefix KV 在一次推理中只由 VLM 产生一次，并在全部 10 个去噪步、18 层中保持只读；它的 RoPE 可随 VLM 前向一并完成，因此去噪阶段没有 prefix 的位置编码开销。Suffix KV 随 x\_t 逐步重算，只在当前层、当前步内有效，它的 RoPE 在 10 步 \(\times\) 18 层中反复执行。若 suffix 的 RoPE 在 GPU 侧执行，就需要把 Q/K 从 PIM 读出、旋转后再写回，每层每步多出 256 KiB 的 DQ 往返。
+Consequently, an optimal layout must confine the reduction dimension within the rank and partition only the independent dimensions across ranks. Based on a quantitative evaluation of external DQ traffic, \sys{} adopts the token-wise layout. This structural decision successfully reduces the total DQ traffic for the AE's attention mechanism from 2704 KiB to 1960 KiB (a 27.5\% reduction).
 
-针对这一部分，VLA-PIM 利用 RoPE 的 sin/cos 只由 position id 决定、与 token 内容及时间步 t 无关的性质，把它们预计算为 BF16 静态表并存入存储阵列。再利用 RoPE 只涉及相邻两元素乘加这一特点，把特征按 pair-major 方式映射到 bank，使每一对旋转元素总在同一个 bank 内，从而能在每个 bank 内就地完成旋转。最终，采取片内 RoPE 使得每层 DQ 总流量净减少 128 KiB。
+Furthermore, we observe that the prefix KV and suffix KV in the AE exhibit distinct lifetimes. The prefix KV is generated only once by the VLM and remains read-only across all 10 denoising steps. Consequently, its RoPE can be computed alongside the VLM's forward pass, eliminating any prefix positional encoding overhead during the denoising phase. Conversely, the suffix KV is iteratively recomputed with $x_t$ and remains valid only within the current layer and time step. As a result, its RoPE is repeatedly executed across the 10 steps and 18 layers. If the suffix RoPE were executed on the GPU, it would necessitate reading the Q/K tensors from the PIM, performing the rotation, and writing them back, incurring prohibitive data movement. To mitigate this, \sys{} leverages the property that the sine and cosine values in RoPE are determined solely by the position ID, independent of the time step $t$. Accordingly, \sys{} precomputes these values into static BF16 lookup tables and stores them directly within the DRAM arrays. Moreover, based on the fact that RoPE merely involves MAC operations between adjacent element pairs, \sys{} adopts a pair-major feature mapping across the banks. This data layout guarantees that each pair of rotating elements strictly resides within the same bank, enabling in-place rotation natively within each bank. Ultimately, this in-bank RoPE mechanism achieves a reduction of $128\,\mathrm{KiB}$ in total DQ traffic per layer.
 
-\subsection{GPU--PIM 协同调度}\label{sec:dataflow-b}
+\subsection{GPU--PIM Co-Scheduling}
+\label{sec:dataflow-b}
 
-在上述微架构与数据流的基础上，VLA-PIM 通过 GPU--PIM 协同调度实现并行计算。调度的核心原则是：\textbf{在 kernel 粒度上划分 GPU 与 PIM 对 DQ 的所有权，而不是在 memory request 粒度上做细粒度仲裁。} 这样可以避免主机与 PIM 命令交替发射带来的复杂仲裁、频繁的 rank 切换和总线反向延迟。一个去噪步内的执行顺序如图~\ref{fig:timeline} 所示：PIM 的输入装载与结果导出集中在少数 I/O epoch 内，epoch 期间 DQ 归 PIM 所有；epoch 结束后 DQ 交还 GPU，VLM kernel 跨越 PIM 计算阶段连续执行；PIM 阶段结束、AE 需要执行非线性算子时，GPU 在 kernel 边界上切换给 AE。
+Building upon the proposed microarchitecture and dataflow, \sys{} achieves parallel execution via GPU--PIM co-scheduling. The core scheduling principle is to partition the ownership of the DQ bus between the GPU and the PIM at the kernel granularity, rather than relying on fine-grained arbitration at the memory request level. This coarse-grained allocation successfully avoids the complex arbitration, frequent rank switching, and bus turnaround latencies inherently caused by interleaving host and PIM commands. The overall execution sequence within a single denoising step is illustrated in Fig.~\ref{fig:timeline}.
 
 \input{figures/timeline}

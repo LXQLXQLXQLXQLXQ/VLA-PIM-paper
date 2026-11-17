@@ -2,5 +2,5 @@
 \centering
 \includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
 \setcounter{figure}{6}
-\caption{第 0 个去噪步第 0 层的执行时间线（物理通道 0）。(a) 流式供数：PIM 的 DQ 突发散布在 QKV、O、Gate/Up、Down 的整个计算过程中。(b) 输入预装载（VLA-PIM）：PIM 的 DQ 传输集中在 7 个 I/O epoch（灰色）内，其余时间 DQ 全部归 GPU；VLM kernel 跨越多个 PIM 阶段连续执行，AE 的非线性算子只在阶段边界插入。}\label{fig:timeline}
+\caption{Execution timeline of layer~0 in denoising step~0 (physical channel~0). (a) Streaming input: PIM DQ bursts are scattered throughout QKV, O, Gate/Up, and Down computation. (b) Input preloading (\sys{}): PIM DQ transfers are concentrated in 7 I/O epochs (gray), and the DQ bus is available to the GPU at all other times. VLM kernels run across multiple PIM phases; AE nonlinear operators are inserted at phase boundaries.}\label{fig:timeline}
 \end{figure*}

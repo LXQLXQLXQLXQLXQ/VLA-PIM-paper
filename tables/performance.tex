@@ -1,21 +1,24 @@
-% Source caption: 表 IX：AE 推理间隔与频率
-\begin{table*}[t]
-\centering
-\caption{AE 推理间隔与频率}
+% Existing data retained; English captions and references synchronized with the 2026-11-17 source.
+\begin{table*}[!t]
+\caption{Asynchronous VLA Inference Cycle and AE Output Rate}
 \label{tab:performance}
-\small
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrr@{}}
 \toprule
-配置 & AE 完成 (ms) & AE 结束前 VLM 进度 (ms) & \(t_{\mathrm{overlap}}\) (ms) & \(t_{\mathrm{AE\text{-}AE}}\) (ms) & AE 频率 (Hz) & 相对 a-serial \\
+\textbf{Config} & \hcell{\textbf{AE done}\\(ms)} & \hcell{\textbf{VLM prog.}\\(ms)} & \hcell{$\bm{t_{\mathrm{overlap}}}$\\(ms)} & \hcell{$\bm{T_{\mathrm{async\_VLA}}}$\\(ms)} & \hcell{\textbf{Rate}\\(Hz)} & \hcell{\textbf{vs.}\\\textbf{a-serial}} \\
 \midrule
-a-serial（Thor） & 73.98 & --- & 0 & 141.29 & 7.08 & 1.00\(\times\) \\
-a-dual（Thor） & --- & --- & 4.31 & 137.07 & 7.30 & 1.03\(\times\) \\
-b & 56.95 & 0 & 0 & 122.88 & 8.14 & 1.15\(\times\) \\
-c & 60.33 & 47.48 & 36.12 & 86.77 & 11.53 & 1.63\(\times\) \\
-d & 57.90 & 47.42 & 36.33 & 84.04 & 11.90 & 1.68\(\times\) \\
-e & 56.83 & 47.16 & 36.35 & 83.57 & 11.97 & 1.69\(\times\) \\
-f & 69.27 & 60.15 & 54.80 & 78.17 & 12.79 & 1.81\(\times\) \\
-\textbf{g（VLA-PIM）} & 68.64 & 60.30 & 54.96 & \textbf{77.68} & \textbf{12.87} & \textbf{1.82\(\times\)} \\
+a-serial (Thor) & 73.98 & --- & 0 & 141.29 & 7.08 & 1.00$\times$ \\
+a-dual (Thor) & --- & --- & 4.31 & 137.07 & 7.30 & 1.03$\times$ \\
+b & 56.95 & 0 & 0 & 122.88 & 8.14 & 1.15$\times$ \\
+c & 60.33 & 47.48 & 36.12 & 86.77 & 11.53 & 1.63$\times$ \\
+d & 57.90 & 47.42 & 36.33 & 84.04 & 11.90 & 1.68$\times$ \\
+e & 56.83 & 47.16 & 36.35 & 83.57 & 11.97 & 1.69$\times$ \\
+f & 69.27 & 60.15 & 54.80 & 78.17 & 12.79 & 1.81$\times$ \\
+\textbf{g (\sys{})} & 68.64 & 60.30 & 54.96 & \textbf{77.68} & \textbf{12.87} & \textbf{1.82}$\bm{\times}$ \\
 \bottomrule
-\end{tabularx}
+\end{tabular*}
+\par\smallskip
+\parbox{\textwidth}{\scriptsize ``VLM prog.'' is the VLM progress completed before the AE finishes.}
 \end{table*}

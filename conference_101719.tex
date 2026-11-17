@@ -1,8 +1,8 @@
 % !TeX encoding = UTF-8
-% IEEE conference draft: Sections I--II as migrated; Chinese methodology through conclusion with figures.
+% IEEE conference draft: all sections in English; methodology synchronized with Google Docs.
 \RequirePackage{iftex}
 % Preserve the original class's pdfLaTeX layout calculation before changing
-% only the text encoding needed for the bilingual draft.
+% the text encoding used by the manuscript.
 \ifPDFTeX\else
   \RequirePackage[T1]{fontenc}
 \fi
@@ -17,31 +17,23 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit}
 \usepackage{bm}
 \usepackage{url}
 \newcommand{\sys}{VLA-PIM}
 \newcommand{\todo}[1]{[TBD: #1]}
 \newcommand{\hcell}[1]{\begin{tabular}[b]{@{}r@{}}#1\end{tabular}}
 
-% Keep the default pdfLaTeX workflow working. Select Chinese support
-% according to the active engine instead of unconditionally loading xeCJK.
-\ifPDFTeX
-  \usepackage{CJKutf8}
-  \newcommand{\StartChinese}{\begin{CJK*}{UTF8}{gbsn}}
-  \newcommand{\StopChinese}{\clearpage\end{CJK*}}
-\else
-  % ctex selects xeCJK for XeLaTeX and luatexja for LuaLaTeX.
-  % scheme=plain preserves the IEEE heading and layout definitions.
-  \usepackage[UTF8,scheme=plain,fontset=fandol]{ctex}
+% Use the standard IEEE Times setup with pdfLaTeX; match it under Xe/LuaLaTeX.
+\ifPDFTeX\else
+  \usepackage{fontspec}
   \setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
   \setsansfont{texgyreheros}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
   \setmonofont{texgyrecursor}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
-  \newcommand{\StartChinese}{}
-  \newcommand{\StopChinese}{}
 \fi
 
 \begin{document}
-\StartChinese
 \title{VLA inference with LPDDR PIM}
 \author{\IEEEauthorblockN{Anonymous Authors}
 \IEEEauthorblockA{Paper under double-blind review}}
@@ -58,5 +50,4 @@
 \input{sections/05-evaluation}
 \input{sections/06-conclusion}
 \input{sections/99-references}
-\StopChinese
 \end{document}

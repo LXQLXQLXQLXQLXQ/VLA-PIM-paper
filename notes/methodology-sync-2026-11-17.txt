@@ -1,0 +1,47 @@
+Source: Google Docs, Methodology 翻译
+https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit
+Read date: 2026-11-17
+Scope: English paragraphs in tab t.0, Architecture Design through Conclusion.
+
+Motivation: user-authored English version from Overleaf commit 05a7804.
+Only its hard-coded performance table number is converted to a cross-reference.
+Abstract, Introduction, and anonymous author block are preserved.
+
+Native Google Docs equations were recovered from the DOCX export's OMML,
+including X/Y/Z, RL/WL, the 4--14 CK and 24--40 CK ranges, M, x_t,
+buffer sizes, the 10x density factor, frequencies, and speedups.
+Broken pasted LaTeX line breaks and async_VLA notation were repaired.
+The two inline wording notes were applied: "satisfy" and "returned".
+Chinese parallel text, private-use formatting markers, and editorial notes
+were not inserted into the manuscript. See editorial-checklist.txt for
+source claims that still require author verification.
+
+Figures 4 and 6 are new vector schematics based on the supplied architecture
+and field-reuse description. Figure 6 is logical, not a pin/cycle encoding.
+Figures 5, 7 and 10 retain the supplied artwork/data with English captions.
+Figure 8 retains the interval histogram statistics, removes the universal
+15 CK admission marker, and distinguishes its stage-edge-inclusive bins
+from the strict-adjacency 50.6% test. The committed data snapshot and plotting
+script reproduce its PDF/PNG without external experiment files.
+
+DQ admission provenance:
+experiments/2026-11-17-gap-admission/results.json
+Strict adjacency: 1,257,657 positive intervals; 636,282 fit neither direction.
+The PIM timestamps are fixed. GPU transfers can already occur in these gaps;
+the count fraction does not measure GPU-unavailable time.
+
+C/A provenance:
+experiments/2026-11-16-ca-replay/README.md and results/summary.csv
+step 0/layer 0: occupancy 13.5096%, replay latency increase 0.50993%.
+step 9/layer 17: occupancy 13.4986%, replay latency increase 0.51067%.
+Each slice is repeated 180 times. These are controlled replay increments,
+not replacements for the main full-workload performance results.
+
+All four tables retain the existing numeric values. Performance now uses
+T_async_VLA to match the source's cycle definition. The configurations file
+remains available as a legacy supplement and is not added as a fifth table.
+
+Primary sources for the three citation keys introduced by Motivation:
+micron_lpddr: https://www.micron.com/products/memory/lpddr-components/lpddr5x
+neupims: https://arxiv.org/abs/2403.00579
+lp_spec: https://arxiv.org/abs/2508.07227

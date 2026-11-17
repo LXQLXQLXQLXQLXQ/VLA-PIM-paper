@@ -1,22 +1,23 @@
-% Source caption: 表 V：PIM 模式下 RD/WR 的 BG/BA 操作码
-\begin{table*}[t]
-\centering
-\caption{PIM 模式下 RD/WR 的 BG/BA 操作码}
+% Existing data retained; English captions and references synchronized with the 2026-11-17 source.
+\begin{table}[!t]
+\caption{BG/BA Opcodes of RD/WR in PIM Mode}
 \label{tab:isa}
-\small
-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.09\textwidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.25\textwidth}@{}}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}c>{\raggedright\arraybackslash}p{0.56\columnwidth}>{\raggedright\arraybackslash}p{0.27\columnwidth}@{}}
 \toprule
-BG/BA & RD & WR \\
+\textbf{BG/BA} & \textbf{RD} & \textbf{WR} \\
 \midrule
-0000 & MAC：累加到当前累加器 & WB\_\allowbreak{}ACC \\
-0001 & MAC\_\allowbreak{}INIT：覆盖累加器 & WB\_\allowbreak{}MAC（旁路，保留） \\
-0010 & MAC\_\allowbreak{}RED（多 MAC 归约，保留） & 保留 \\
-0011 & MAC\_\allowbreak{}INIT\_\allowbreak{}RED：单 MAC 点积并归约 & WB\_\allowbreak{}OBUF：输出缓冲写回 \\
-0100 & MAC\_\allowbreak{}INIT\_\allowbreak{}RED，K 的 BF16 lane 0--7 & 保留 \\
-0101 & MAC\_\allowbreak{}INIT\_\allowbreak{}RED，K 的 BF16 lane 8--15 & 保留 \\
-0110 & RD\_\allowbreak{}ROPE：加载 sin/cos 系数列到 RoPE 寄存器 & 保留 \\
-0111 & RD\_\allowbreak{}ROPE\_\allowbreak{}Q：加载 Q 向量并旋转 & 保留 \\
-1000 & RD\_\allowbreak{}ROPE\_\allowbreak{}K：加载 K 向量并旋转 & 保留 \\
+0000 & \texttt{MAC}: accumulate into current accumulator & \texttt{WB\_ACC} \\
+0001 & \texttt{MAC\_INIT}: overwrite accumulator & \texttt{WB\_MAC} (bypass, reserved) \\
+0010 & \texttt{MAC\_RED} (multi-MAC reduction, reserved) & Reserved \\
+0011 & \texttt{MAC\_INIT\_RED}: single-MAC dot product with reduction & \texttt{WB\_OBUF}: Output Buffer write-back \\
+0100 & \texttt{MAC\_INIT\_RED}, BF16 lanes 0--7 of K & Reserved \\
+0101 & \texttt{MAC\_INIT\_RED}, BF16 lanes 8--15 of K & Reserved \\
+0110 & \texttt{RD\_ROPE}: load sin/cos coefficient column into RoPE registers & Reserved \\
+0111 & \texttt{RD\_ROPE\_Q}: load Q vector and rotate & Reserved \\
+1000 & \texttt{RD\_ROPE\_K}: load K vector and rotate & Reserved \\
 \bottomrule
-\end{tabularx}
-\end{table*}
+\end{tabular}
+\end{table}
