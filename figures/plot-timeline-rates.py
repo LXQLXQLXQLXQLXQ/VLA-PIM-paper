@@ -70,7 +70,7 @@ def timeline(data, out, detail):
         ax.set_xticks([])
         ax.spines['bottom'].set_visible(False)
         ax.grid(axis='y', visible=False)
-        title = case['title'].replace('(VLA-PIM, e)', '(e)')
+        title = case['title'].replace(' (d)', '').replace(' (VLA-PIM, e)', '')
         ax.set_title(title, loc='left', pad=3, fontsize=6.8)
 
     zoom = fig.add_subplot(grid[:, 1])

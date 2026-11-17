@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Figure 7: single-column float and plot; enlarge white blue-stage text from 6.1 to 7.5 pt; align VLM Request with panel (b) PIM stages.",
+  "scope": "Figure 7 single-column follow-up: remove configuration suffixes (d)/(e) from the two panel titles.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -125,7 +125,12 @@
       "gate_up_label_wrapped": true,
       "request_alignment_reference": "panel (b) PIM stages",
       "native_dq_alignment_reference": "panel (a) PIM DQ",
-      "visual_review_page": 6
+      "visual_review_page": 6,
+      "configuration_suffixes": false,
+      "panel_titles": [
+        "(a) Streaming input",
+        "(b) Input preloading"
+      ]
     },
     "memory_timing_note": {
       "removed_table": "tab:sim-params",
@@ -171,13 +176,13 @@
   "figures": 6,
   "tables": 2,
   "template_class_unchanged": true,
-  "visual_review": "Single-column Figure 7 reviewed standalone and on page 6: 7.5 pt white labels fit taller blue lanes with rotation/wrapping; native DQ matches panel (a) DQ; VLM Request matches panel (b) PIM stages. Native timings, no-axis layout, dashed connector and orange locator retained. Caption fits one column.",
-  "pdf_sha256": "02898c1d449204f8cf3c39adb572fb432646ad2d28125eaac21a61476385d0c1",
+  "visual_review": "Single-column Figure 7 retains the prior layout and alignment; panel titles now read (a) Streaming input and (b) Input preloading, with configuration suffixes removed. Updated figure visually inspected; two pdfLaTeX passes succeeded.",
+  "pdf_sha256": "2215d714bb8a290f223d696be9e14b4b31437ae30e46f13d4df1a4cff7331e3a",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
   "revision_notes": "notes/fig7-single-column-2026-11-17.txt",
   "previous_figure_revision_notes": "notes/figure-revision-2026-11-17.txt",
-  "previous_verification_archive": "../essay/backups/Fig7_single_column_before_20261117_3924533.tar.gz:notes/verification.json",
+  "previous_verification_archive": "../essay/backups/Fig7_remove_config_tags_before_20261117_697d610.tar.gz:notes/verification.json",
   "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
   "previous_revision_notes": "notes/fig7-aligned-2026-11-17.txt"
 }

@@ -9,7 +9,8 @@ read requirement, the 1 CK overrun, and the 4 CK write distinction.
 All 12 blue-stage labels increase from 6.1 to 7.5 pt (23%). Narrow
 stage labels rotate vertically; gate/up wraps over two lines. The taller
 blue lanes make the larger text readable without changing stage durations.
-The panel-(b) title omits the redundant VLA-PIM name but retains (e).
+Follow-up: panel titles are (a) Streaming input and (b) Input preloading;
+the configuration suffixes (d)/(e) are removed. Figure 10 is unchanged.
 
 The right native DQ row still matches panel (a)'s DQ center and height.
 The VLM Request row now matches panel (b)'s blue PIM stages center and
