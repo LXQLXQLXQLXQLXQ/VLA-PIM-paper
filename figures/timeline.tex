@@ -1,6 +1,6 @@
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
+\includegraphics[width=\columnwidth]{figures/fig7_step_timeline.pdf}
 \setcounter{figure}{6}
-\caption{Layer~0 of denoising step~0 (physical channel~0): (a) streaming input and (b) input preloading. The left timelines show PIM phases and DQ burst starts. The right inset expands six consecutive native WR bursts from the boxed down-input region. Its 14-CK gap (13.1 ns) cannot fit a VLM RD: 11 CK for WR-to-RD turnaround, a 2-CK RD burst, and 2 CK for RD-to-WR turnaround require 15 CK. The VLM request row illustrates this minimum timing window; the red segment exceeds the available gap by 1 CK. A write needs only 4 CK, so the exclusion applies to reads. Input preloading provides a 71.3-\textmu s window without PIM DQ traffic.}\label{fig:timeline}
-\end{figure*}
+\caption{Layer~0 of denoising step~0: (a) streaming input and (b) input preloading. The inset enlarges six native down-input WR bursts on channel~0. A VLM RD requires $11+2+2=15$ CK (turnaround, data, turnaround), exceeding the 14-CK gap (13.1 ns) by 1 CK (red). The request row illustrates minimum DQ timing; a WR requires only 4 CK.}\label{fig:timeline}
+\end{figure}

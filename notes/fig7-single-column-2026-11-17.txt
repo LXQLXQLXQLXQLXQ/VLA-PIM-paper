@@ -1,0 +1,40 @@
+2026-11-17 — Figure 7: single column, larger white text, stage alignment
+
+Changed the LaTeX float from figure* to figure with columnwidth graphics.
+The plotting canvas is 3.5 x 2.15 inches, designed at single-column scale.
+The cropped vector PDF is 252.666 x 137.756 pt. The compact caption
+retains native trace scope, the 14 CK / 13.1 ns gap, the 11+2+2 CK
+read requirement, the 1 CK overrun, and the 4 CK write distinction.
+
+All 12 blue-stage labels increase from 6.1 to 7.5 pt (23%). Narrow
+stage labels rotate vertically; gate/up wraps over two lines. The taller
+blue lanes make the larger text readable without changing stage durations.
+The panel-(b) title omits the redundant VLA-PIM name but retains (e).
+
+The right native DQ row still matches panel (a)'s DQ center and height.
+The VLM Request row now matches panel (b)'s blue PIM stages center and
+height, replacing the previous alignment to panel (b)'s DQ row.
+Both alignments are derived from the actual axes transforms. Render
+inspection verified center/height differences below 1e-8 display pixels.
+
+The narrow native WR blocks retain their widths and gaps. Their shared
+DQ (WR) label replaces individual tiny WR labels. Request timing components
+are grouped into the two-line inequality so the adjacent 2 CK labels do
+not collide at single-column scale. No horizontal axes, channel suffix,
+gray overview bands, colored text annotations, or legend are added.
+The orange locator and dashed connector remain.
+
+The six native down-input bursts and experiment data are unchanged;
+the request row is still a minimum-timing illustration, not a GPU trace.
+
+Validation: standalone figure and manuscript page 6 visually reviewed.
+Two pdfLaTeX passes succeeded: 8 pages, 6 figures, 2 tables; no overfull
+boxes, missing characters, undefined references, or duplicate labels.
+The isolated build starts from 3924533 plus this figure-only revision.
+Manuscript body and Figure 10 are unchanged.
+
+Reproduction:
+  python3 figures/plot-timeline-rates.py --figure timeline
+
+Pre-edit backup relative to the parent PIM_for_VLA workspace:
+  essay/backups/Fig7_single_column_before_20261117_3924533.tar.gz
