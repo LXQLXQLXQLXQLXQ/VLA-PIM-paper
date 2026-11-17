@@ -34,35 +34,14 @@ Existing LPDDR-PIM designs stream inputs from the host, leaving the DQ bus inter
 % SOURCE-EN: 113
 Let $X,Y,Z\in\{\mathrm{RD},\mathrm{WR}\}$ denote the types of the preceding PIM access, the interleaved GPU access, and the subsequent PIM access, respectively. The minimum DQ gap required to interleave a single GPU access between two adjacent PIM data bursts is calculated as:
 % END-SOURCE-EN: 113
-% SOURCE-EN: 114
+% USER-FORMAT: SOURCE-EN 114--122; keep the equation on one line and
+% move the read/write latency definitions into the following paragraph.
 \begin{equation}
-% END-SOURCE-EN: 114
-% SOURCE-EN: 115
-\begin{aligned}
-% END-SOURCE-EN: 115
-% SOURCE-EN: 116
-t_{X-Y-Z}
-% END-SOURCE-EN: 116
-% SOURCE-EN: 117
-&= t_{XY}+t_{YZ}+L_Z-L_X-\frac{BL}{n_{\min}},\\
-% END-SOURCE-EN: 117
-% SOURCE-EN: 118
-L_{\mathrm{RD}}
-% END-SOURCE-EN: 118
-% SOURCE-EN: 119
-&= RL,\qquad L_{\mathrm{WR}}=WL,
-% END-SOURCE-EN: 119
-% SOURCE-EN: 120
-\end{aligned}
-% END-SOURCE-EN: 120
-% SOURCE-EN: 121
+t_{X-Y-Z}=t_{XY}+t_{YZ}+L_Z-L_X-\frac{BL}{n_{\min}},
 \label{eq:pim-gpu-pim-gap}
-% END-SOURCE-EN: 121
-% SOURCE-EN: 122
 \end{equation}
-% END-SOURCE-EN: 122
-% SOURCE-EN: 123
-where $t_{XY}$ is the minimum cross-rank command interval for $X\rightarrow Y$ in clock cycles (CK). Under our LPDDR5X-8533 configuration ($RL=23$, $WL=12$, $BL/n_{\min}=2$), we analyze two scenarios:
+% SOURCE-EN: 123; latency definitions moved here from the display above.
+where $L_{\mathrm{RD}}=RL$, $L_{\mathrm{WR}}=WL$, and $t_{XY}$ is the minimum cross-rank command interval for $X\rightarrow Y$ in clock cycles (CK). Under our LPDDR5X-8533 configuration ($RL=23$, $WL=12$, $BL/n_{\min}=2$), we analyze two scenarios:
 % END-SOURCE-EN: 123
 
 % SOURCE-EN: 124
@@ -76,10 +55,23 @@ where $t_{XY}$ is the minimum cross-rank command interval for $X\rightarrow Y$ i
 % SOURCE-EN: 126
 \item \textbf{The target rank requires WCK resynchronization:} The target rank must first be resynchronized via a CAS(\texttt{WS\_RD}/\texttt{WS\_WR}) command. In this case, $t_{XY}$ is jointly determined by the completion time of the preceding transfer, the WCK postamble, and the synchronization preparation time:
 % END-SOURCE-EN: 126
+\end{itemize}
 
 % SOURCE-EN: 127
-\begin{equation} \begin{aligned} t_{XY} ={}& L_X+\frac{BL}{n_{\max}}\\ &+\left\lceil \frac{t_{\mathrm{WCKPST}}-0.5t_{\mathrm{WCK}}} {t_{\mathrm{CK}}} \right\rceil -\frac{t_{\mathrm{WCKENL},Y}}{t_{\mathrm{CK}}}+1, \end{aligned} \label{eq:rank-resync-command-gap} \end{equation}
-where $t_{\mathrm{WCKPST}}$ represents the WCK postamble, $t_{\mathrm{WCKENL},Y}$ denotes the synchronization preparation latency for the corresponding read or write operation, and the trailing $1\,\mathrm{CK}$ accounts for the interval between the CAS synchronization command and the immediately following RD/WR command. Under this scenario, $t_{X-Y-Z}$ significantly increases to $24\text{--}40\,\mathrm{CK}$. \end{itemize}
+% USER-FORMAT: compact fractions and local spacing keep the full equation
+% on one line within the IEEE column, including its equation number.
+\begingroup
+\small
+\medmuskip=2mu
+\thickmuskip=3mu
+\begin{equation}
+t_{XY}=L_X+\tfrac{BL}{n_{\max}}
++\left\lceil\tfrac{t_{\mathrm{WCKPST}}-0.5t_{\mathrm{WCK}}}{t_{\mathrm{CK}}}\right\rceil
+-\tfrac{t_{\mathrm{WCKENL},Y}}{t_{\mathrm{CK}}}+1,
+\label{eq:rank-resync-command-gap}
+\end{equation}
+\endgroup
+where $t_{\mathrm{WCKPST}}$ represents the WCK postamble, $t_{\mathrm{WCKENL},Y}$ denotes the synchronization preparation latency for the corresponding read or write operation, and the trailing $1\,\mathrm{CK}$ accounts for the interval between the CAS synchronization command and the immediately following RD/WR command. Under this scenario, $t_{X-Y-Z}$ significantly increases to $24\text{--}40\,\mathrm{CK}$.
 % END-SOURCE-EN: 127
 
 % SOURCE-EN: 128

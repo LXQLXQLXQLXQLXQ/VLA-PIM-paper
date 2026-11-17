@@ -14,7 +14,7 @@
       "passes_after_final_edits": 2,
       "exit_code_each": 0,
       "overfull_boxes": 0,
-      "underfull_boxes": 8,
+      "underfull_boxes": 5,
       "missing_characters": 0,
       "undefined_references": false,
       "duplicate_labels": false
@@ -137,7 +137,7 @@
   "tables": 2,
   "template_class_unchanged": true,
   "visual_review": "Figure 7 inspected standalone and on page 7: compact overviews at left, boxed down input linked to a right inset, six native WR bursts, a 14 CK gap, and a 15 CK GPU RD timing illustration with a red 1 CK overrun. No overlap or overview x axes. Figures 9/10 fit below. Input-preloaded equations (1) and (2) inspected on page 3: each formula and its number fit on a single line with no clipping or overlap.",
-  "pdf_sha256": "dd2751e621cbd03561b794bb61595b231864844a6c314af0dff2b36a0105dd0c",
+  "pdf_sha256": "d4781874e34c9ef16a409e1d4e9bd963b4325f386e9ff65ffe7e30aed1dd96c8",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
   "revision_notes": "notes/fig7-down-zoom-2026-11-17.txt",
