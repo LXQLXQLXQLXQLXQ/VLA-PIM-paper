@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "User-approved Table II and removal of Figure 6; strict source-English restoration from System Overview through Conclusion.",
+  "scope": "User-requested removal of Figure 8, two-Thor bars in Figure 10, and Figure 7 with AE GPU pauses and enlarged VLM details. Source English body retained.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -27,17 +27,30 @@
       "approved_table_matches_preview_byte_for_byte": true,
       "rendered_chinese_characters": 0,
       "previously_added_prose_removed": true
+    },
+    "figure_revision": {
+      "body_source_blocks_unchanged": 46,
+      "figure8_removed": true,
+      "figure7_vector_pdf": true,
+      "figure_previews_dpi": 600,
+      "retained_vlm_segments_have_zero_ae_gpu_overlap": true,
+      "full_trace_kernel_pause_checks_per_case": 1416,
+      "two_thor_ae_hz": 13.569792215067293,
+      "two_thor_vlm_hz": 14.969489181485573,
+      "new_two_device_measurement": false,
+      "experiment_data_modified": false
     }
   },
   "pages": 8,
-  "figures": 5,
+  "figures": 4,
   "tables": 4,
   "template_class_unchanged": true,
-  "visual_review": "All eight pages inspected; accepted Table II and its single-line RD Command note fit within the column; equations and figures have no clipping or overlap.",
+  "visual_review": "All eight rendered pages inspected. Figure 7 detail panels and Figure 10 four bar groups fit without clipping or overlap. Figure 8 is absent.",
   "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
-  "pdf_sha256": "1a8a0442e8b6a585f50f49d183bc42f0bb52b2c0e689eb1f02bc1dcf13b84a6a",
+  "pdf_sha256": "e050e8d54e6e1234e9563578f3d3ae21112427497b5e331cd42d2e6ee1551e0e",
   "source_docx_sha256": "af190463748a1c5a1b740904db90aa52687b253128832e4616040fe852225a35",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
-  "pre_edit_base_commit": "ef36c2c7f3c44e3a347bec9d306eb52068246fb1"
+  "pre_edit_base_commit": "79239f0b7cc86fb75531559467b44ddf219d88e6",
+  "figure_revision_notes": "notes/figure-revision-2026-11-17.txt"
 }

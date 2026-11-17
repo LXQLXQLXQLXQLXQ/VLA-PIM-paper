@@ -15,12 +15,12 @@ Thor/Ramulator 实验设置段因缺少原文英文，按用户指示暂移至 n
 - 系统概览（figures/system-overview.tex）；
 - 输入预装载微架构（figures/microarchitecture.tex）；
 - 单步执行时间线（figures/timeline.tex）；
-- DQ 空隙分布（figures/dq-gaps.tex）；
 - 解耦频率（figures/decoupled-rates.tex）。
 图 6 已按用户要求删除，RD 字段格式合入 Table II 的单行注释。
 Table II 采用已确认的 v3：BG/BA、Cmd.、Operation、Function 四列，RD/WR 指令逐行列出。
-表格和章节自动编号；图片保留 4、5、7、8、10 的编号，共五张图、四张表。
+表格和章节自动编号；图片保留 4、5、7、10 的编号，共四张图、四张表。
 
 原英文版备份：backup/english-2026-11-16-7e7442d 分支。
-本次修改前的完整源码归档位置见 notes/methodology-sync-2026-11-17.txt。
+本次图表修改前另有 79239f0 源码归档，见 notes/figure-revision-2026-11-17.txt。
+图 7、图 10 的矢量 PDF 与 600 dpi PNG 可用 figures/plot-timeline-rates.py 从已提交快照重绘。
 Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然后重新编译。

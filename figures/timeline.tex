@@ -2,5 +2,5 @@
 \centering
 \includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
 \setcounter{figure}{6}
-\caption{Execution timeline of layer~0 in denoising step~0 (physical channel~0). (a) Streaming input: PIM DQ bursts are scattered throughout QKV, O, Gate/Up, and Down computation. (b) Input preloading (\sys{}): PIM DQ transfers are concentrated in 7 I/O epochs (gray), and the DQ bus is available to the GPU at all other times. VLM kernels run across multiple PIM phases; AE nonlinear operators are inserted at phase boundaries.}\label{fig:timeline}
+\caption{Execution timeline of layer~0 in denoising step~0 (physical channel~0). (a) Streaming input. (b) Input preloading (\sys{}), with PIM DQ transfers concentrated in 7 I/O epochs (gray). White gaps in the VLM row mark AE GPU execution; alternating green shades distinguish consecutive kernels. (c), (d) Enlarged VLM intervals from 150 to 210~$\mu$s in (a), (b), respectively.}\label{fig:timeline}
 \end{figure*}

@@ -1,0 +1,55 @@
+2026-11-17 — Figures 7, 8, and 10
+
+User-requested changes:
+- Figure 8 is removed from the compiled manuscript. Its historical data and
+  plotting assets remain available, but no Figure 8 environment is included.
+- Figure 10 now includes a two-Thor bar group: one Thor for VLM, one for AE.
+  It uses the same measured standalone rates as the former horizontal lines:
+  AE 13.569792215067293 Hz, VLM 14.969489181485573 Hz. No new paired two-device
+  hardware measurement is claimed. The other three groups retain their values.
+- Figure 7 removes the AE nonlinear row. VLM kernel intervals are split at
+  the recorded AE GPU execution intervals, and 150–210 us details are added.
+  The figure is a vector PDF, with a 600 dpi PNG preview. Alternating green
+  shades distinguish consecutive kernel IDs; they do not encode throughput.
+
+Why the old VLM bars appeared to overlap AE GPU execution:
+The old plot in essay/figures/plot_paper_figures.py painted the full wall-clock
+interval [kernel.start_us, kernel.end_us] as a continuous bar, even when that
+interval included paused_us. This was a plotting error, not evidence that
+AE and VLM GPU execution overlapped in the simulation.
+
+Checked native scheduling behavior:
+experiments/2026-11-16/source/ramulator2/src/ramulator/frontend/impl/pim_vla_frontend.cpp
+- When AE needs the GPU, VLM moves from running to draining at a checkpoint.
+- Accepted memory requests drain before the state changes to paused.
+- AE GPU work starts only when there is no active VLM kernel or VLM is paused.
+- VLM resumes after AE GPU work; pause duration is accumulated in paused_us.
+Both cases use vlm_gpu_quantum_us = 2. This is a modeled yield boundary, not
+an independently measured Thor preemption mechanism or measured handoff cost.
+
+Data checks across each full 18-layer x 10-step trace:
+- combined-e: all 1416 kernels checked; 814 yields, summed recorded pause
+  8896.131762 us; 7340.024468 us of AE GPU time intersects kernel lifetimes.
+- combined-g: all 1416 kernels checked; 681 yields, summed recorded pause
+  7937.615826 us; 6799.075178 us of AE GPU time intersects kernel lifetimes.
+For every kernel, its recorded pause covers all intersecting AE GPU time.
+The excess includes request-draining intervals. Some AE work occurs between
+VLM kernels and therefore does not belong to any kernel's paused_us.
+
+Figure 7 uses exact AE GPU event intervals to cut the VLM bars. The remaining
+colored portions include request draining; they are kernel service intervals,
+not a cycle-resolved SM activity trace. The original export does not include
+exact drain-start timestamps, so those timestamps are not invented.
+The renderer asserts zero AE GPU overlap in every retained VLM segment.
+
+Reproduction:
+python3 figures/plot-timeline-rates.py
+Snapshot: figures/data/timeline-rates-20261117.json
+The snapshot records original source hashes and retains native CK timestamps.
+No simulation, hardware measurement, or paper performance value was changed.
+English body paragraphs from System Overview onward are preserved; only the
+Figure 8 input and the requested figure captions are edited.
+
+Pre-edit tracked source backup (relative to the parent PIM_for_VLA workspace):
+essay/backups/Fig7_Fig8_Fig10_before_20261117_79239f0.tar.gz
+SHA256: 15104c07dd4ac9d48793e2c0d97a9a9e0012fe4a70d3c544e7740357f3c6cdac
