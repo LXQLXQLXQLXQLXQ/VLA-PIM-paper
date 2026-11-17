@@ -16,7 +16,7 @@ from matplotlib.patches import Patch, Rectangle, ConnectionPatch
 
 BLUE, ORANGE = '#2a78d6', '#eb6834'
 GREENS = ('#1baf7a', '#12734f')
-INK, GRID, EPOCH = '#52514e', '#e6e5e1', '#deddd9'
+INK, GRID = '#52514e', '#e6e5e1'
 
 
 def save(fig, out, name):
@@ -27,8 +27,8 @@ def save(fig, out, name):
 
 def timeline(data, out, detail):
     tick = data['clock_ps'] / 1e6
-    fig = plt.figure(figsize=(7.2, 2.50))
-    grid = fig.add_gridspec(2, 2, width_ratios=(1.65, 1), hspace=0.52, wspace=0.27)
+    fig = plt.figure(figsize=(7.2, 1.95))
+    grid = fig.add_gridspec(2, 2, width_ratios=(1.65, 1), hspace=0.35, wspace=0.27)
     example = detail['zoom']
     selected_start = example['left']['end_ck']
     selected_end = example['right']['start_ck']
@@ -39,8 +39,6 @@ def timeline(data, out, detail):
         ax = fig.add_subplot(grid[index, 0])
         overview.append(ax)
         us = lambda ck: (ck-case['lo_ck']) * tick
-        for start, end in case['io_epochs_ck']:
-            ax.axvspan(us(start), us(end), color=EPOCH, lw=0, zorder=0)
         for e in case['events']:
             if e['kind'] != 'pim':
                 continue
@@ -137,9 +135,7 @@ def timeline(data, out, detail):
         xyB=(0, 0.69), coordsA=overview[0].transData, coordsB=zoom.transAxes,
         axesA=overview[0], axesB=zoom, color=ORANGE, lw=0.8,
         arrowstyle='->', shrinkA=2, shrinkB=2))
-    fig.legend(handles=[Patch(facecolor=EPOCH, label='I/O epoch (DQ owned by PIM)')],
-               loc='upper left', bbox_to_anchor=(0.12, 1.01), fontsize=6.6)
-    fig.subplots_adjust(left=0.12, right=0.99, top=0.83, bottom=0.16)
+    fig.subplots_adjust(left=0.12, right=0.99, top=0.92, bottom=0.17)
     save(fig, out, 'fig7_step_timeline')
 
 

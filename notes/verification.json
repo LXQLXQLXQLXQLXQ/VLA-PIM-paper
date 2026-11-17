@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Single-line equation follow-up: equations (1), (2), and (3) each fit on one line with their equation numbers; equation (3) combines the original cycle and reciprocal-rate relations into an equivalent chained equality.",
+  "scope": "Figure 7: remove the light-gray I/O-epoch bands and legend; compress the figure vertically by 19.5% at identical width.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -99,7 +99,14 @@
       "native_bursts_match_overview": true,
       "experiment_modified": false,
       "manuscript_body_modified_by_this_revision": false,
-      "figure10_modified_by_this_revision": false
+      "figure10_modified_by_this_revision": false,
+      "io_epoch_background_bands": false,
+      "legend": false,
+      "figure_width_pt": 509.112,
+      "previous_figure_height_pt": 175.069,
+      "figure_height_pt": 140.888,
+      "height_reduction_pct": 19.5,
+      "font_sizes_unchanged": true
     },
     "memory_timing_note": {
       "removed_table": "tab:sim-params",
@@ -145,13 +152,13 @@
   "figures": 6,
   "tables": 2,
   "template_class_unchanged": true,
-  "visual_review": "Figure 7 inspected standalone and on page 7: compact overviews at left, boxed down input linked to a right inset, six native WR bursts, a 14 CK gap, and a 15 CK GPU RD timing illustration with a red 1 CK overrun. No overlap or overview x axes. Figures 9/10 fit below. Input-preloaded equations (1) and (2) inspected on page 3: each formula and its number fit on a single line with no clipping or overlap. Equation (3) inspected on page 6: cycle and reciprocal-rate relations form one chained equality at the normal font size; the equation number stays on the same line with no clipping or overlap.",
-  "pdf_sha256": "9402f4ff0f6b1f4ec09934aef11fd9813f4bb5e5198baf095de7c7e17f73cd67",
+  "visual_review": "Figure 7 reviewed standalone and on manuscript page 7: gray bands and legend removed; figure height reduced 19.5% at unchanged width/font sizes; compact overview spacing and clear native down-input inset with 14 CK gap and 1 CK read-window overrun. Figures 9/10 fit below.",
+  "pdf_sha256": "044179bc603b8cd296a0a7b50203d938ac043a21a9354d8593b0eba0db462179",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
-  "revision_notes": "notes/fig7-down-zoom-2026-11-17.txt",
+  "revision_notes": "notes/fig7-compact-2026-11-17.txt",
   "previous_figure_revision_notes": "notes/figure-revision-2026-11-17.txt",
-  "previous_verification_archive": "../essay/backups/Fig7_down_zoom_before_20261117_b61c320.tar.gz:notes/verification.json",
+  "previous_verification_archive": "../essay/backups/Fig7_no_gray_compact_before_20261117_817d5b9.tar.gz:notes/verification.json",
   "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
-  "previous_revision_notes": "notes/memory-timing-revision-2026-11-17.txt"
+  "previous_revision_notes": "notes/fig7-down-zoom-2026-11-17.txt"
 }

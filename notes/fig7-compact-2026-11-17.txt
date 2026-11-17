@@ -1,0 +1,26 @@
+2026-11-17 — Figure 7: remove gray bands and legend; compress vertically
+
+Removed light-gray I/O-epoch background bands from both left overviews
+and removed their legend. Removed the obsolete gray-band caption clause.
+The orange inset gap highlight and native dark DQ bursts remain.
+
+Reduced figure canvas height from 2.50 to 1.95 inches, reduced inter-panel
+spacing from 0.52 to 0.35, and reclaimed the former legend space.
+At identical 509.112 pt PDF width, the cropped figure height decreases
+from 175.069 to 140.888 pt (19.5%). Font sizes remain unchanged.
+The down-input locator, six native WR bursts, 14 CK gap, and GPU RD
+timing window with its 1 CK overrun retain the previous data and geometry.
+The left overview panels still have no horizontal ticks or labels.
+
+Vector PDF and 600 dpi PNG reviewed standalone and on manuscript page 7.
+Two pdfLaTeX passes succeeded: 8 pages, 6 figures, 2 tables, no overfull
+boxes, missing characters, undefined references, or duplicate labels.
+Build starts from 817d5b9 plus this figure-only revision. Manuscript body,
+Figure 10, experiment data, and frozen trace snapshots are unchanged.
+
+Reproduction:
+  python3 figures/plot-timeline-rates.py --figure timeline
+
+Pre-edit backup relative to the parent PIM_for_VLA workspace:
+  essay/backups/Fig7_no_gray_compact_before_20261117_817d5b9.tar.gz
+This updates the layout described in fig7-down-zoom-2026-11-17.txt.
