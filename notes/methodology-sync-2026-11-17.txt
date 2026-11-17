@@ -1,47 +1,45 @@
 Source: Google Docs, Methodology 翻译
-https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit
+https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit?tab=t.0
 Read date: 2026-11-17
-Scope: English paragraphs in tab t.0, Architecture Design through Conclusion.
+Scope: Original English body paragraphs from System Overview through Conclusion.
 
-Motivation: user-authored English version from Overleaf commit 05a7804.
-Only its hard-coded performance table number is converted to a cross-reference.
-Abstract, Introduction, and anonymous author block are preserved.
+The final manuscript restores the source English, including the C/A paragraph,
+DQ-gap discussion, loading steps, performance wording, and conclusion. Previous
+rewrites and added replay/measurement explanations have been removed.
+English was copied from the source, not translated from its parallel Chinese.
 
-Native Google Docs equations were recovered from the DOCX export's OMML,
-including X/Y/Z, RL/WL, the 4--14 CK and 24--40 CK ranges, M, x_t,
-buffer sizes, the 10x density factor, frequencies, and speedups.
-Broken pasted LaTeX line breaks and async_VLA notation were repaired.
-The two inline wording notes were applied: "satisfy" and "returned".
-Chinese parallel text, private-use formatting markers, and editorial notes
-were not inserted into the manuscript. See editorial-checklist.txt for
-source claims that still require author verification.
+Native Google Docs equations were recovered from DOCX OMML. Permitted conversions
+are limited to LaTeX syntax, math rendering, whitespace, unit spacing, dash glyphs,
+and cross-references. Two malformed pasted equation line breaks and the escaped
+underscore in async_VLA were repaired. The two inline Chinese editorial notes
+were removed while preserving the adjacent English words. Source TBD markers
+remain verbatim. The audit maps 46 source blocks to their LaTeX representations.
+English source headings are retained where supplied; existing English headings
+are retained where the source supplies only a Chinese heading.
 
-Figures 4 and 6 are new vector schematics based on the supplied architecture
-and field-reuse description. Figure 6 is logical, not a pin/cycle encoding.
-Figures 5, 7 and 10 retain the supplied artwork/data with English captions.
-Figure 8 retains the interval histogram statistics, removes the universal
-15 CK admission marker, and distinguishes its stage-edge-inclusive bins
-from the strict-adjacency 50.6% test. The committed data snapshot and plotting
-script reproduce its PDF/PNG without external experiment files.
+Motivation remains the user's English from Overleaf commit 05a7804. Abstract,
+Introduction, anonymous author block, and IEEEtran.cls are unchanged by this edit.
 
-DQ admission provenance:
-experiments/2026-11-17-gap-admission/results.json
-Strict adjacency: 1,257,657 positive intervals; 636,282 fit neither direction.
-The PIM timestamps are fixed. GPU transfers can already occur in these gaps;
-the count fraction does not measure GPU-unavailable time.
+Approved changes outside the source-English transcription:
+- Table II uses the user's accepted v3 preview: separate Operation and Function
+  columns, RD/WR instructions as rows, concise descriptions for all WR entries.
+- Figure 6 is removed. Its RD format is now a single-line Table II note:
+  RD Command: RD16 | BG[1:0] | BA[1:0] | Column Address C[5:0] | AP
+- The source has no English counterpart for the Thor/Ramulator setup paragraph.
+  Per user instruction, it is temporarily excluded from the manuscript and kept
+  in notes/experimental-setup-awaiting-english.txt, together with the Chinese source.
 
-C/A provenance:
-experiments/2026-11-16-ca-replay/README.md and results/summary.csv
-step 0/layer 0: occupancy 13.5096%, replay latency increase 0.50993%.
-step 9/layer 17: occupancy 13.4986%, replay latency increase 0.51067%.
-Each slice is repeated 180 times. These are controlled replay increments,
-not replacements for the main full-workload performance results.
+Figures 4, 5, 7, 8, and 10 remain. Existing artwork/data and table values are
+retained. Added explanatory extensions in the DQ-gap and decoupled-rate captions
+were removed along with the corresponding unsourced body additions.
+The configurations table remains a legacy supplement outside the compiled paper.
 
-All four tables retain the existing numeric values. Performance now uses
-T_async_VLA to match the source's cycle definition. The configurations file
-remains available as a legacy supplement and is not added as a fifth table.
+RD field verification: JEDEC JESD209-5C, Table 201 (printed page 190, PDF page 228),
+BG-mode RD16 uses BG[1:0], BA[1:0], C[5:0], and AP. The note is a logical field list.
+Accepted preview and verification record:
+essay/reviews/fig6-table2-20261117-163217/v3/
 
-Primary sources for the three citation keys introduced by Motivation:
-micron_lpddr: https://www.micron.com/products/memory/lpddr-components/lpddr5x
-neupims: https://arxiv.org/abs/2403.00579
-lp_spec: https://arxiv.org/abs/2508.07227
+Pre-edit tracked source backup (base ef36c2c):
+essay/backups/Fig6_TableII_before_20261117-163217_ef36c2c.tar.gz
+SHA256: e9a97fb805e9446d81934af19369c8cbc226b724e3b935409a9ea2ca7256f7dd
+The essay paths are relative to the parent PIM_for_VLA workspace.

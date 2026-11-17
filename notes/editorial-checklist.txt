@@ -1,15 +1,15 @@
-2026-11-17：全英文正文，Motivation 合入用户的 Overleaf 提交 05a7804；Methodology 至结论同步自 Google Docs。
+2026-11-17：按用户要求从 System Overview 起严格采用 Google Docs 中已有英文。
 
-已处理：
-- C/A 段改为采样回放口径：约 13.5% 利用率、约 0.51% 延迟增量，注明适用范围。
-- DQ 段改为按实际读写方向检验：严格相邻正长度间隔中约 50.6% 不能容纳读或写。
-- DQ 图移除统一 15 CK 门限标记；补齐英文图注与四张英文表格。
-- 新增图 4 系统概览和图 6 逻辑命令字段复用示意，未推测 JEDEC 的引脚/周期编码。
-- Motivation 的性能表引用改为交叉引用；补齐 micron_lpddr、neupims、lp_spec 的书目条目。
+已落实：
+- 恢复 C/A、DQ、装载步骤、性能与结论的英文原句，删除自行改写和额外补充。
+- Table II 采用确认过的 v3：Operation 只列名称，Function 单列功能，WR 三条指令均有描述。
+- 删除图 6，RD Command 字段列表仅保留在 Table II 的一行注释中。
+- Thor/Ramulator 实验设置段缺少英文，按用户指示暂移出正文，完整保存在备注文件。
+- Motivation 沿用用户的 Overleaf 英文提交 05a7804。
 
-原稿仍待作者完善：
-- 面积 M11 数值、Samsung 规格和完整来源、动作微调算法引文。
-- Motivation 提及的图 1 尚未提供。图号 9 沿用原稿的空缺，没有补造数据图。
-- 摘要/Introduction 的带宽保持率 92.1% 与旧评估的 92.2% 尚待统一，本次未改写前文。
-- Google Docs 的保持 WCK 同步间隔范围写为 4--14 CK，本次按原文保留；现有 direction-aware 轨迹分析脚本的部分组合需要 15 CK。这一范围需作者再次核对，50.6% 统计使用现有脚本的逐方向判断结果。
-- ASAP7、10 倍面积折算和 Micron 型号来自所提供英文稿，本次仅同步文字，未新增综合或器件验证。
+保留的作者待补项（本次不自行补写）：
+- 原文面积占位符 [TBD-M11: Area Value]。
+- 原文动作微调算法占位符 [TBD: Cite action fine-tuning algorithms]。
+- Table I 中已有的 Samsung 规格待核项。
+- Thor/Ramulator 实验设置段待提供英文后恢复。
+- Motivation 提及的图 1 尚未提供；图号 9 的原有空缺保留。

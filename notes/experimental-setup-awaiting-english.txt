@@ -1,0 +1,20 @@
+2026-11-17 — Deferred experimental-setup paragraph
+
+Per user instruction, this paragraph is temporarily excluded from the manuscript.
+The supplied Google Doc has Chinese only at DOCX body paragraphs 218–226;
+there is no corresponding approved English paragraph.
+The area-method paragraphs do have source English and remain in the manuscript.
+
+Original source Chinese (not included in the PDF):
+我们采用“Thor 实测校准VLM 访存模型+ Ramulator2
+周期精确仿真PIM”的评估方法。GPU 侧，在NVIDIA
+Thor 上用OpenPI 的PyTorch 实现实测0:5（MHA8 配
+置，BF16，batch=1，动作块长度H=16，10 个去噪步，3
+路相机加200 个文本token），得到VLM 各kernel 的时长
+与读写字节，以及AE 非线性算子的时长。PIM 侧，基
+于Ramulator2 构建周期精确仿真器，在同一个内存控
+制器中同时模拟VLM 访存与PIM 命令；DRAM 时序取
+自JEDEC JESD209-5C 的LPDDR5X-8533 速档[待引用]。
+
+Previous English draft, retained only for reference (not source-approved):
+We calibrate a VLM memory-access model with measurements on NVIDIA Thor and simulate the PIM cycle-accurately in Ramulator2~\cite{ramulator2}. On the GPU side, we run $\pi_{0.5}$~\cite{pi05} on Thor with the PyTorch implementation of OpenPI~\cite{openpi} (MHA8 configuration, BF16, batch size~1, action chunk length $H=16$, 10 denoising steps, 3 camera views plus 200 text tokens). From these runs we obtain the duration and the bytes read and written of each VLM kernel, as well as the durations of the nonlinear operators of the AE. On the PIM side, we build a cycle-accurate simulator on Ramulator2 that models the VLM memory accesses and the PIM commands in the same memory controller. DRAM timing follows the LPDDR5X-8533 speed bin of JEDEC JESD209-5C~\cite{jedec_lpddr5}. Table~\ref{tab:sim-params} lists the main simulation parameters.

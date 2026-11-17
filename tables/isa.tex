@@ -1,23 +1,32 @@
-% Existing data retained; English captions and references synchronized with the 2026-11-17 source.
+% Local proposal v3; opcode assignments are unchanged.
 \begin{table}[!t]
 \caption{BG/BA Opcodes of RD/WR in PIM Mode}
 \label{tab:isa}
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}c>{\raggedright\arraybackslash}p{0.56\columnwidth}>{\raggedright\arraybackslash}p{0.27\columnwidth}@{}}
+\setlength{\tabcolsep}{2.5pt}
+\renewcommand{\arraystretch}{0.82}
+\setlength{\aboverulesep}{1pt}
+\setlength{\belowrulesep}{1pt}
+\begin{tabularx}{\columnwidth}{@{}ccl>{\raggedright\arraybackslash}X@{}}
 \toprule
-\textbf{BG/BA} & \textbf{RD} & \textbf{WR} \\
+\textbf{BG/BA} & \textbf{Cmd.} & \textbf{Operation} & \textbf{Function} \\
 \midrule
-0000 & \texttt{MAC}: accumulate into current accumulator & \texttt{WB\_ACC} \\
-0001 & \texttt{MAC\_INIT}: overwrite accumulator & \texttt{WB\_MAC} (bypass, reserved) \\
-0010 & \texttt{MAC\_RED} (multi-MAC reduction, reserved) & Reserved \\
-0011 & \texttt{MAC\_INIT\_RED}: single-MAC dot product with reduction & \texttt{WB\_OBUF}: Output Buffer write-back \\
-0100 & \texttt{MAC\_INIT\_RED}, BF16 lanes 0--7 of K & Reserved \\
-0101 & \texttt{MAC\_INIT\_RED}, BF16 lanes 8--15 of K & Reserved \\
-0110 & \texttt{RD\_ROPE}: load sin/cos coefficient column into RoPE registers & Reserved \\
-0111 & \texttt{RD\_ROPE\_Q}: load Q vector and rotate & Reserved \\
-1000 & \texttt{RD\_ROPE\_K}: load K vector and rotate & Reserved \\
+0000 & RD & \texttt{MAC} & Accumulate MAC result \\
+0001 & RD & \texttt{MAC\_INIT} & Initialize accumulator \\
+0010 & RD & \texttt{MAC\_RED} & Multi-MAC reduction (reserved) \\
+0011 & RD & \texttt{MAC\_INIT\_RED} & Single-MAC dot product + reduction \\
+0100 & RD & \texttt{MAC\_INIT\_RED} & Dot/reduce; K BF16 lanes 0--7 \\
+0101 & RD & \texttt{MAC\_INIT\_RED} & Dot/reduce; K BF16 lanes 8--15 \\
+0110 & RD & \texttt{RD\_ROPE} & Load sin/cos into RoPE registers \\
+0111 & RD & \texttt{RD\_ROPE\_Q} & Load and rotate Q \\
+1000 & RD & \texttt{RD\_ROPE\_K} & Load and rotate K \\
+\midrule
+0000 & WR & \texttt{WB\_ACC} & Store accumulator to DRAM \\
+0001 & WR & \texttt{WB\_MAC} & MAC bypass to DRAM (reserved) \\
+0011 & WR & \texttt{WB\_OBUF} & Store output buffer to DRAM \\
 \bottomrule
-\end{tabular}
+\end{tabularx}
+\par\smallskip
+\parbox{\columnwidth}{\scriptsize\mbox{\textit{RD Command:} \texttt{RD16}\,|\,\texttt{BG[1:0]}\,|\,\texttt{BA[1:0]}\,|\,Column Address \texttt{C[5:0]}\,|\,\texttt{AP}}}
 \end{table}

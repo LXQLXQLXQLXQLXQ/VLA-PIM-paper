@@ -1,8 +1,12 @@
-% Source: Google Docs "Methodology 翻译", 2026-11-17; English paragraphs.
+% Source: Google Docs "Methodology 翻译", 2026-11-17; original English, formatting conversion only.
 
 \section{Conclusion}
 \label{sec:conclusion}
 
+% SOURCE-EN: 288
 This paper proposes \sys{}, a novel architecture that enables the concurrent execution of VLM memory accesses (on the GPU) and AE computations (on the PIM) within edge LPDDR memory systems. By employing rank-level partitioning, \sys{} completely preserves the full channel capacity for serving GPU data requests. Furthermore, the DQ-aware token-wise data layout and the in-bank RoPE mechanism jointly reduce the AE's per-layer DQ traffic by $14.3\%$. To orchestrate this, the input-preloaded dataflow and kernel-granularity co-scheduling consolidate the remaining data transfers, enabling the GPU to sustain high bandwidth during the PIM computation phase.
+% END-SOURCE-EN: 288
 
-Ultimately, this design paradigm elevates the objective of heterogeneous execution, shifting the goal from merely accelerating the AE in isolation to achieving highly efficient execution overlap while sustaining continuous GPU memory services. Validated through measurements on the NVIDIA Thor and cycle-accurate Ramulator simulations, \sys{} achieves an AE inference frequency of $1.82\times$ and $1.76\times$ those of the serial Thor execution and the dual-stream GPU baseline, respectively.
+% SOURCE-EN: 289
+Ultimately, this design paradigm elevates the objective of heterogeneous execution, shifting the goal from merely accelerating the AE in isolation to achieving highly efficient execution overlap while sustaining continuous GPU memory services. Validated through measurements on the NVIDIA Thor and cycle-accurate Ramulator simulations, \sys{} achieves an AE inference frequency $1.82\times$ and $1.76\times$ higher than the serial Thor execution and the dual-stream GPU baseline, respectively.
+% END-SOURCE-EN: 289

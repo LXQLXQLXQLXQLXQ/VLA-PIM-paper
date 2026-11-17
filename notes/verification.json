@@ -1,12 +1,13 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Full English manuscript; Motivation from the user push; Methodology through Conclusion and figures/tables from the supplied Google Doc.",
+  "scope": "User-approved Table II and removal of Figure 6; strict source-English restoration from System Overview through Conclusion.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
     "revision_id": "AHj4eMTwOQNaQAbrMlnLFG-tQMjnAziOiw9ULc5G3Zjj7vHsMmiSt21ClmWVI8v6BtKPwU-Ijqnx4x618tGV8tFIJdE19Q1YSQ4RBPTq-7s",
-    "motivation_upstream_commit": "05a7804"
+    "motivation_upstream_commit": "05a7804",
+    "source_word_document_xml_sha256": "bd14f8cbbea0e6a4128d9b3f1121fc3b6a3a5ab6b8ae634e76ecd5f5068d2eb3"
   },
   "validation": {
     "pdfLaTeX": {
@@ -14,19 +15,29 @@
       "passes_after_final_edits": 2,
       "exit_code_each": 0,
       "overfull_boxes": 0,
-      "underfull_boxes": 5,
+      "underfull_boxes": 7,
       "missing_characters": 0,
       "undefined_references": false,
       "rendered_chinese_characters": 0
+    },
+    "source_english_audit": {
+      "mapped_blocks": 46,
+      "original_english_prose_matches_after_declared_formatting_conversions": true,
+      "unmapped_body_prose": 0,
+      "approved_table_matches_preview_byte_for_byte": true,
+      "rendered_chinese_characters": 0,
+      "previously_added_prose_removed": true
     }
   },
-  "pages": 9,
-  "figures": 6,
+  "pages": 8,
+  "figures": 5,
   "tables": 4,
   "template_class_unchanged": true,
-  "visual_review": "All rendered pages inspected; system overview, command fields, tables and data plots fit without clipping or overlap.",
+  "visual_review": "All eight pages inspected; accepted Table II and its single-line RD Command note fit within the column; equations and figures have no clipping or overlap.",
   "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
-  "pdf_sha256": "df49e404c5930acbd29b74003be5357fdc48134c9cce4f3e803958d38d6d3cf7",
-  "source_docx_sha256": "33f0d75a9d39552e24bda2d0b3fd65f581e57bbf885234139fc464dfa5884a1a",
-  "remaining_author_items": "See notes/editorial-checklist.txt."
+  "pdf_sha256": "1a8a0442e8b6a585f50f49d183bc42f0bb52b2c0e689eb1f02bc1dcf13b84a6a",
+  "source_docx_sha256": "af190463748a1c5a1b740904db90aa52687b253128832e4616040fe852225a35",
+  "remaining_author_items": "See notes/editorial-checklist.txt.",
+  "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
+  "pre_edit_base_commit": "ef36c2c7f3c44e3a347bec9d306eb52068246fb1"
 }

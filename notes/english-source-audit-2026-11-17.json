@@ -1,0 +1,308 @@
+{
+  "source_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit?tab=t.0",
+  "source_docx_sha256": "af190463748a1c5a1b740904db90aa52687b253128832e4616040fe852225a35",
+  "source_word_document_xml_sha256": "bd14f8cbbea0e6a4128d9b3f1121fc3b6a3a5ab6b8ae634e76ecd5f5068d2eb3",
+  "scope": "All English body paragraphs from System Overview through Conclusion, including native equations and pasted LaTeX.",
+  "allowed_conversions": [
+    "OMML equations to LaTeX",
+    "VLA-PIM to the identical rendered system-name macro",
+    "Figure/Table/Section numbers to cross-references, retaining the source reference words",
+    "TeX escaping, dash glyphs, whitespace, unit spacing, and equation line wrapping",
+    "Repair two malformed pasted equation line breaks and escape async_VLA underscore",
+    "Remove two Chinese editorial notes and private-use formatting markers, retaining adjacent English"
+  ],
+  "body_prose_rewriting": false,
+  "source_heading_text_retained_where_available": true,
+  "existing_english_headings_retained_where_source_has_only_chinese": true,
+  "approved_exceptions": [
+    "User-approved Table II v3 with Operation and Function columns and one-line RD Command note",
+    "Figure 6 and its added sentence removed at user request",
+    "Thor/Ramulator setup paragraph deferred to notes at user request because source English is absent"
+  ],
+  "paragraphs": [
+    {
+      "docx_body_paragraph_zero_based": 5,
+      "source_with_recovered_math_sha256": "4c95a1a19467f64f0b4d97cb16aefdb7d2a1a9d08ab59c789dee14b0aee55092",
+      "latex_sha256": "8043def5e81a167e62df058289153ddc164f68f49c61cdb84efd87d664f5f441",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 23,
+      "source_with_recovered_math_sha256": "16d4dfef4b362bc3105802919a2888491c8ca533e2cbe6d0aff42d23ed9c0c5f",
+      "latex_sha256": "f91093c144c3308186a95c4b61d81f4ae662a98eb035129b4829ba9edc2ca839",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 46,
+      "source_with_recovered_math_sha256": "4bf0c62313c98ab6d716688138ca3d37e85ad9a890595b0bf3e22449c72faf07",
+      "latex_sha256": "ee08955de7893811840e0c20f6c4e1e36b58893f7177eb01075f69f405f0e313",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 47,
+      "source_with_recovered_math_sha256": "a7078bdcaa2815955a8117fea4c34e037c404bca8214d0ed3c14b370322dcf38",
+      "latex_sha256": "dd2ca3a5b2f125c0d00d8cb174836b3dc18ec9de30b0aea4c6817c8a8ed823d0",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 112,
+      "source_with_recovered_math_sha256": "4fcfe9d16728e23799cb9f354f4b9a02889bd731a3d9eee9163d958287645b6f",
+      "latex_sha256": "c13f0c6a254da91b388b801daf0e0d424d0983db190db356246696e5dabccbb5",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 113,
+      "source_with_recovered_math_sha256": "0640a6812b9fead4e69f13a0d8da9346db155bce3240e1ab2ceaee7a043a0266",
+      "latex_sha256": "0640a6812b9fead4e69f13a0d8da9346db155bce3240e1ab2ceaee7a043a0266",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 114,
+      "source_with_recovered_math_sha256": "bb66fb83595ecb94b263c13fa39189d04218b6fd95ed26ddcf7c54b224e28bc6",
+      "latex_sha256": "bb66fb83595ecb94b263c13fa39189d04218b6fd95ed26ddcf7c54b224e28bc6",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 115,
+      "source_with_recovered_math_sha256": "8570ab369189af5826174a2fe9e646cdcef26ad7f72f68a0195dde0589623c81",
+      "latex_sha256": "8570ab369189af5826174a2fe9e646cdcef26ad7f72f68a0195dde0589623c81",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 116,
+      "source_with_recovered_math_sha256": "42470fd6be795b1e0de846432b2a0e23ac6f78261c131e206221bf94a353a7c1",
+      "latex_sha256": "42470fd6be795b1e0de846432b2a0e23ac6f78261c131e206221bf94a353a7c1",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 117,
+      "source_with_recovered_math_sha256": "01b91ac7472cb3806ba327ead6e9fc3da638b9427354830bfc7c05cb37db95c2",
+      "latex_sha256": "e129f89a5fd11e86e4bfb88bebbff016f8bae52772aff422d0185cb496fe5c67",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 118,
+      "source_with_recovered_math_sha256": "fc8f5a21d288a662b20bd2d4f8fe8f6ed0b42525bf53acb8bb85186d5e8fed13",
+      "latex_sha256": "fc8f5a21d288a662b20bd2d4f8fe8f6ed0b42525bf53acb8bb85186d5e8fed13",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 119,
+      "source_with_recovered_math_sha256": "c4aacd270456382b4f7c271e27509f26c7d836e8e38e82c753b4ff62e1b10be3",
+      "latex_sha256": "c4aacd270456382b4f7c271e27509f26c7d836e8e38e82c753b4ff62e1b10be3",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 120,
+      "source_with_recovered_math_sha256": "adb455679c8ed3b6cc4d1f7835bf410ba1610ac87f12bceea4b3743ce07a648c",
+      "latex_sha256": "adb455679c8ed3b6cc4d1f7835bf410ba1610ac87f12bceea4b3743ce07a648c",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 121,
+      "source_with_recovered_math_sha256": "388f5ff487084f381816430225959ce5e35f1b3b2d42b4ba47697255fe9cf61c",
+      "latex_sha256": "388f5ff487084f381816430225959ce5e35f1b3b2d42b4ba47697255fe9cf61c",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 122,
+      "source_with_recovered_math_sha256": "6cee40f3ff5bb96ad2230717ad60ec600c5ad7f6d86ea8c45156d4853dd9fb60",
+      "latex_sha256": "6cee40f3ff5bb96ad2230717ad60ec600c5ad7f6d86ea8c45156d4853dd9fb60",
+      "equation_fragment_matches_source_with_declared_syntax_repair": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 123,
+      "source_with_recovered_math_sha256": "aa508b5a11ff1c70685cb03baf814b4c3c5d4e5daf6d6c35d0a629a1ce7358d0",
+      "latex_sha256": "aa508b5a11ff1c70685cb03baf814b4c3c5d4e5daf6d6c35d0a629a1ce7358d0",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 124,
+      "source_with_recovered_math_sha256": "d4cb2bc361906f1ccb5c4c01c8de82e6051feee5c93cd28ae057bfaba0f2c12d",
+      "latex_sha256": "d4cb2bc361906f1ccb5c4c01c8de82e6051feee5c93cd28ae057bfaba0f2c12d",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 125,
+      "source_with_recovered_math_sha256": "605e61be076f3863e72a466e80e4bfb011278b7222dd7a7145cdb0154092469a",
+      "latex_sha256": "605e61be076f3863e72a466e80e4bfb011278b7222dd7a7145cdb0154092469a",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 126,
+      "source_with_recovered_math_sha256": "e8dc7731f87a70c935a0254b1b1647f93552f14b9559082aff752dee1fbcf9c0",
+      "latex_sha256": "0f41d22d4f60d23b85923f1cff304b8fabcd77da62ce11b8b566e35828bb7fd1",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 127,
+      "source_with_recovered_math_sha256": "56544b23fbe0b15bfa8bd93c7fb92d8b869493eb2717cdfec755293ef548dfbe",
+      "latex_sha256": "1ca13e15d0b234df6599904497e3445e724c4d4551599d451a3ce474820fa194",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 128,
+      "source_with_recovered_math_sha256": "aac06ff8ef349d8cb1edbb4c380d319102e98aed1fc50feff3718f0ff2c37a82",
+      "latex_sha256": "aac06ff8ef349d8cb1edbb4c380d319102e98aed1fc50feff3718f0ff2c37a82",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 149,
+      "source_with_recovered_math_sha256": "d99131b9c88284abe2e3d18da3e9af0139ef391ff246246d6c3ea2bc5b5d8965",
+      "latex_sha256": "88ea384c9544b5638df7d293b430c90bd8a52c2e4b9d4c5bce056da6b8ff76c2",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 150,
+      "source_with_recovered_math_sha256": "55ac249ad3776fa6c1d63f496fffffb26b6aaae6d7ef5424b2a92fc7bf03508b",
+      "latex_sha256": "55ac249ad3776fa6c1d63f496fffffb26b6aaae6d7ef5424b2a92fc7bf03508b",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 151,
+      "source_with_recovered_math_sha256": "a590e85636f317d54d03627fa6cfe8dcbad32251bb4b40065d3b6055a8326fa6",
+      "latex_sha256": "6227420d75be4e199f3bb907fddfef2cf6fa95dfc6683604960edea9f20eaebf",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 152,
+      "source_with_recovered_math_sha256": "4a202c47cdc42801a875eb1c68c03ff4d2df012cdb30d472ff57de28827fb25d",
+      "latex_sha256": "4a202c47cdc42801a875eb1c68c03ff4d2df012cdb30d472ff57de28827fb25d",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 168,
+      "source_with_recovered_math_sha256": "02933ec23c17d90a0559806508d3b0ac2d1029b499ff941ed94f2098c458af94",
+      "latex_sha256": "e2258e1a36912f9d944f771c7813f8acc64a1119e36b4eb3547ab1fa1cd618c1",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 169,
+      "source_with_recovered_math_sha256": "80a1469b53de77204642f1818ee6dbc3ed6ec0d6e5ca65d92e784f5151aad279",
+      "latex_sha256": "1ccb3ca25cfa552e9e80019f26f47dfd43d7d6cca5316202265b788a604d12ae",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 190,
+      "source_with_recovered_math_sha256": "60aa3bd9086b2b658ba10a2ecfe1c9b092e4f336588ab4c6c3ffc6d36f4533f3",
+      "latex_sha256": "1c3aca051e3e7b5e356542591b6259d05e8f9c6a4a4fb4da3c6e141a9d98ec6b",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 191,
+      "source_with_recovered_math_sha256": "bd82b129f0b52ca367ff6580c63870675a217bb0a2646b6a3db3985e76165701",
+      "latex_sha256": "ad4fc660a62648fc76244bacbcaa07b35260197cbda6429d1192d7fb8b6d158f",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 192,
+      "source_with_recovered_math_sha256": "9b450abcdc98e482ea4331bbe4282554b1e303c0dde5e19a99e13d698fcebdc3",
+      "latex_sha256": "c22affee57eb48c1172b9547db32af4f8b9ef73ee271eb9d55cd12c7849647e9",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 207,
+      "source_with_recovered_math_sha256": "b0ba9c3582be90cf6468ed1e8c13af60ee028a14f26eab78fb34885f9c53c9be",
+      "latex_sha256": "0c02dd6482804716f3017f75a1912e26a4a2a1b49100d5afdfb84aa163c8ec1d",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 215,
+      "source_with_recovered_math_sha256": "e30d7556b26547ea2246d9d338690af416effce8660973d055dd53a4c470efb3",
+      "latex_sha256": "1ef9e297841500b44b23893ad708a4841ae207a79aa329c33fa2a95f3c9591e4",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 235,
+      "source_with_recovered_math_sha256": "d60d4f08a4f4fcb7e88623dbd5ed0cbd60e4fcc85b8b6c5d8dd7c9e32dbcf3d0",
+      "latex_sha256": "9f66bf5c734b8957cec026fd2b66044f43ea2bf46a19c4f80bbf5f0ccfd23991",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 236,
+      "source_with_recovered_math_sha256": "4e5a927c23ac95b980ff220af0e622b7988c402dbf6bb8943a0deb84164bb121",
+      "latex_sha256": "f3ad43d8ba694d45ea030e2804b6878d1f6ebb5963d40030b5e32e5c8ef67f63",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 247,
+      "source_with_recovered_math_sha256": "404446e61890ce3000035a4354fbebba7b4fac1ecf9538cb231acc1520f6b251",
+      "latex_sha256": "0f77b9ad2c6d620bed230adbce3cbdba1738f715e2409cc77c7e14866cc9ee6c",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 248,
+      "source_with_recovered_math_sha256": "75d93bb2701eb2fa856aadb01e62df8bdc4f32a73b4d2222eba43d42c6d5caa5",
+      "latex_sha256": "75d93bb2701eb2fa856aadb01e62df8bdc4f32a73b4d2222eba43d42c6d5caa5",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 249,
+      "source_with_recovered_math_sha256": "421684fa36cd4a05369690669af0dfd6f6568b9680dd8057a08fcad7a3fe6c3d",
+      "latex_sha256": "b99ab4bc5586c70c43d6cd318e9b1d442bbe248236afd688d4b943f8921bcbb7",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 251,
+      "source_with_recovered_math_sha256": "16235abe7211272d64641c539a038a2a45fe39137b6351f314f5cb96e3a048e4",
+      "latex_sha256": "16235abe7211272d64641c539a038a2a45fe39137b6351f314f5cb96e3a048e4",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 253,
+      "source_with_recovered_math_sha256": "c8df4e781c76700d90f9af2521ba5807ca9b6b2ce8193d3f86daeb08c46d8da5",
+      "latex_sha256": "c8df4e781c76700d90f9af2521ba5807ca9b6b2ce8193d3f86daeb08c46d8da5",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 254,
+      "source_with_recovered_math_sha256": "7db8016ec9e2fe02dda5184bbd4b14dd2472d4729bc71f646c9b7314b569d2d5",
+      "latex_sha256": "4f22427cd9b1c25d4b174b9bd20f1dd5318a0177c9223c31166d45dfd21829a1",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 273,
+      "source_with_recovered_math_sha256": "d149a8f9271c10094ca483f56fa715bfd4f7ad50d27a37f71f26dcb5a6254ed7",
+      "latex_sha256": "2ba89c50bc4f0d78c4d301ae98242e5f7c4d89db1284d09acdd16355e2f1f3af",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 274,
+      "source_with_recovered_math_sha256": "936efa97d9495e2acbecdef02fdd3741ab46077d37a5d03fb9d2a8d39815abdf",
+      "latex_sha256": "936efa97d9495e2acbecdef02fdd3741ab46077d37a5d03fb9d2a8d39815abdf",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 275,
+      "source_with_recovered_math_sha256": "6a7fe125be1ae6ac290c8db381bb1a843d73cab556e98f9887075c3140c74933",
+      "latex_sha256": "a59d0d53fa61446a2ea913f8f2467fa8956ed556e0950ad9768143a7623fedc1",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 276,
+      "source_with_recovered_math_sha256": "263c7c3b9d9f38e3f26cb212cd055872a732a7e52b70a379166d55e89fe2924f",
+      "latex_sha256": "3a039b5349be42b83a136f29258ff00bd60569943c457fc552d8b8bdb81759c9",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 288,
+      "source_with_recovered_math_sha256": "5e1f1316b5f83140b2c9b055ba9361709cce6e41b61e7ad1786fb8caf30d876a",
+      "latex_sha256": "657b7bbd0c8877d5679b102098fd27f4bd26d53fd22957f388d19ec48594bdc8",
+      "english_prose_matches_source": true
+    },
+    {
+      "docx_body_paragraph_zero_based": 289,
+      "source_with_recovered_math_sha256": "2d5d94149ef5be00e4caaec3d5510c40caf0f5deaa75f16aa2877781dd99acab",
+      "latex_sha256": "071babc694a331b67ba96dd2082183db731c35dfded1cb0776fe34ea67ec5b67",
+      "english_prose_matches_source": true
+    }
+  ],
+  "validation": {
+    "mapped_blocks": 46,
+    "original_english_prose_matches_after_declared_formatting_conversions": true,
+    "unmapped_body_prose": 0,
+    "approved_table_matches_preview_byte_for_byte": true,
+    "rendered_chinese_characters": 0,
+    "previously_added_prose_removed": true
+  }
+}
