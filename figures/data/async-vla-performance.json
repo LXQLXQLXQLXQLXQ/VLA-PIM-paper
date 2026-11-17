@@ -1,0 +1,13 @@
+{
+  "source": "Existing tables/performance.tex and tables/configs.tex, before the 2026-11-17 chart revision; no new measurements.",
+  "metric": "T_async VLA",
+  "unit": "ms",
+  "configurations": [
+    {"label": "a-serial", "original_label": "a-serial", "cycle_ms": 141.29, "details": ["Thor GPU", "Serial"]},
+    {"label": "a-dual", "original_label": "a-dual", "cycle_ms": 137.07, "details": ["Thor GPU", "Dual-stream"]},
+    {"label": "b", "original_label": "b", "cycle_ms": 122.88, "details": ["Feature-wise", "GPU RoPE", "Streaming", "Serial GPU–PIM"]},
+    {"label": "c", "original_label": "c", "cycle_ms": 86.77, "details": ["Feature-wise", "GPU RoPE", "Streaming", "Concurrent", "PIM-head"]},
+    {"label": "d", "original_label": "e", "cycle_ms": 83.57, "details": ["Token-wise", "In-bank RoPE", "Streaming", "Concurrent", "PIM-head"]},
+    {"label": "e (VLA-PIM)", "original_label": "g", "cycle_ms": 77.68, "details": ["Token-wise", "In-bank RoPE", "Input-preloaded", "Concurrent", "Epoch-exclusive"]}
+  ]
+}

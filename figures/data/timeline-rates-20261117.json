@@ -4,7 +4,7 @@
   "timeline_cases": [
     {
       "case": "combined-e",
-      "title": "(a) Streaming input (e)",
+      "title": "(a) Streaming input (d)",
       "lo_ck": 48607,
       "hi_ck": 374763,
       "events": [
@@ -7292,7 +7292,7 @@
     },
     {
       "case": "combined-g",
-      "title": "(b) Input preloading (VLA-PIM, g)",
+      "title": "(b) Input preloading (VLA-PIM, e)",
       "lo_ck": 48607,
       "hi_ck": 455455,
       "events": [
@@ -14014,13 +14014,13 @@
       "provenance": "Separate devices, using measured standalone AE and VLM rates; no new paired measurement."
     },
     {
-      "label": "VLA-PIM\nstreaming (e)",
+      "label": "VLA-PIM\nstreaming (d)",
       "ae_hz": 17.596708804158034,
       "vlm_hz": 10.454712699575884,
       "provenance": "Same derivation as the previous plot: inverse AE completion time and completed solo-normalized VLM work in that overlap window."
     },
     {
-      "label": "VLA-PIM\npreload (g)",
+      "label": "VLA-PIM\npreload (e)",
       "ae_hz": 14.567798308605393,
       "vlm_hz": 12.560610421777403,
       "provenance": "Same derivation as the previous plot: inverse AE completion time and completed solo-normalized VLM work in that overlap window."

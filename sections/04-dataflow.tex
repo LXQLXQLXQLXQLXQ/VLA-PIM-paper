@@ -13,6 +13,11 @@ Since the GPU and PIM share the external interface of the LPDDR channel, the AE'
 Attention tensors can be partitioned across ranks in two manners: feature-wise, where each rank stores all tokens but only half of the feature dimensions; or token-wise, where each rank stores half of the tokens across all feature dimensions. The communication cost within the LPDDR-PIM architecture is fundamentally hierarchical. Within a rank, communication bypasses the DQ bus entirely, as inputs can be simultaneously written to all banks via the broadcast datapath, and partial sums are reduced via the on-chip adder tree. Conversely, inter-rank communication consumes external DQ bandwidth, as cross-rank data duplication and reduction must be routed through the MC due to the lack of a logic die.
 % END-SOURCE-EN: 191
 
+% USER-ADDED: approved layout/DQ figure and cross-reference, 2026-11-17.
+Figure~\ref{fig:layout-dq} illustrates both layouts and isolates the DQ traffic of Q exchange, QK$^{T}$, and PV.
+
+\input{figures/layout-dq}
+
 % SOURCE-EN: 192
 Consequently, an optimal layout must confine the reduction dimension within the rank and partition only the independent dimensions across ranks. Based on a quantitative evaluation of external DQ traffic, \sys{} adopts the token-wise layout. This structural decision successfully reduces the total DQ traffic for the AE's attention mechanism from 2704 KiB to 1960 KiB (a 27.5\% reduction).
 % END-SOURCE-EN: 192

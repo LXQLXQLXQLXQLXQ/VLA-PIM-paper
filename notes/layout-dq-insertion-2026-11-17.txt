@@ -1,0 +1,40 @@
+2026-11-17 — Approved KV-layout and external-DQ figure
+
+User request: insert the approved single-column figure in the Layout/RoPE part.
+
+Placement
+- Section IV-A, DQ-aware Data Layout & On-die RoPE.
+- figures/layout-dq.tex is included after the feature-wise/token-wise layout
+  paragraph, with one new cross-reference sentence outside the source-English
+  blocks. Existing source-English paragraphs are unchanged.
+- The new figure naturally occupies Figure 6, between Figures 5 and 7.
+  This is the new layout figure, not the previously removed RD-command diagram.
+- The 3.5-inch-wide vector PDF is included at column width.
+
+Artwork
+- Exact user-approved PDF/PNG/SVG copied from the workspace experiment folder:
+  experiments/2026-11-17-dq-traffic/fig_external_dq_traffic.{pdf,png,svg}.
+- Header: KV features partitioning. Rank A/B are the two PIM ranks of one head,
+  across adjacent physical channels; they are not the GPU/PIM rank pair within
+  a physical channel. Token parity and feature ownership are grouped for display.
+- Only representative bank boundaries are drawn; B_0 and B_15 use subscripts.
+- The source count snapshot is figures/data/layout-dq-20261117.json.
+- Reproduction: python3 figures/plot-layout-dq.py (Python >=3.10, matplotlib).
+  The paper renderer has no dependency on the parent simulator checkout.
+  Its PNG reproduces the approved PNG byte for byte in the checked environment.
+
+Traffic scope
+- One layer, one denoising step, all 16 channels; GPU RoPE in both layouts.
+- Q exchange + QK^T + PV: 1552 -> 936 KiB, a 39.7% reduction.
+- Q exchange is only the additional 64 KiB import: the Q export is reused from
+  GPU RoPE. The caption explicitly identifies this convention.
+- QKV and O projections are excluded from the plotted bars. The existing
+  2704 -> 1960 KiB (27.5%) sentence includes these projections and is retained.
+- No experiment, performance-table value, or simulation result was modified.
+
+Pre-insertion backup (relative to the parent workspace)
+essay/backups/layout-dq-before-20261117-175022/
+Contains the previous IV-A/IV-B source and compiled PDF, plus provenance hashes.
+
+Validation and the rendered-page review are recorded separately in
+notes/layout-dq-verification-2026-11-17.json.

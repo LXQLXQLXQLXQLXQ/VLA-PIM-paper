@@ -1,0 +1,61 @@
+2026-11-17 — Replace the performance table with Figure 9
+
+User-requested scope:
+- Retain both a baselines (serial and dual-stream), b, c, former e, former g.
+- Rename former e to d and former g to e; omit former d/f configurations.
+- Plot only T_async_VLA (ms), with configuration details below every label.
+- One arrow from the a baseline group to e marks the AE output-rate gains:
+  141.29 / 77.68 = 1.82x vs. a-serial;
+  137.07 / 77.68 = 1.76x vs. a-dual.
+- Update Overall Performance, the Motivation cross-reference, the retained
+  configuration list, and embedded labels in Figures 7 and 10.
+- Discuss token-wise layout plus in-bank RoPE together (c -> d: 3.20 ms),
+  then input preloading plus epoch-exclusive scheduling (d -> e: 5.89 ms).
+  The removed variants are not used for individual-effect claims.
+
+Files and provenance:
+- figures/data/async-vla-performance.json retains the six original cycle values
+  and the original-to-new configuration mapping.
+- figures/plot-async-vla-performance.py regenerates the vector PDF and 600 dpi PNG.
+- figures/data/timeline-rates-20261117.json changes four display labels only;
+  experiment identifiers, measurements, native traces, and source hashes stay intact.
+- tables/performance.tex is replaced by figures/async-vla-performance.tex.
+- tables/configs.tex remains uncompiled but is synchronized with the new labels.
+- This user-directed revision supersedes the original-English-only requirement
+  specifically for Overall Performance and the required figure cross-reference.
+
+Verification:
+- All six cycle values checked against the pre-edit table archive.
+- Two final pdfLaTeX passes succeeded, with no overfull boxes, missing
+  characters, undefined references, or duplicate labels.
+- Rendered document: 8 pages, 5 figures (4,5,7,9,10), 3 tables.
+- Pages 6–8 visually inspected. Configuration labels do not overlap;
+  Figures 7/10 use d/e consistently. Removed configurations and their cycle
+  values (84.04 and 78.17 ms) are absent from rendered paper text.
+- No simulations or hardware experiments were rerun.
+
+Pre-edit archives in ../essay/backups/:
+- Table6_before_bar_chart_20261117.tar.gz
+  SHA256: d8c0b8b2da3ba579cfc459be71d3d0e31dfd11ac4630a577eca9560093ed9986
+- Table6_related_figure_labels_before_20261117.tar.gz
+
+Follow-up — Single-column revision (2026-11-17)
+- Figure 9 now uses a standard figure environment at column width.
+- All six bars have width 0.42 and center spacing 1.0 (plot coordinates).
+- The plot retains configuration IDs only; the two a labels distinguish serial
+  and dual. Full configuration descriptions are no longer repeated below bars.
+- The caption and introductory evaluation paragraph explain b -> c -> d -> e
+  as cumulative method additions; all measured cycle values and rate gains remain.
+- Two final pdfLaTeX passes succeed without overfull boxes, missing characters,
+  undefined references, or duplicate labels. Page 7 visually inspected.
+- Current manuscript: 8 pages, 6 figures (including the separately added Figure 6),
+  3 tables. Existing layout/DQ material is retained.
+- Pre-edit archive: ../essay/backups/Table6_before_single_column_20261117.tar.gz
+- Page preview: ../essay/reviews/table6-single-column-20261117/page-7.png
+
+Follow-up — Metric typography (2026-11-17)
+- Replace the underscore between async and VLA with a space in the plotted
+  y-axis label, inference-cycle equation, rate equation, and body reference.
+- Two pdfLaTeX passes succeeded; the chart text explicitly contains async VLA
+  and rendered paper text contains no async_VLA. Page 7 visually inspected.
+- User requested publication via the existing GitHub-to-Overleaf sync.

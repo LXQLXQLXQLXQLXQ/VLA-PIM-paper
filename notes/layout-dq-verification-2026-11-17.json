@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-17",
+  "request": "Insert the approved KV-layout/DQ figure in the Layout/RoPE subsection",
+  "section": "IV-A: DQ-aware Data Layout & On-die RoPE",
+  "figure_number": 6,
+  "page": 6,
+  "column_width_inches": 3.5,
+  "artwork_height_inches": 2.15,
+  "approved_artwork_preserved": true,
+  "approved_artwork_sha256": {
+    "pdf": "291606b396ce1c37548a96c91678f8b3de3592f53916fd75673e253f0b4f90c0",
+    "png": "e33402719b223f301d4363f8aacf03326a871cabb5a0a63e66a179db0949c44c",
+    "svg": "3f41ec9e68205f3fe818784a56c55e67c3b6af8ddfeee5bdeece68fa7dc1cfe7"
+  },
+  "renderer": "figures/plot-layout-dq.py",
+  "snapshot": "figures/data/layout-dq-20261117.json",
+  "renderer_png_byte_identical": true,
+  "existing_source_english_blocks_unchanged": 5,
+  "traffic_scope": "Q exchange + QKT + PV; GPU RoPE; per layer and denoising step, all 16 channels",
+  "traffic_kib": {
+    "feature_wise": 1552,
+    "token_wise": 936,
+    "reduction": 616,
+    "reduction_percent": 39.7
+  },
+  "existing_full_attention_metric_retained": "2704 -> 1960 KiB (27.5%); includes QKV/O projections",
+  "compile": {
+    "engine": "pdfLaTeX",
+    "passes": 3,
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "pages": 8,
+    "overfull_boxes": 0,
+    "undefined_references": false,
+    "missing_characters": 0,
+    "underfull_boxes": 9
+  },
+  "figure_labels": {
+    "fig:system-overview": {
+      "number": 4,
+      "page": 4
+    },
+    "fig:microarchitecture": {
+      "number": 5,
+      "page": 4
+    },
+    "fig:layout-dq": {
+      "number": 6,
+      "page": 6
+    },
+    "fig:timeline": {
+      "number": 7,
+      "page": 7
+    },
+    "fig:async-vla-performance": {
+      "number": 9,
+      "page": 7
+    },
+    "fig:decoupled-rates": {
+      "number": 10,
+      "page": 8
+    }
+  },
+  "visual_review": "Rendered page 6 inspected at 140 dpi. The approved figure occupies one column with a readable caption and no clipping or overlap.",
+  "pdf_sha256": "7729b104695ccec9524bb08d98d8e859611761dd27a1722109820434123a5432",
+  "review_pdf": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/layout-dq-20261117-175022/conference_101719.pdf",
+  "review_page": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/layout-dq-20261117-175022/page-6.png",
+  "pre_edit_backup": "/fact_data/xinyaowang/PIM_for_VLA/essay/backups/layout-dq-before-20261117-175022",
+  "build_input_files_changed_during_final_compile": false,
+  "unrelated_working_tree_edits_preserved": true,
+  "local_runtime": "Existing cached Times/Courier metrics and standard pdfTeX font maps; caches and build output under /scratch, no manuscript-specific runtime workaround added"
+}
