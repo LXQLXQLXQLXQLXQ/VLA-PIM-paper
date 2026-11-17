@@ -1,0 +1,39 @@
+2026-11-17 — Figure 7 streaming-input gap enlargement
+
+Requested final structure:
+- Remove the full VLM kernel lanes from both overview panels.
+- Preserve PIM phases and DQ burst starts in panels (a) and (b).
+- Expand a short native streaming-input segment below, showing why the
+  intervening gaps cannot serve pending VLM memory requests.
+
+Selected native example: combined-e, physical channel 0, step 0, layer 0.
+Absolute CK interval: 52251–52281; relative to layer start: 3.418072–3.446212 us.
+Eight qkv input WR bursts, each 2 CK, separated by seven 2 CK gaps.
+All timestamps and directions come from the existing native dq-bursts.csv.
+No experiment or PIM timestamps were modified or rerun.
+
+DQ exclusion calculation (both ranks keep WCK synchronized):
+- Native different-rank DQ edges: RR=2, RW=2, WR=11, WW=1 CK.
+- VLM WR between two PIM WRs: 1 + 2 + 1 = 4 CK.
+- VLM RD between two PIM WRs: 11 + 2 + 2 = 15 CK.
+- The recorded 2 CK gaps satisfy neither requirement. With PIM bursts fixed,
+  pending VLM memory requests cannot use these gaps and must wait.
+These are necessary DQ timing constraints; other constraints cannot make a
+rejected gap usable. The lower strip illustrates feasibility for this local
+DQ channel, rather than a measured cycle-by-cycle GPU SM execution trace.
+
+The native WR blocks in panel (c) preserve their true 2 CK width. Overview
+DQ marks show burst start times. Orange hatching identifies unusable gaps;
+the waiting strip is explicitly explained as a timing constraint in the caption.
+The input-preloaded overview retains its measured 71.265488 us PIM-DQ-free window.
+
+Reproduction:
+python3 figures/plot-timeline-rates.py --figure timeline
+Overview snapshot: figures/data/timeline-rates-20261117.json
+Zoom snapshot and provenance: figures/data/streaming-input-gap-20261117.json
+The previous complete VLM-kernel lanes and their pause visualization are removed.
+Original English body paragraphs are preserved in this commit. Concurrent
+performance/layout edits in the working tree are excluded from this commit.
+
+Pre-edit source backup, relative to the parent PIM_for_VLA workspace:
+essay/backups/Fig7_gap_zoom_before_20261117_4c8cddb.tar.gz
