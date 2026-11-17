@@ -12,7 +12,7 @@ from pathlib import Path
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import Patch, Rectangle
+from matplotlib.patches import Patch, Ellipse
 
 BLUE, ORANGE = '#2a78d6', '#eb6834'
 GREENS = ('#1baf7a', '#12734f')
@@ -60,29 +60,21 @@ def save(fig, out, name):
     plt.close(fig)
 
 
-def draw_kernels(ax, spans, y, height=0.62, labels=False, window=None):
+def draw_kernels(ax, spans, y, height=0.62):
     for start, end, ordinal in spans:
         lo, hi = start, end
-        if window:
-            lo, hi = max(lo, window[0]), min(hi, window[1])
         if hi <= lo:
             continue
         # Alternating shades identify consecutive kernels. Gaps preserve time.
         ax.broken_barh([(lo, hi-lo)], (y-height/2, height),
                        facecolor=GREENS[ordinal % 2], linewidth=0, zorder=3)
-        if labels and hi-lo >= 3:
-            ax.text((lo+hi)/2, y, f'K{ordinal}', ha='center', va='center',
-                    color='white', fontsize=6.2, zorder=4)
 
 
 def timeline(data, out):
     tick = data['clock_ps'] / 1e6
-    fig = plt.figure(figsize=(7.2, 4.35))
-    grid = fig.add_gridspec(3, 2, height_ratios=(1, 1, 0.42),
-                           hspace=0.63, wspace=0.25)
-    zoom = (150, 210)
+    fig, axes = plt.subplots(2, 1, figsize=(7.2, 3.25))
     for index, case in enumerate(data['timeline_cases']):
-        ax = fig.add_subplot(grid[index, :])
+        ax = axes[index]
         us = lambda ck: (ck-case['lo_ck']) * tick
         spans = kernel_segments(case, tick)
         for start, end in case['io_epochs_ck']:
@@ -96,12 +88,37 @@ def timeline(data, out):
             if hi-lo > 14:
                 ax.text((lo+hi)/2, 2, e['name'].replace('_', '/'),
                         ha='center', va='center', fontsize=6.8, color='white', zorder=4)
-        ax.broken_barh([(us(s), (e-s)*tick) for s, e in case['pim_dq_bursts_ck']],
-                       (0.69, 0.62), facecolor=INK, linewidth=0, zorder=3)
+        # Mark event timestamps so nanosecond bursts remain visible at paper
+        # scale without widening their physical durations in the source data.
+        ax.vlines([us(s) for s, e in case['pim_dq_bursts_ck']], 0.69, 1.31,
+                  colors=INK, linewidth=0.22, zorder=3)
         draw_kernels(ax, spans, 0)
-        ax.add_patch(Rectangle((zoom[0], -0.4), zoom[1]-zoom[0], 0.8,
-                               fill=False, edgecolor=INK, linestyle='--',
-                               linewidth=0.7, zorder=5))
+        if index == 0:
+            # QKV input WR bursts verified from the native direction/stage trace.
+            ax.add_patch(Ellipse((17, 1), 25, 0.95, fill=False,
+                                 edgecolor=ORANGE, linewidth=1.25, zorder=5))
+            ax.annotate('Repeated streaming inputs', xy=(25, 1.27),
+                        xytext=(52, 1.50), fontsize=7.0, color=ORANGE,
+                        arrowprops={'arrowstyle':'->', 'color':ORANGE, 'lw':0.8},
+                        ha='left', va='center', zorder=6)
+        else:
+            ax.add_patch(Ellipse((4.0, 1), 6.3, 0.95, fill=False,
+                                 edgecolor=ORANGE, linewidth=1.25, zorder=5))
+            ax.annotate('Bulk input load', xy=(6.3, 1.25),
+                        xytext=(27, 1.50), fontsize=7.0, color=ORANGE,
+                        arrowprops={'arrowstyle':'->', 'color':ORANGE, 'lw':0.8},
+                        ha='left', va='center', zorder=6)
+            # The interval after the first I/O epoch and before the next is
+            # PIM-DQ-free. It is an opportunity for VLM service, not an SM trace.
+            epochs = case['io_epochs_ck']
+            start, end = us(epochs[0][1]), us(epochs[1][0])
+            assert not any(s < epochs[1][0] and e > epochs[0][1]
+                           for s, e in case['pim_dq_bursts_ck'])
+            ax.annotate('', xy=(start+0.7, 0.98), xytext=(end-0.7, 0.98),
+                        arrowprops={'arrowstyle':'<->', 'color':GREENS[1], 'lw':1.0},
+                        zorder=5)
+            ax.text((start+end)/2, 0.64, f'VLM DQ window: {end-start:.1f} µs',
+                    ha='center', va='center', fontsize=6.7, color=GREENS[1], zorder=5)
         ax.set_yticks([0, 1, 2])
         ax.set_yticklabels(['VLM kernels', 'PIM DQ bursts (ch 0)', 'PIM stages'])
         ax.set_ylim(-0.5, 2.5)
@@ -111,19 +128,9 @@ def timeline(data, out):
         if index == 1:
             ax.set_xlabel('Time since layer 0 of denoising step 0 starts (µs)', labelpad=2)
 
-        detail = fig.add_subplot(grid[2, index])
-        draw_kernels(detail, spans, 0, labels=True, window=zoom)
-        detail.set_xlim(*zoom)
-        detail.set_ylim(-0.48, 0.48)
-        detail.set_yticks([])
-        detail.set_xticks([150, 170, 190, 210])
-        detail.set_xlabel('Relative time (µs)', labelpad=2)
-        detail.set_title(f'({"c" if index == 0 else "d"}) VLM detail of ({"a" if index == 0 else "b"})',
-                         loc='left', pad=3, fontsize=7.3)
-        detail.grid(axis='y', visible=False)
     fig.legend(handles=[Patch(facecolor=EPOCH, label='I/O epoch (DQ owned by PIM)')],
                loc='upper right', bbox_to_anchor=(0.99, 1.01), fontsize=7)
-    fig.subplots_adjust(left=0.165, right=0.995, top=0.94, bottom=0.09)
+    fig.subplots_adjust(left=0.165, right=0.995, top=0.92, bottom=0.13, hspace=0.62)
     save(fig, out, 'fig7_step_timeline')
 
 
@@ -155,6 +162,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--data', type=Path, default=here/'data/timeline-rates-20261117.json')
     parser.add_argument('--out', type=Path, default=here)
+    parser.add_argument('--figure', choices=['timeline', 'rates', 'both'], default='both')
     args = parser.parse_args()
     data = json.loads(args.data.read_text())
     args.out.mkdir(parents=True, exist_ok=True)
@@ -164,9 +172,11 @@ def main():
         'axes.grid':True, 'grid.color':GRID, 'grid.linewidth':0.6,
         'axes.axisbelow':True, 'legend.frameon':False,
         'pdf.fonttype':42, 'ps.fonttype':42})
-    timeline(data, args.out)
-    rates(data, args.out)
-    print('Rendered vector PDFs and 600 dpi PNGs for Figures 7 and 10.')
+    if args.figure in ['timeline', 'both']:
+        timeline(data, args.out)
+    if args.figure in ['rates', 'both']:
+        rates(data, args.out)
+    print(f'Rendered vector PDF and 600 dpi PNG: {args.figure}.')
 
 
 if __name__ == '__main__':

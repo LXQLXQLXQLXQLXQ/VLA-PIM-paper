@@ -7,10 +7,23 @@ User-requested changes:
   It uses the same measured standalone rates as the former horizontal lines:
   AE 13.569792215067293 Hz, VLM 14.969489181485573 Hz. No new paired two-device
   hardware measurement is claimed. The other three groups retain their values.
-- Figure 7 removes the AE nonlinear row. VLM kernel intervals are split at
-  the recorded AE GPU execution intervals, and 150–210 us details are added.
+- Figure 7 removes the AE nonlinear row and the VLM detail panels. Orange
+  circles compare repeated streaming inputs in (a) with the bulk input load
+  in (b). A green arrow marks the subsequent 71.265488 us PIM-DQ-free window.
+  VLM kernel intervals are split at recorded AE GPU execution intervals.
   The figure is a vector PDF, with a 600 dpi PNG preview. Alternating green
   shades distinguish consecutive kernel IDs; they do not encode throughput.
+
+Input-callout data verification:
+- (a) The selected 6–28 us interval contains 208 native qkv WR input bursts.
+- (b) The first input I/O epoch spans 3.360854–4.645914 us and contains 512
+  native qkv WR bursts. The next epoch starts at 75.911402 us; the interval
+  between these epochs contains no PIM DQ bursts.
+DQ burst starts are plotted as ticks, preserving timestamps without depicting
+their display linewidth as a physical burst duration. The circles illustrate
+fragmentation of DQ service windows available to VLM. They do not constitute
+a trace of DQ-caused kernel suspension; the existing trace cannot locate
+each such suspension. No extra kernel gaps are inserted for DQ contention.
 
 Why the old VLM bars appeared to overlap AE GPU execution:
 The old plot in essay/figures/plot_paper_figures.py painted the full wall-clock
@@ -43,13 +56,16 @@ exact drain-start timestamps, so those timestamps are not invented.
 The renderer asserts zero AE GPU overlap in every retained VLM segment.
 
 Reproduction:
-python3 figures/plot-timeline-rates.py
+python3 figures/plot-timeline-rates.py --figure timeline
 Snapshot: figures/data/timeline-rates-20261117.json
 The snapshot records original source hashes and retains native CK timestamps.
 No simulation, hardware measurement, or paper performance value was changed.
 English body paragraphs from System Overview onward are preserved; only the
 Figure 8 input and the requested figure captions are edited.
 
-Pre-edit tracked source backup (relative to the parent PIM_for_VLA workspace):
+Initial figure-edit tracked source backup (relative to the parent PIM_for_VLA workspace):
 essay/backups/Fig7_Fig8_Fig10_before_20261117_79239f0.tar.gz
 SHA256: 15104c07dd4ac9d48793e2c0d97a9a9e0012fe4a70d3c544e7740357f3c6cdac
+
+Input-callout edit source backup:
+essay/backups/Fig7_input_callouts_before_20261117_69ce854.tar.gz

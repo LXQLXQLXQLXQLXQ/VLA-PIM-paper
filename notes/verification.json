@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "User-requested removal of Figure 8, two-Thor bars in Figure 10, and Figure 7 with AE GPU pauses and enlarged VLM details. Source English body retained.",
+  "scope": "Figure 7: remove VLM details; circle streaming-input and bulk-input examples; mark the 71.3 us PIM-DQ-free VLM service window.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -39,18 +39,36 @@
       "two_thor_vlm_hz": 14.969489181485573,
       "new_two_device_measurement": false,
       "experiment_data_modified": false
+    },
+    "figure7_input_callouts": {
+      "vlm_detail_panels_removed": true,
+      "native_dq_burst_start_markers": true,
+      "streaming_qkv_wr_count_6_to_28_us": 208,
+      "bulk_qkv_wr_count_first_epoch": 512,
+      "bulk_input_epoch_us": [
+        3.360854,
+        4.645914
+      ],
+      "pim_dq_free_window_us": [
+        4.645914,
+        75.911402
+      ],
+      "pim_dq_free_window_duration_us": 71.265488,
+      "dq_caused_kernel_suspensions_not_inferred": true,
+      "source_english_blocks_preserved_in_committed_manuscript": 46,
+      "unrelated_working_tree_edits_excluded_from_pdf": true
     }
   },
   "pages": 8,
   "figures": 4,
   "tables": 4,
   "template_class_unchanged": true,
-  "visual_review": "All eight rendered pages inspected. Figure 7 detail panels and Figure 10 four bar groups fit without clipping or overlap. Figure 8 is absent.",
+  "visual_review": "Figure 7 inspected at paper scale: two panels, orange input circles, and the green 71.3 us DQ window annotation are legible and do not overlap. VLM detail panels removed.",
   "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
-  "pdf_sha256": "e050e8d54e6e1234e9563578f3d3ae21112427497b5e331cd42d2e6ee1551e0e",
+  "pdf_sha256": "f5067d7f15e35197fc41f2408f8ff3f4371ef26b4e09e10e6874fcbb9ec3462e",
   "source_docx_sha256": "af190463748a1c5a1b740904db90aa52687b253128832e4616040fe852225a35",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
-  "pre_edit_base_commit": "79239f0b7cc86fb75531559467b44ddf219d88e6",
+  "pre_edit_base_commit": "69ce85404ae386afcfa74667cc51d21a712deb6b",
   "figure_revision_notes": "notes/figure-revision-2026-11-17.txt"
 }

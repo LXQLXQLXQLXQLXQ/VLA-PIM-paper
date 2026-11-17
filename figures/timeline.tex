@@ -2,5 +2,5 @@
 \centering
 \includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
 \setcounter{figure}{6}
-\caption{Execution timeline of layer~0 in denoising step~0 (physical channel~0). (a) Streaming input. (b) Input preloading (\sys{}), with PIM DQ transfers concentrated in 7 I/O epochs (gray). White gaps in the VLM row mark AE GPU execution; alternating green shades distinguish consecutive kernels. (c), (d) Enlarged VLM intervals from 150 to 210~$\mu$s in (a), (b), respectively.}\label{fig:timeline}
+\caption{Execution timeline of layer~0 in denoising step~0 (physical channel~0). Circled regions highlight (a) repeated streaming input transfers that fragment DQ service windows for the VLM and (b) a bulk input load followed by a continuous PIM-DQ-free window. DQ bursts are marked at their start times; gray bands mark PIM I/O epochs. The VLM row shows kernel intervals, with alternating green shades for consecutive kernels and white gaps for AE GPU execution.}\label{fig:timeline}
 \end{figure*}
