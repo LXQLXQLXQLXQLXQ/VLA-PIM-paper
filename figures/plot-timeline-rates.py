@@ -28,7 +28,7 @@ def save(fig, out, name):
 def timeline(data, out, detail):
     tick = data['clock_ps'] / 1e6
     fig = plt.figure(figsize=(7.2, 1.95))
-    grid = fig.add_gridspec(2, 2, width_ratios=(1.65, 1), hspace=0.35, wspace=0.27)
+    grid = fig.add_gridspec(2, 2, width_ratios=(1.65, 1), hspace=0.35, wspace=0.34)
     example = detail['zoom']
     selected_start = example['left']['end_ck']
     selected_end = example['right']['start_ck']
@@ -55,24 +55,8 @@ def timeline(data, out, detail):
             # Overview locator only: native burst positions are preserved in the zoom.
             ax.add_patch(Rectangle((middle-5, -0.41), 10, 0.82, fill=False,
                                    edgecolor=ORANGE, linewidth=1.1, zorder=5))
-            ax.annotate('Boxed down input', xy=(middle-5, 0.23),
-                        xytext=(165, 0.48), fontsize=6.4, color=ORANGE,
-                        arrowprops={'arrowstyle':'->', 'color':ORANGE, 'lw':0.8},
-                        ha='left', va='center', zorder=6)
-        else:
-            ax.annotate('Bulk input load', xy=(6.3, 0.23),
-                        xytext=(27, 0.50), fontsize=6.4, color=ORANGE,
-                        arrowprops={'arrowstyle':'->', 'color':ORANGE, 'lw':0.8},
-                        ha='left', va='center', zorder=6)
-            start, end = us(case['io_epochs_ck'][0][1]), us(case['io_epochs_ck'][1][0])
-            assert not any(s < case['io_epochs_ck'][1][0] and e > case['io_epochs_ck'][0][1]
-                           for s, e in case['pim_dq_bursts_ck'])
-            ax.annotate('', xy=(start+0.7, -0.02), xytext=(end-0.7, -0.02),
-                        arrowprops={'arrowstyle':'<->', 'color':GREENS[1], 'lw':0.9}, zorder=5)
-            ax.text(start, -0.41, f'VLM DQ window: {end-start:.1f} µs',
-                    ha='left', va='center', fontsize=6.0, color=GREENS[1], zorder=5)
         ax.set_yticks([0, 1])
-        ax.set_yticklabels(['PIM DQ (ch 0)', 'PIM stages'], fontsize=6.6)
+        ax.set_yticklabels(['PIM DQ', 'PIM stages'], fontsize=6.6)
         ax.set_ylim(-0.57, 1.40)
         ax.set_xlim(0, us(case['hi_ck']))
         ax.set_xticks([])
@@ -81,6 +65,15 @@ def timeline(data, out, detail):
         ax.set_title(case['title'], loc='left', pad=4)
 
     zoom = fig.add_subplot(grid[:, 1])
+    fig.subplots_adjust(left=0.12, right=0.99, top=0.92, bottom=0.17)
+    zoom.set_ylim(0, 1)
+    # Derive lane centers/heights from the overview positions in figure space.
+    # This keeps native DQ aligned with (a) and the request window with (b).
+    def aligned_y(ax, y):
+        return zoom.transAxes.inverted().transform(ax.transData.transform((0, y)))[1]
+    dq_y, request_y = [aligned_y(ax, 0) for ax in overview]
+    lane_height = aligned_y(overview[0], 0.30)-aligned_y(overview[0], -0.30)
+    dq_bottom, request_bottom = dq_y-lane_height/2, request_y-lane_height/2
     origin = example['bursts'][0]['start_ck']
     length = example['bursts'][-1]['end_ck']-origin
     gap_start, gap_end = selected_start-origin, selected_end-origin
@@ -91,51 +84,50 @@ def timeline(data, out, detail):
     assert required_end-gap_end == 1
     zoom.axvspan(gap_start, gap_end, color='#fff0e5', zorder=0)
     for b in example['bursts']:
-        zoom.add_patch(Rectangle((b['start_ck']-origin, 1.01), b['end_ck']-b['start_ck'],
-                                 0.34, facecolor=INK, edgecolor='white', linewidth=0.4))
-        zoom.text((b['start_ck']+b['end_ck'])/2-origin, 1.18, 'WR',
+        zoom.add_patch(Rectangle((b['start_ck']-origin, dq_bottom), b['end_ck']-b['start_ck'],
+                                 lane_height, facecolor=INK, edgecolor='white', linewidth=0.4))
+        zoom.text((b['start_ck']+b['end_ck'])/2-origin, dq_y, 'WR',
                   fontsize=5.0, color='white', ha='center', va='center')
-    zoom.text(0, 1.48, 'PIM DQ: down input', fontsize=6.8, color=INK)
-    zoom.annotate('', xy=(gap_start, 1.69), xytext=(gap_end, 1.69),
-                  arrowprops={'arrowstyle':'<->', 'color':ORANGE, 'lw':0.9})
-    zoom.text((gap_start+gap_end)/2, 1.81,
+    zoom.text(0, dq_y+lane_height/2+0.035, 'DQ', fontsize=6.8, color=INK)
+    dimension_y = dq_y+lane_height/2+0.13
+    zoom.annotate('', xy=(gap_start, dimension_y), xytext=(gap_end, dimension_y),
+                  arrowprops={'arrowstyle':'<->', 'color':INK, 'lw':0.9})
+    zoom.text((gap_start+gap_end)/2, dimension_y+0.045,
               f'{example["gap_ck"]} CK = {example["gap_ck"]*data["clock_ps"]/1000:.1f} ns',
-              ha='center', fontsize=6.7, color=ORANGE)
-    zoom.text(0, 0.64, 'GPU RD request: minimum window', fontsize=6.6, color=INK)
+              ha='center', fontsize=6.7, color=INK)
+    zoom.text(0, request_y+lane_height/2+0.05, 'VLM Request (RD)', fontsize=6.6, color=INK)
     segments = [(gap_start, guard_wr_rd, '#f5ca9d', '11'),
                 (gap_start+guard_wr_rd, burst, GREENS[0], '2'),
                 (gap_start+guard_wr_rd+burst, guard_rd_wr, '#f5ca9d', '2')]
     for start, duration, color, label in segments:
-        zoom.add_patch(Rectangle((start, 0.06), duration, 0.33,
+        zoom.add_patch(Rectangle((start, request_bottom), duration, lane_height,
                                  facecolor=color, edgecolor='white', linewidth=0.4))
-        zoom.text(start+duration/2, -0.07, label, ha='center', va='top', fontsize=6.0)
-    zoom.text(gap_start+guard_wr_rd/2, 0.225, 'WR → RD', ha='center', va='center', fontsize=6.0)
-    zoom.text(gap_start+guard_wr_rd+burst/2, 0.225, 'RD', ha='center', va='center', fontsize=5.0, color='white')
-    zoom.add_patch(Rectangle((gap_start, 0.06), required_end-gap_start, 0.33,
+        zoom.text(start+duration/2, request_bottom-0.035, label, ha='center', va='top', fontsize=6.0)
+    zoom.text(gap_start+guard_wr_rd/2, request_y, 'WR → RD', ha='center', va='center', fontsize=6.0)
+    zoom.text(gap_start+guard_wr_rd+burst/2, request_y, 'RD', ha='center', va='center', fontsize=5.0, color='white')
+    zoom.add_patch(Rectangle((gap_start, request_bottom), required_end-gap_start, lane_height,
                              fill=False, edgecolor=ORANGE, linestyle='--', linewidth=0.8))
-    zoom.add_patch(Rectangle((gap_end, 0.06), required_end-gap_end, 0.33,
+    zoom.add_patch(Rectangle((gap_end, request_bottom), required_end-gap_end, lane_height,
                              facecolor='#e34a33', edgecolor='#e34a33', hatch='///', alpha=0.65))
-    zoom.axvline(gap_end, ymin=0.17, ymax=0.75, color=ORANGE, ls=':', lw=0.8)
-    zoom.annotate('1 CK too long', xy=(required_end-0.5, 0.26),
-                  xytext=(length, 0.86), ha='right', fontsize=6.2, color='#b33722',
-                  arrowprops={'arrowstyle':'->', 'color':'#b33722', 'lw':0.8})
-    zoom.text((gap_start+required_end)/2, -0.36, '11 + 2 + 2 = 15 CK > 14 CK',
-              fontsize=6.5, ha='center', color='#b33722')
+    zoom.vlines(gap_end, request_bottom-0.10, dq_y+lane_height/2,
+                color=INK, ls=':', lw=0.8)
+    zoom.annotate('1 CK too long', xy=(required_end-0.5, request_y),
+                  xytext=(length, request_y+0.26), ha='right', fontsize=6.2, color=INK,
+                  arrowprops={'arrowstyle':'->', 'color':INK, 'lw':0.8, 'linestyle':'--'})
+    zoom.text((gap_start+required_end)/2, request_bottom-0.14, '11 + 2 + 2 = 15 CK > 14 CK',
+              fontsize=6.5, ha='center', color=INK)
     zoom.set_xlim(-0.7, length+0.7)
-    zoom.set_ylim(-0.56, 2.03)
-    zoom.set_xticks([0, 8, 16, 24, 32])
-    zoom.tick_params(axis='x', labelsize=6.0, length=2)
-    zoom.set_xlabel('Relative time (CK)', fontsize=6.5, labelpad=2)
+    zoom.set_xticks([])
     zoom.set_yticks([])
     zoom.spines['left'].set_visible(False)
+    zoom.spines['bottom'].set_visible(False)
     zoom.grid(visible=False)
-    zoom.set_title('Boxed input segment (enlarged)', loc='left', pad=4, fontsize=7.4)
+    zoom.set_title('Enlarged down input', loc='left', pad=4, fontsize=7.4)
     fig.add_artist(ConnectionPatch(
-        xyA=(((selected_start+selected_end)/2-data['timeline_cases'][0]['lo_ck'])*tick+5, 0.23),
-        xyB=(0, 0.69), coordsA=overview[0].transData, coordsB=zoom.transAxes,
-        axesA=overview[0], axesB=zoom, color=ORANGE, lw=0.8,
-        arrowstyle='->', shrinkA=2, shrinkB=2))
-    fig.subplots_adjust(left=0.12, right=0.99, top=0.92, bottom=0.17)
+        xyA=(((selected_start+selected_end)/2-data['timeline_cases'][0]['lo_ck'])*tick+5, 0),
+        xyB=(-0.6, dq_y), coordsA=overview[0].transData, coordsB=zoom.transData,
+        axesA=overview[0], axesB=zoom, color=INK, lw=1.1, linestyle=(0, (4, 3)),
+        arrowstyle='-|>', mutation_scale=14, shrinkA=2, shrinkB=2))
     save(fig, out, 'fig7_step_timeline')
 
 

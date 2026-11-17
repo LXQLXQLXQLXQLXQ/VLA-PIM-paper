@@ -1,0 +1,36 @@
+2026-11-17 — Figure 7: clean labels, dashed connector, aligned lanes
+
+Removed (ch 0) from both overview DQ labels. Removed the left orange
+annotations/arrows, green DQ-window annotation/arrow, and every horizontal
+axis, including the inset ticks, label, and bottom spine. The only added
+locator in the left overview is the orange rectangle around down input.
+Necessary timing labels in the inset now use neutral dark text.
+
+The connector from the orange rectangle to the enlarged DQ row is now
+a longer horizontal dashed arrow with a larger arrowhead. The inset
+title is shortened to Enlarged down input; the request row is labelled
+VLM Request (RD). The caption uses VLM request consistently.
+
+Both inset lane centers and heights are derived from overview transforms:
+  native DQ lane aligns with panel (a)'s PIM DQ lane;
+  minimum VLM request window aligns with panel (b)'s PIM DQ lane.
+A render inspection verified both center and height differences below
+1e-8 display pixels, and checked that horizontal axes, colored annotation
+text, the channel suffix, and the removed overview annotations are absent.
+
+The six native down-input WR bursts, 14 CK gap, 11+2+2 CK request window,
+and red 1 CK overrun retain their previous timestamps and proportions.
+The request row remains a timing illustration, not a measured GPU trace.
+The native trace snapshots and experiment data are unchanged.
+
+Vector PDF and 600 dpi PNG reviewed standalone and on manuscript page 7.
+Two pdfLaTeX passes succeeded: 8 pages, 6 figures, 2 tables; zero overfull
+boxes, missing characters, undefined references, or duplicate labels.
+The isolated build starts from 0a4fcd8 plus this figure-only revision.
+Manuscript body and Figure 10 are unchanged.
+
+Reproduction:
+  python3 figures/plot-timeline-rates.py --figure timeline
+
+Pre-edit backup relative to the parent PIM_for_VLA workspace:
+  essay/backups/Fig7_aligned_clean_before_20261117_0a4fcd8.tar.gz
