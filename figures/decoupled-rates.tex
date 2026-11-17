@@ -2,5 +2,5 @@
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_decoupled_rate.pdf}
 \setcounter{figure}{9}
-\caption{VLM 与 AE 解耦运行时的 AE 动作块频率与 VLM KV 刷新频率。虚线和点线分别为 Thor 上 VLM、AE 各自独占 GPU 时的频率。}\label{fig:decoupled-rates}
+\caption{AE action-chunk rate and VLM KV refresh rate under decoupled execution. The dashed and dotted lines show the measured standalone rates of the VLM and AE on Thor. VLA-PIM rates are extrapolated from one overlap window.}\label{fig:decoupled-rates}
 \end{figure}

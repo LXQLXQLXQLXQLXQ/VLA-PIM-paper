@@ -1,0 +1,22 @@
+% Logical field roles only: this is not a JEDEC pin/cycle encoding diagram.
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\footnotesize,
+  field/.style={draw=black!60,minimum height=0.7cm,align=center},
+  flow/.style={-Latex,draw=black!65,line width=0.6pt}]
+\node[anchor=west,font=\small\bfseries] at (0,2.4) {RD command: logical fields};
+\node[field,minimum width=1.1cm,fill=black!4] at (0.55,1.65) {RD};
+\node[field,minimum width=1.5cm,fill=orange!10] (bg) at (1.85,1.65) {BG[1:0]};
+\node[field,minimum width=1.5cm,fill=orange!10] (ba) at (3.35,1.65) {BA[1:0]};
+\node[field,minimum width=2.3cm,fill=blue!5] (col) at (5.25,1.65) {Column address};
+\node[align=center] (op) at (2.6,0.3) {4-bit PIM operation\\Executed by all 16 banks};
+\node[align=center] (addr) at (5.25,0.3) {Select data column\\in the active row};
+\draw[flow] (bg.south) -- (1.85,1) -| (op.north);
+\draw[flow] (ba.south) -- (3.35,1) -| (op.north);
+\draw[flow] (col.south) -- (addr.north);
+\node[align=center,font=\scriptsize,text=black!70] at (3.2,-0.55) {DRAM mode: BG/BA select a bank.\quad PIM mode: BG/BA select an operation.};
+\end{tikzpicture}
+\setcounter{figure}{5}
+\caption{Logical reuse of RD command fields in PIM mode. The four BG/BA bits encode the operation (Table~\ref{tab:isa}), while the column field addresses the data. Fields are shown schematically, rather than in C/A pin or cycle order.}
+\label{fig:command-fields}
+\end{figure}

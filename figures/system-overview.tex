@@ -1,0 +1,27 @@
+% Schematic drawn from the supplied methodology; no additional hardware is implied.
+\begin{figure*}[!t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\small,
+  block/.style={draw=black!65,rounded corners=2pt,align=center,line width=0.7pt},
+  data/.style={Latex-Latex,line width=1pt,draw=blue!60!black}]
+\node[block,fill=blue!5,minimum width=3.5cm,minimum height=2.8cm] (gpu) at (0,0) {};
+\node[font=\bfseries] at (0,0.95) {GPU};
+\node[align=center] at (0,0.2) {VLM inference\\AE nonlinear operators};
+\node[font=\footnotesize] at (0,-0.85) {Normalization, softmax, etc.};
+\node[block,fill=black!3,minimum width=2.8cm,minimum height=2.8cm,align=center] (mc) at (4.3,0) {Memory controller\\\footnotesize Kernel-level DQ ownership\\\footnotesize JEDEC-compatible commands};
+\node[block,fill=blue!5,minimum width=4.8cm,minimum height=1.2cm] (dram) at (11.3,1.05) {DRAM rank (CS0)\\VLM weights and data};
+\node[block,fill=orange!8,minimum width=4.8cm,minimum height=1.6cm] (pim) at (11.3,-1.05) {PIM rank (CS1)\\AE linear operators and local RoPE\\\footnotesize 4 BG $\times$ 4 banks; local buffers and MACs};
+\draw[data] (gpu.east) -- (mc.west);
+\draw[data] (mc.east) -- (7.7,0);
+\draw[line width=1pt,draw=blue!60!black] (7.7,-1.05) -- (7.7,1.05);
+\draw[data] (7.7,1.05) -- (dram.west);
+\draw[data] (7.7,-1.05) -- (pim.west);
+\node[align=center,font=\footnotesize,above] at (6.85,0.15) {Shared\\C/A and DQ};
+\node[draw=black!50,dashed,rounded corners=3pt,fit=(dram)(pim),inner sep=9pt] (channel) {};
+\node[above=2pt of channel,font=\bfseries\small] {One LPDDR5X channel};
+\node[below=4pt of channel,align=center,font=\footnotesize] {16 independent x16 channels across 8 packages; 273 GB/s peak};
+\end{tikzpicture}
+\setcounter{figure}{3}
+\caption{Overall architecture of \sys{}. Each channel has an independently selected DRAM rank for GPU-side VLM accesses and a PIM rank for AE computation. The ranks share the external C/A and DQ interfaces; bank-local PIM computation uses internal bandwidth.}
+\label{fig:system-overview}
+\end{figure*}

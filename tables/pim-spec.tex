@@ -1,20 +1,21 @@
-% Source caption: 表 IV：PIM rank 关键规格
-\begin{table}[t]
-\centering
-\caption{PIM rank 关键规格}
+% Existing data retained; English captions and references synchronized with the 2026-11-17 source.
+\begin{table}[!t]
+\caption{Key Specifications of a PIM Rank}
 \label{tab:pim-spec}
+\centering
 \footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.23\linewidth} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{0.23\linewidth}@{}}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.27\columnwidth}>{\raggedright\arraybackslash}p{0.42\columnwidth}>{\raggedright\arraybackslash}p{0.24\columnwidth}@{}}
 \toprule
-项目 & VLA-PIM & Samsung LPDDR5X-PIM{[}4{]} \\
+\textbf{Item} & \textbf{\sys{}} & \textbf{Samsung LPDDR5X-PIM~\cite{samsung_lpddr5x_pim}} \\
 \midrule
-接口 & LPDDR5X-8533，x16，BG 模式 & 【待核】 \\
-每 rank bank 数 & 16（4 BG \(\times\) 4） & 【待核】 \\
-每 bank 计算单元 & 16 \(\times\) BF16 MAC（FP32 累加），256-bit & 【待核】 \\
-每 bank 输入缓冲 & 1 KiB & 【待核】 \\
-每 bank 输出缓冲 & 2 KiB（FP32） & 【待核】 \\
-本地 RoPE & 每 bank 1 个 & 无 \\
-新增数据通路 & Row Buffer \(\rightarrow\) Input Buffer 广播（输入预装载） & 无 \\
+Interface & LPDDR5X-8533, x16, BG mode & \todo{verify} \\
+Banks per rank & 16 (4 BG $\times$ 4) & \todo{verify} \\
+Compute per bank & $16\times$ BF16 MAC (FP32 accum.), 256-bit & \todo{verify} \\
+Input buffer per bank & 1~KiB & \todo{verify} \\
+Output buffer per bank & 2~KiB (FP32) & \todo{verify} \\
+Local RoPE & 1 per bank & None \\
+New datapath & Row Buffer $\rightarrow$ Input Buffer broadcast (input preloading) & None \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}

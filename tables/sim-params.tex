@@ -1,17 +1,18 @@
-% Source caption: 表 VII：主要仿真参数
-\begin{table}[t]
-\centering
-\caption{主要仿真参数}
+% Existing data retained; English captions and references synchronized with the 2026-11-17 source.
+\begin{table}[!t]
+\caption{Main Simulation Parameters}
 \label{tab:sim-params}
-\small
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{0.26\linewidth} >{\raggedright\arraybackslash}X@{}}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.22\columnwidth}>{\raggedright\arraybackslash}p{0.74\columnwidth}@{}}
 \toprule
-参数 & 取值 \\
+\textbf{Parameter} & \textbf{Value} \\
 \midrule
-内存 & LPDDR5X-8533，16 通道 \(\times\) x16，每通道 2 rank，BG 模式 4 BG \(\times\) 4 bank \\
-时钟 & CK = 0.938 ns，WCK:CK = 4:1，WCK always-on \\
-主要时序 (CK) & CL/CWL 23/12；tRCD 20(读)/9(写)；tRP 20(pb)/23(ab)；tRAS/tRC 45/65；tRRD/tFAW 4/16；tWTR\_\allowbreak{}S/L 7/13；tWR 37；tCCD\_\allowbreak{}L 4 \\
-刷新 (CK) & tRFCab/pb 224/128；tREFI/tREFIpb 4164/520 \\
+Memory & LPDDR5X-8533, 16 channels $\times$ x16, 2 ranks per channel, BG mode with 4 BG $\times$ 4 banks \\
+Clock & CK $=0.938$~ns, WCK:CK $=4{:}1$, WCK always-on \\
+Key timing (CK) & CL/CWL 23/12; tRCD 20 (RD)/9 (WR); tRP 20 (pb)/23 (ab); tRAS/tRC 45/65; tRRD/tFAW 4/16; tWTR\_S/L 7/13; tWR 37; tCCD\_L 4 \\
+Refresh (CK) & tRFCab/pb 224/128; tREFI/tREFIpb 4164/520 \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}

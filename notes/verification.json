@@ -1,33 +1,32 @@
 {
-  "date": "2026-11-16",
+  "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Restore Chinese methodology through conclusion and supplied figures from local v3; preserve upstream front matter and author block.",
-  "english_backup_commit": "7e7442db239df98b82a372167e82c4453d1ecb74",
-  "english_backup_branch": "backup/english-2026-11-16-7e7442d",
-  "source_sha256": "7797a97b88e6f6741ad653d3dfd1f41655b1c012523862b22f87fab931e899fb",
+  "scope": "Full English manuscript; Motivation from the user push; Methodology through Conclusion and figures/tables from the supplied Google Doc.",
+  "source": {
+    "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
+    "document_title": "Methodology 翻译",
+    "revision_id": "AHj4eMTwOQNaQAbrMlnLFG-tQMjnAziOiw9ULc5G3Zjj7vHsMmiSt21ClmWVI8v6BtKPwU-Ijqnx4x618tGV8tFIJdE19Q1YSQ4RBPTq-7s",
+    "motivation_upstream_commit": "05a7804"
+  },
   "validation": {
     "pdfLaTeX": {
-      "exit_code": 0,
-      "passes": 2,
-      "missing_characters": 0,
+      "engine": "pdfTeX 1.40.21 / TeX Live 2020",
+      "passes_after_final_edits": 2,
+      "exit_code_each": 0,
       "overfull_boxes": 0,
-      "undefined_references": false,
-      "underfull_boxes": 9
-    },
-    "XeLaTeX": {
-      "exit_code": 0,
-      "passes": 2,
+      "underfull_boxes": 5,
       "missing_characters": 0,
-      "overfull_boxes": 0,
       "undefined_references": false,
-      "underfull_boxes": 0
+      "rendered_chinese_characters": 0
     }
   },
-  "local_runtime_note": "TeX Live 2020; standard Times, Courier and CJK packages installed in scratch. Standard cm/cmextra/latxfont/symbols/pdftex35/gbsnu font maps explicitly initialized for the incomplete local pdfLaTeX runtime. No workaround added to manuscript.",
-  "missing_internal_refs": [],
-  "figures": 4,
-  "pages": 7,
-  "pdf_sha256": "6876152ede06c193817bbd6385c71a97db1b5741041c3ac756663825539cb5bc",
-  "template_class": "Original IEEEtran.cls unchanged",
-  "visual_review": "Front page, architecture figure, timeline, result table and gap/rate plots inspected; no clipping or overlap observed."
+  "pages": 9,
+  "figures": 6,
+  "tables": 4,
+  "template_class_unchanged": true,
+  "visual_review": "All rendered pages inspected; system overview, command fields, tables and data plots fit without clipping or overlap.",
+  "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
+  "pdf_sha256": "df49e404c5930acbd29b74003be5357fdc48134c9cce4f3e803958d38d6d3cf7",
+  "source_docx_sha256": "33f0d75a9d39552e24bda2d0b3fd65f581e57bbf885234139fc464dfa5884a1a",
+  "remaining_author_items": "See notes/editorial-checklist.txt."
 }

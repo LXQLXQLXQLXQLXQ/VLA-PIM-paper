@@ -1,5 +1,8 @@
-% Source: methodology-zh-v3.md, section VII
-% Chinese text retained; Drive comment metadata is kept only in the local backup.
-\section{结论}\label{sec:conclusion}
+% Source: Google Docs "Methodology 翻译", 2026-11-17; English paragraphs.
 
-本文提出 VLA-PIM，在边端 LPDDR 存储体系内协同组织 VLM 的 GPU 访存与 AE 的 PIM 计算。Rank 划分保留了全部通道为 GPU 供数的能力；面向共享总线的 token-wise 布局与生命周期感知的片内 RoPE，使 AE 每层经 DQ 的数据减少 14.3\%（与输入预装载合计减少 21.7\%）；输入预装载与 kernel 粒度的协同调度把剩余传输集中起来，使 GPU 在 PIM 计算期间保持单独运行时 92.2\% 的带宽。这套设计把``减少传输量''与``组织传输时序''结合起来，使异构执行的目标从单纯加速 AE，扩展为在维持 GPU 访存服务的同时与 PIM 计算有效重叠。在 Thor 实测与周期精确仿真下，VLA-PIM 的 AE 推理频率达到 Thor 串行执行的 1.82\(\times\)、双流 GPU 基线的 1.76\(\times\)。
+\section{Conclusion}
+\label{sec:conclusion}
+
+This paper proposes \sys{}, a novel architecture that enables the concurrent execution of VLM memory accesses (on the GPU) and AE computations (on the PIM) within edge LPDDR memory systems. By employing rank-level partitioning, \sys{} completely preserves the full channel capacity for serving GPU data requests. Furthermore, the DQ-aware token-wise data layout and the in-bank RoPE mechanism jointly reduce the AE's per-layer DQ traffic by $14.3\%$. To orchestrate this, the input-preloaded dataflow and kernel-granularity co-scheduling consolidate the remaining data transfers, enabling the GPU to sustain high bandwidth during the PIM computation phase.
+
+Ultimately, this design paradigm elevates the objective of heterogeneous execution, shifting the goal from merely accelerating the AE in isolation to achieving highly efficient execution overlap while sustaining continuous GPU memory services. Validated through measurements on the NVIDIA Thor and cycle-accurate Ramulator simulations, \sys{} achieves an AE inference frequency of $1.82\times$ and $1.76\times$ those of the serial Thor execution and the dual-stream GPU baseline, respectively.
