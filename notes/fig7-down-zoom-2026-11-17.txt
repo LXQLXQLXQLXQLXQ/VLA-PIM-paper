@@ -1,0 +1,45 @@
+2026-11-17 — Figure 7: compact left overview and right down-input inset
+
+User selected the down operator's genuine 14 CK gap after checking that
+PV/O/gate-up only have 2–3 CK short input gaps in the existing native trace.
+The earlier qkv-start locator is removed. The two left overview panels
+are compressed horizontally and retain no horizontal ticks or labels.
+A rectangular locator in the down input stream connects to the right inset;
+there is no panel (c) or complete VLM kernel timeline.
+
+Native selection: combined-e, physical channel 0, step 0, layer 0, stage 8.
+Six consecutive input WR bursts, each 2 CK wide:
+  359538–359540, 359542–359544, 359546–359548,
+  359562–359564, 359566–359568, 359570–359572.
+The selected gap is CK 359548–359562 (14 CK = 13.132 ns).
+It begins 291.662658 us after the layer starts at CK 48607.
+The inset preserves every WR width and gap; its relative origin is CK 359538.
+The left rectangle is a locator and is wider than the selected ns-scale
+segment so it can be seen at the full-layer overview scale.
+
+The GPU request row is an illustration of minimum DQ timing, not an
+observed rank0 request or GPU SM pause trace. Earliest candidate window:
+  WR→RD guard: CK 359548–359559, 11 CK
+  GPU RD data: CK 359559–359561,  2 CK
+  RD→WR guard: CK 359561–359563,  2 CK
+The recorded next PIM WR starts at CK 359562: the return guard overruns
+the available gap by 1 CK. This overrun is shown in red. The caption
+retains the distinction that a GPU WR needs only 4 CK and is not excluded
+by this 14 CK gap under DQ timing alone.
+
+Reproduction:
+  python3 figures/analyze-streaming-gaps.py
+  python3 figures/plot-timeline-rates.py --figure timeline
+Snapshots: figures/data/timeline-rates-20261117.json and
+figures/data/streaming-input-gap-20261117.json.
+Native trace/raw checksums and the different-rank command-pair matrix
+are verified; experiment data and PIM timestamps are unchanged.
+
+Validation: vector PDF and 600 dpi PNG reviewed standalone and on paper
+page 7. Two pdfLaTeX passes succeeded: 8 pages, 6 figures, 2 tables,
+no overfull boxes, missing characters, undefined references, or duplicate
+labels. Source-English body paragraphs and Figure 10 remain unchanged.
+
+Pre-edit source backup relative to the parent PIM_for_VLA workspace:
+  essay/backups/Fig7_down_zoom_before_20261117_b61c320.tar.gz
+This revision supersedes fig7-no-axes-2026-11-17.txt's full-width layout.

@@ -37,13 +37,15 @@ def main():
     required = {q: edges['W'+q]+2+edges[q+'W'] for q in 'RW'}
     stages = {s['stage_id']: s for s in raw['stages']}
     counts = {s: Counter() for s in ['all_input_WW', 'first_layer_input_WW', 'qkv_stage0_WW']}
-    previous, examples = {}, {}
+    previous, examples, down_bursts = {}, {}, []
     with trace.open() as stream:
         for row in csv.DictReader(stream):
             assert row['channel'] == '0'
             burst = {k: row[k] for k in ['direction', 'stage', 'command']}
             burst.update({k: int(row[k]) for k in ['start_ck', 'end_ck', 'stage_id']})
             sid = burst['stage_id']
+            if sid == 8:
+                down_bursts.append(burst)
             assert burst['end_ck']-burst['start_ck'] == 2
             left = previous.get(sid)
             if left and left['direction'] == burst['direction'] == 'W':
@@ -75,9 +77,20 @@ def main():
                   source_trace_sha256=trace_sha,
                   source_matrix='experiments/2026-11-16/source/reference/spec/command-pair-matrix.json',
                   source_matrix_sha256=sha(matrix))
+    index = next(i for i, (left, right) in enumerate(zip(down_bursts, down_bursts[1:]))
+                 if left['direction'] == right['direction'] == 'W'
+                 and right['start_ck']-left['end_ck'] == 14)
+    selected = down_bursts[index-2:index+4]
+    assert len(selected) == 6 and all(b['direction'] == 'W' for b in selected)
+    result['zoom'] = dict(stage='down', stage_id=8, gap_ck=14,
+                          left=down_bursts[index], right=down_bursts[index+1],
+                          bursts=selected,
+                          definition='Six consecutive native input WR bursts; GPU RD row shows required DQ timing rather than observed GPU requests.')
+    result['read_excluded_example'] = dict(left=down_bursts[index],
+                                           right=down_bursts[index+1], gap_ck=14)
     args.out.write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps(dict(required_ck=required, scopes=scopes,
-                          read_excluded_example=examples[14]), indent=2))
+                          zoom=result['zoom']), indent=2))
 
 
 if __name__ == '__main__':

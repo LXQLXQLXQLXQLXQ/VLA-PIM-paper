@@ -7,19 +7,19 @@
   "read_excluded_example": {
     "left": {
       "direction": "W",
-      "stage": "qkv",
+      "stage": "down",
       "command": "WR",
-      "start_ck": 52394,
-      "end_ck": 52396,
-      "stage_id": 0
+      "start_ck": 359546,
+      "end_ck": 359548,
+      "stage_id": 8
     },
     "right": {
       "direction": "W",
-      "stage": "qkv",
+      "stage": "down",
       "command": "WR",
-      "start_ck": 52410,
-      "end_ck": 52412,
-      "stage_id": 0
+      "start_ck": 359562,
+      "end_ck": 359564,
+      "stage_id": 8
     },
     "gap_ck": 14
   },
@@ -125,5 +125,77 @@
   "source_trace": "experiments/2026-11-16/results/combined-e/repeat-1/dq-bursts.csv",
   "source_trace_sha256": "29a409a3350516f86757cd53d514d2a640f127b7cd4c9cf5ae57d6786ba59ca9",
   "source_matrix": "experiments/2026-11-16/source/reference/spec/command-pair-matrix.json",
-  "source_matrix_sha256": "e016cb00d939550bd1592e41bfe34974601609f1ed2a33f9d36e6cb054d404e3"
+  "source_matrix_sha256": "e016cb00d939550bd1592e41bfe34974601609f1ed2a33f9d36e6cb054d404e3",
+  "zoom": {
+    "stage": "down",
+    "stage_id": 8,
+    "gap_ck": 14,
+    "left": {
+      "direction": "W",
+      "stage": "down",
+      "command": "WR",
+      "start_ck": 359546,
+      "end_ck": 359548,
+      "stage_id": 8
+    },
+    "right": {
+      "direction": "W",
+      "stage": "down",
+      "command": "WR",
+      "start_ck": 359562,
+      "end_ck": 359564,
+      "stage_id": 8
+    },
+    "bursts": [
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359538,
+        "end_ck": 359540,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359542,
+        "end_ck": 359544,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359546,
+        "end_ck": 359548,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359562,
+        "end_ck": 359564,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359566,
+        "end_ck": 359568,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359570,
+        "end_ck": 359572,
+        "stage_id": 8
+      }
+    ],
+    "definition": "Six consecutive native input WR bursts; GPU RD row shows required DQ timing rather than observed GPU requests."
+  }
 }
