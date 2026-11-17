@@ -112,8 +112,14 @@ def timeline(data, out, detail):
                              facecolor='#e34a33', edgecolor='#e34a33', hatch='///', alpha=0.65))
     zoom.vlines(gap_end, request_bottom-0.10, dq_y+dq_height/2,
                 color=INK, ls=':', lw=0.8)
-    zoom.annotate('1 CK too long', xy=(required_end-0.5, request_y),
-                  xytext=(length, request_y+0.25), ha='right', fontsize=6.0, color=INK,
+    zoom.annotate('2CK Data Burst',
+                  xy=(gap_start+guard_wr_rd+burst/2, request_y+request_height/2),
+                  xytext=(gap_start+2, request_y+0.20), ha='center', va='bottom',
+                  fontsize=6.0, color=INK,
+                  bbox={'facecolor':'white', 'edgecolor':'none', 'pad':0.6},
+                  arrowprops={'arrowstyle':'->', 'color':INK, 'lw':0.8, 'linestyle':'--'})
+    zoom.annotate('1CK too short for\nrank switching', xy=(required_end-0.5, request_y),
+                  xytext=(length, request_y+0.20), ha='right', va='bottom', fontsize=6.0, color=INK,
                   bbox={'facecolor':'white', 'edgecolor':'none', 'pad':0.6},
                   arrowprops={'arrowstyle':'->', 'color':INK, 'lw':0.8, 'linestyle':'--'})
     zoom.text((gap_start+required_end)/2, request_bottom-0.035,

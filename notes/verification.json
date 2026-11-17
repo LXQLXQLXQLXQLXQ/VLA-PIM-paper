@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Figure 7 restored to a double-column float at text width; retain 7.5 pt white labels, cleaned panel titles, and VLM Request alignment with panel (b) PIM stages.",
+  "scope": "Figure 7: label the green payload 2CK Data Burst and the red return-turnaround shortfall 1CK too short for rank switching.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -131,7 +131,10 @@
         "(a) Streaming input",
         "(b) Input preloading"
       ],
-      "double_column": true
+      "double_column": true,
+      "green_data_burst_label": "2CK Data Burst",
+      "red_rank_switching_shortfall_label": "1CK too short for rank switching",
+      "callout_leaders": "black dashed arrows"
     },
     "memory_timing_note": {
       "removed_table": "tab:sim-params",
@@ -177,13 +180,13 @@
   "figures": 6,
   "tables": 2,
   "template_class_unchanged": true,
-  "visual_review": "Figure 7 reviewed standalone and spanning both columns on page 7: 7.5 pt white stage labels display horizontally; configuration suffixes remain removed; native DQ aligns with panel (a) DQ and VLM Request with panel (b) PIM stages.",
-  "pdf_sha256": "931cb30f25c3a28f4d35fc4db72c02ebb52ad6dcb52bdb6612fef62856a77ad7",
+  "visual_review": "Figure 7 callouts reviewed standalone and on double-column page 7: green 2 CK payload and red 1 CK rank-switch shortfall have separate black labels and dashed leaders, without overlap. Existing stage alignment and figure layout retained.",
+  "pdf_sha256": "d043628fd954a6ce07dcc1d71ffa1fe4fdc487c563fc741968acf51f8f55b3f5",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
   "revision_notes": "notes/fig7-double-column-2026-11-17.txt",
   "previous_figure_revision_notes": "notes/figure-revision-2026-11-17.txt",
-  "previous_verification_archive": "../essay/backups/Fig7_double_column_before_20261117_20b46b7.tar.gz:notes/verification.json",
+  "previous_verification_archive": "../essay/backups/Fig7_burst_labels_before_20261117_540c3bc.tar.gz:notes/verification.json",
   "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
   "previous_revision_notes": "notes/fig7-single-column-2026-11-17.txt"
 }

@@ -26,3 +26,9 @@ Reproduction:
 Pre-edit backups relative to the parent PIM_for_VLA workspace:
   essay/backups/Fig7_double_column_before_20261117_20b46b7.tar.gz
   essay/backups/Fig7_double_column_working_edits_before_20261117_20b46b7.patch
+
+Follow-up: added black callouts with dashed leaders: 2CK Data Burst points
+to the green 2 CK payload; 1CK too short for rank switching points to the
+red 1 CK return-turnaround shortfall, replacing 1 CK too long. Both labels
+were reviewed standalone and on page 7 after two successful TeX passes.
+Backup: essay/backups/Fig7_burst_labels_before_20261117_540c3bc.tar.gz.
