@@ -15,27 +15,22 @@ These execution patterns motivate a heterogeneous hardware design. Processing-in
 \subsection{LPDDR-PIM for Edge Inference}
 \label{sec:background-b}
 
-LPDDR combines energy efficiency with compact packaging and serves as main memory in edge platforms such as NVIDIA Orin and Thor~\cite{micron_lpddr}. LPDDR-PIM adds computation within DRAM. Samsung's LPDDR5X-PIM, for example, couples a processing unit with each bank to exploit the aggregate internal bandwidth~\cite{samsung_lpddr5x_pim}.
+LPDDR combines energy efficiency with compact packaging and serves as the main memory in edge platforms such as NVIDIA Orin and Thor~\cite{micron_lpddr}. LPDDR-PIM integrates processing units directly inside the DRAM die to accelerate memory-bound workloads. For example, Samsung's LPDDR5X-PIM places a processing unit next to each bank~\cite{samsung_lpddr5x_pim}. During execution, these units read weights directly from local bank row buffers and receive shared input vectors through internal broadcast paths. By operating across all banks in parallel, PIM utilizes the high aggregate internal bandwidth without moving weights over the external memory bus.
 
-LPDDR is organized into channels, ranks, and banks. Each channel provides independent command/address (C/A) and data (DQ) buses. Ranks within a channel are selected by separate chip-select (CS) signals and have independent storage arrays, but share the channel's external buses. Within each rank, PIM units access data through local bank paths. The shared buses must therefore serve both GPU memory requests and PIM data transfers.
-
-Existing designs introduce additional hardware to support concurrency. NeuPIMs adds dual row buffers within each bank~\cite{neupims}, while LP-Spec introduces a near-data memory controller, independent command paths, and buffers~\cite{lp_spec}. These mechanisms do not directly apply to a configuration that retains conventional row buffers and shared C/A and DQ interfaces, motivating alternative ways to manage shared-bus traffic.
-
+An LPDDR device is organized into channels, ranks, and banks. Each channel provides independent command/address (C/A) and data (DQ) buses. Within a channel, ranks contain separate storage arrays and are selected by individual chip-select (CS) signals. This physical organization supports rank-level partitioning for heterogeneous execution. Specifically, assigning AE computation and VLM memory accesses to different ranks allows PIM units to compute using their local bank arrays while all channels remain available to serve standard GPU requests. However, ranks within the same channel still share the external C/A and DQ buses, meaning that GPU memory traffic and PIM data transfers must share the same external interface.
 
 \subsection{Challenges of Sharing the LPDDR Bus}
 \label{sec:background-c}
 
-Two aspects of PIM communication limit the bandwidth available to the GPU:
+Because ranks share the external buses, concurrent execution introduces two communication bottlenecks that limit the bandwidth available to the GPU:
 
-\begin{enumerate}
-    \item \textbf{Fragmented access windows.}
-    Streaming inputs into limited PIM buffers interleaves external transfers with internal computation, leaving short, scattered DQ idle windows. GPU accesses must satisfy cross-rank and read/write turnaround timing constraints. Short windows may not accommodate a useful transfer, while frequent switching reduces efficiency. Consequently, usable GPU bandwidth depends on both the duration and distribution of these windows.
+\textbf{Fragmented access windows.} PIM units have small on-chip buffers and require frequent input streaming over the DQ bus. Interleaving these external transfers with internal computation breaks the bus timeline into short, scattered idle windows. Meanwhile, GPU memory accesses must obey cross-rank and read/write turnaround timing constraints. Short idle windows are often too brief for useful data transfers, and frequent bus switching degrades overall utilization.
 
-    \item \textbf{Communication overhead from data mapping.}
-    Local broadcasts remain within a rank, whereas inter-rank exchanges routed through the host memory controller occupy DQ. Feature-wise partitioning of attention can require such exchanges to combine partial results. Similarly, Q/K tensors produced in PIM must travel to the GPU and back if rotary position embedding (RoPE) is performed there. These transfers recur across denoising steps, increasing AE latency and reducing bandwidth available to the VLM. Data partitioning and operator placement must therefore account for their external communication costs.
-\end{enumerate}
+\textbf{Communication overhead from data mapping.} Data broadcasts within a single rank stay local, whereas data exchanges across ranks must travel through the host memory controller over the DQ bus. For example, feature-wise partitioning of attention requires cross-rank communication to accumulate partial results. Similarly, if rotary position embedding (RoPE) runs on the GPU, the Q and K tensors generated in PIM must be sent to the GPU and written back. Because these transfers repeat at every denoising step, they increase AE latency and consume off-chip bandwidth needed by the VLM.
 
-These observations motivate VLA-PIM's design: assign GPU memory accesses and AE computation to separate ranks, then combine input preloading with communication-efficient data mapping to reduce external transfers and create contiguous GPU access windows.
+Existing PIM designs address bus contention by modifying the memory hardware. For instance, NeuPIMs adds dual row buffers inside each bank~\cite{neupims}, while LP-Spec introduces a near-data memory controller with separate command paths and buffers~\cite{lp_spec}. However, these approaches do not apply to standard LPDDR interfaces that retain conventional row buffers and shared C/A and DQ buses.
+
+These constraints motivate the design of VLA-PIM. Building on rank-level partitioning on unmodified LPDDR interfaces, VLA-PIM combines input preloading with communication-aware data mapping. This design minimizes external data transfers and consolidates contiguous bus access windows for the GPU.
 
 % \subsection{异步 VLA 的执行特征与带宽瓶颈}
 % \label{sec:background-a}
