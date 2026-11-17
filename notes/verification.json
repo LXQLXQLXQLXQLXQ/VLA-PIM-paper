@@ -1,7 +1,7 @@
 {
   "date": "2026-11-17",
   "main_document": "conference_101719.tex",
-  "scope": "Input-preloaded microarchitecture: render equations (1) and (2) on one line each, including their equation numbers; move read/write latency definitions into the following prose.",
+  "scope": "Single-line equation follow-up: equations (1), (2), and (3) each fit on one line with their equation numbers; equation (3) combines the original cycle and reciprocal-rate relations into an equivalent chained equality.",
   "source": {
     "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
     "document_title": "Methodology 翻译",
@@ -130,14 +130,23 @@
       "equation_2_uses_full_column_width": true,
       "formula_tokens_match_before_after_spacing_normalization": true,
       "visual_review_page": 3
+    },
+    "async_vla_equation": {
+      "label": "eq:ae-interval",
+      "single_line_display": true,
+      "equation_number_on_same_line": true,
+      "normal_font_size_retained": true,
+      "equivalent_chained_equality": true,
+      "original_cycle_and_rate_relations_retained": true,
+      "visual_review_page": 6
     }
   },
   "pages": 8,
   "figures": 6,
   "tables": 2,
   "template_class_unchanged": true,
-  "visual_review": "Figure 7 inspected standalone and on page 7: compact overviews at left, boxed down input linked to a right inset, six native WR bursts, a 14 CK gap, and a 15 CK GPU RD timing illustration with a red 1 CK overrun. No overlap or overview x axes. Figures 9/10 fit below. Input-preloaded equations (1) and (2) inspected on page 3: each formula and its number fit on a single line with no clipping or overlap.",
-  "pdf_sha256": "d4781874e34c9ef16a409e1d4e9bd963b4325f386e9ff65ffe7e30aed1dd96c8",
+  "visual_review": "Figure 7 inspected standalone and on page 7: compact overviews at left, boxed down input linked to a right inset, six native WR bursts, a 14 CK gap, and a 15 CK GPU RD timing illustration with a red 1 CK overrun. No overlap or overview x axes. Figures 9/10 fit below. Input-preloaded equations (1) and (2) inspected on page 3: each formula and its number fit on a single line with no clipping or overlap. Equation (3) inspected on page 6: cycle and reciprocal-rate relations form one chained equality at the normal font size; the equation number stays on the same line with no clipping or overlap.",
+  "pdf_sha256": "9402f4ff0f6b1f4ec09934aef11fd9813f4bb5e5198baf095de7c7e17f73cd67",
   "remaining_author_items": "See notes/editorial-checklist.txt.",
   "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
   "revision_notes": "notes/fig7-down-zoom-2026-11-17.txt",
