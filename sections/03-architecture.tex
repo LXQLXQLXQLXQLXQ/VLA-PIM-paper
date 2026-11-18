@@ -19,6 +19,9 @@
 
 % END-SOURCE-EN: 47
 
+\input{figures/microarchitecture}
+\input{tables/isa}
+
 \subsection{Input-Preloaded Microarchitecture}
 \label{sec:architecture-b}
 
@@ -81,7 +84,7 @@ To suit rank-level partitioning, \sys{} adds a direct datapath from the row buff
 A remaining concern is whether PIM commands on the shared C/A bus interfere with GPU accesses. Since AE linear operators are dominated by skinny GEMMs, a single RD command drives MAC operations for $M$ input rows, keeping PIM command density low. Under the input-preloaded dataflow, the PIM rank uses only about $13.5\%$ of the C/A bus during the computation window, when it does not occupy the DQ bus. Even if C/A conflicts delay GPU commands, total latency rises by only $0.51\%$, so C/A contention is negligible.
 % END-SOURCE-EN: 152
 
-\input{figures/microarchitecture}
+\input{figures/layout-dq}
 
 \subsection{PIM Command Interface and ISA Extension}
 \label{sec:architecture-c}

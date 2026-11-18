@@ -16,8 +16,7 @@ Each PIM bank adds a $1\,\mathrm{KiB}$ input buffer, a $2\,\mathrm{KiB}$ output 
 
 \subsection{Overall Performance}
 \label{sec:evaluation-b}
-We evaluate overall performance using the inference cycle, defined as the interval between consecutive AE outputs.
-This cycle is calculated by summing the standalone execution times of the VLM and AE and subtracting the time saved through concurrent execution.
+We report the inference cycle, i.e., the interval between consecutive AE outputs: the standalone VLM and AE times minus the time saved by concurrency.
 
 \input{figures/evaluation-summary}
 The full VLA-PIM design shortens the inference cycle of $\pi_{0.5}$ to $77.68\,\mathrm{ms}$ ($12.87\,\mathrm{Hz}$), achieving a $1.76\times$ speedup over the single-GPU dual-stream baseline.

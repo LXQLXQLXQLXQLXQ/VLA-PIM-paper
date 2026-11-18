@@ -1,6 +1,5 @@
 % Source: Google Docs "Methodology 翻译", 2026-11-17; original English, formatting conversion only.
 
-\input{tables/isa}
 
 \section{Dataflow and Scheduling}
 \label{sec:dataflow}
@@ -23,7 +22,7 @@ An efficient layout should therefore keep the reduction dimension within a rank 
 % END-SOURCE-EN: 192
 
 % SOURCE-EN: 207
-The prefix and suffix KV in the AE also have different lifetimes. The prefix KV is generated once by the VLM and stays read-only across all 10 denoising steps, so its RoPE can be applied during the VLM forward pass, adding no positional-encoding overhead to the denoising phase. The suffix KV, in contrast, is recomputed from $x_t$ and is valid only within the current layer and step, so its RoPE recurs across 10 steps and 18 layers. Running it on the GPU would require reading Q/K from the PIM, rotating them, and writing them back, incurring prohibitive data movement. Instead, \sys{} exploits the fact that RoPE's sine and cosine values depend only on the position ID, not on $t$, and precomputes them into static BF16 lookup tables stored in the DRAM arrays. Since RoPE involves only MAC operations between adjacent element pairs, \sys{} further adopts a pair-major feature mapping that keeps each rotation pair in the same bank, enabling in-place rotation within each bank. In-bank RoPE removes another $128\,\mathrm{KiB}$ per layer and denoising step ($2.1\%$). Combined with the token-wise layout, it reduces the AE's total DQ traffic from $6096\,\mathrm{KiB}$ to $5224\,\mathrm{KiB}$, a $14.3\%$ reduction.
+The prefix and suffix KV in the AE also have different lifetimes. The prefix KV is generated once by the VLM and stays read-only across all 10 denoising steps, so its RoPE is applied in the VLM forward pass at no denoising cost. The suffix KV is recomputed from $x_t$ in every layer and step, so its RoPE recurs across 10 steps and 18 layers; running it on the GPU would move Q/K back and forth over the DQ bus. Since RoPE’s sine and cosine depend only on the position ID, \sys{} precomputes them into static BF16 lookup tables in the DRAM arrays. Because RoPE needs only MACs between adjacent element pairs, a pair-major feature mapping keeps each pair in one bank for in-place rotation. In-bank RoPE removes another $128\,\mathrm{KiB}$ per layer and step ($2.1\%$), cutting the AE’s total DQ traffic from $6096\,\mathrm{KiB}$ to $5224\,\mathrm{KiB}$, a $14.3\%$ reduction.
 % END-SOURCE-EN: 207
 
 \subsection{GPU-PIM Co-scheduling}
@@ -37,5 +36,4 @@ For $\pi_{0.5}$ with WCK resynchronized at every rank switch, combining all the 
 
 % END-SOURCE-EN: 215
 
-\input{figures/layout-dq}
 \input{figures/timeline}
