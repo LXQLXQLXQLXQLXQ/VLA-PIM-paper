@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-18",
+  "request": "Match Fig. 5 fonts, sizes and formatting to Figs. 7 and 8",
+  "figure": 5,
+  "manuscript_page": 6,
+  "style": {
+    "family": "DejaVu Sans",
+    "weight": "normal",
+    "title_pt": 8,
+    "labels_and_legend_pt": 7,
+    "width_inches": 3.5,
+    "height_inches": 2.15,
+    "palette": "Blue/orange/green/gray from Figs. 7 and 8",
+    "line_color": "#52514e",
+    "bar_value_pt": 6
+  },
+  "renderer": "figures/plot-layout-dq.py",
+  "source_data": "figures/data/layout-dq-20261117.json",
+  "renderer_and_snapshot_recovered_from_commit": "fe76366",
+  "traffic_kib": {
+    "feature_wise": [
+      0,
+      992,
+      496,
+      64
+    ],
+    "token_wise": [
+      64,
+      496,
+      248,
+      128
+    ],
+    "totals": [
+      1552,
+      936
+    ],
+    "reduction": 616
+  },
+  "all_figure_text_and_numbers_preserved": true,
+  "manuscript_text_tokens_preserved": true,
+  "exports": {
+    "vector": [
+      "pdf",
+      "svg"
+    ],
+    "bitmap": [
+      "png",
+      "tif"
+    ],
+    "bitmap_dpi": 600,
+    "bitmap_pixels": [
+      2100,
+      1290
+    ],
+    "tiff_compression": "LZW",
+    "tiff_pixel_identical_to_png_rgb": true
+  },
+  "compile": {
+    "engine": "pdfLaTeX",
+    "successful_passes": 1,
+    "pages": 8,
+    "overfull_boxes": 0,
+    "undefined_references": false,
+    "missing_characters": 0
+  },
+  "visual_review": "Inspected exported PNG and compiled manuscript page 6; no clipping or overlap.",
+  "sha256": {
+    "figures/fig_layout_dq.pdf": "e1eb6760684c4457a24a28399ebaa794065a01c1e5b623bf9779e4eab3caa9cb",
+    "figures/fig_layout_dq.png": "766cdb3d93e0dd012d3b6f6e55e6fe5596d726f0cd7ae6f190f85cc0699916e0",
+    "figures/fig_layout_dq.svg": "6642bd11feb7ddb8984856d39c86e1a953fabf2a45d0749c9645caf0d9db5025",
+    "figures/fig_layout_dq.tif": "a197ea6e7ccecfdf1590d8f959503b06da5ee785271feedc5aa6ebe0bc4fe9b7",
+    "figures/plot-layout-dq.py": "e87f0e99f83693219df2900bac0fa1c102f71fc98372ffc44d57216933135dec"
+  },
+  "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-bar-values-20261118T181305",
+  "follow_up": "Reduce only the seven numbers inside stacked bars from 7 pt to 6 pt; other text retains its existing size."
+}
