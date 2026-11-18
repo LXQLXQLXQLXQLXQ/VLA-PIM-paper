@@ -14,7 +14,7 @@
     "missing_images": 0,
     "missing_characters": 0,
     "overfull_boxes": 0,
-    "underfull_hboxes": 21,
+    "underfull_hboxes": 24,
     "underfull_vboxes": 1,
     "main_document_byte_preserved": true,
     "first_four_figure_sources_byte_preserved": true,
@@ -126,10 +126,10 @@
     }
   ],
   "visual_review": "Merged manuscript page 7 inspected: two subplots fit in one column; figure is automatically numbered 7, with timeline 6 and decoupled rates 8. The appended area data on final page 10 also fits without clipping.",
-  "pdf_sha256": "cf4292ff866306d1ee845bf3d61faa5172c6e4f65ac906a9dbc26054359d0a4e",
+  "pdf_sha256": "ef7e51af3aef21332e0ed680a4536e790dac5ad790132944e63f638aa9859c86",
   "remaining_author_items": "Existing editorial TBD entries retained from the latest upstream source.",
   "table_I": {
-    "caption": "Key Specifications per PIM Package",
+    "caption": "Key Specifications Normalized to Four x16 PIM Dies",
     "page": 3,
     "number": "I",
     "values_source": "User-supplied table in this conversation",
@@ -149,5 +149,38 @@
     "BF16_equivalent_normalization_explicit": true
   },
   "performance_chart_verification": "notes/performance-chart-gr00t-2026-11-18.json",
-  "local_runtime": "Reused cached cite/Times metrics, placeins, and standard font maps; all runtime paths remain outside manuscript sources."
+  "local_runtime": "Reused cached cite/Times metrics, placeins, and standard font maps; all runtime paths remain outside manuscript sources.",
+  "memory_reference_revision": {
+    "date": "2026-11-18",
+    "base_commit": "5aecaf2",
+    "part_number": "MT62F2G32D4DS",
+    "verified_capacity": "8 GB/package (64 Gb)",
+    "manuscript_capacity_added": false,
+    "organization": "Four single-x16 dies; two x16 channels; two ranks/channel. One PIM rank/channel gives two PIM dies and 32 PIM banks/package.",
+    "table_I_basis": "Four x16 PIM dies (x64); numeric comparison entries retained under the explicit normalization.",
+    "area_appendix": "Reference changed to single-x16 dies; dual-x16 organization retained only as an alternative sensitivity case.",
+    "unchanged": "Simulator density, experimental results, power/energy values, area estimates, and figure assets.",
+    "primary_source": {
+      "author": "Micron Technology",
+      "title": "Y42M LPDDR5X SDRAM",
+      "revision": "D, November 2022",
+      "pages": [
+        1,
+        2
+      ],
+      "url": "https://www.mouser.com/datasheet/2/671/Micron_05092023_315b_441b_y42m_sdp_ddp_qdp_8dp_lpd-3175540.pdf"
+    },
+    "validation": {
+      "pdflatex_passes": 2,
+      "exit_code_each": 0,
+      "pages": 10,
+      "undefined_references": false,
+      "overfull_boxes": 0,
+      "visual_review_pages": [
+        3,
+        10
+      ],
+      "upstream_integrated": "6db0ce4 (latest Overleaf wording update)"
+    }
+  }
 }

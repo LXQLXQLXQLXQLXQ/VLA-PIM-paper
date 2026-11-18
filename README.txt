@@ -34,7 +34,8 @@ GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）�
 所有图统一自动编号为 1–8；时间线仍采用已确认的双栏版本。
 恢复记录见 notes/restored-back-figures-2026-11-17.txt。
 
-Table I 已按每个 x64 PIM 封装补齐 VLA-PIM、LP-Spec、AHASD 和 Samsung 四种方案。
+Table I 已按四个 x16 PIM 裸片（x64）统一归一化，比较 VLA-PIM、LP-Spec、AHASD 和 Samsung 四种方案。
+参考器件已更正为 Micron MT62F2G32D4DS；实际每封装含两个 PIM 裸片、32 个 PIM bank，与表中归一化口径分别注明。
 保留 BF16-equivalent 折算、AHASD 统计范围假设、缓冲区来源和时序说明；引用改为正式文献。
 详见 notes/tableI-completion-2026-11-17.txt。
 

@@ -85,7 +85,7 @@ Output RF & 6.633 & 0.534 & 6.099 \\
 The three denominator conventions are $A_{\mathrm{t}}/D$ for total evaluated blocks, $\Delta A/D$ for added area relative to bare DRAM, and $\Delta A/(D+A_{\mathrm{b}})$ for added area relative to the reference augmented with the matched baseline. They give $20.11\%$, $13.29\%$, and $12.44\%$, respectively. These are reference-normalized estimates, not measured full-chip overheads.
 
 \subsection{Physical Organization and Sensitivity Scenarios}
-The simulated configuration is 8~Gb/channel-rank, so the $60.92\,\mathrm{mm}^{2}$ 16~Gb reference cannot be treated as its measured die area. A channel-rank need not equal a physical die. The supplied Micron organization includes dual-$\times16$ dies: if both channels each install 16 datapaths, there are 32 per die. Installing PIM on only one channel uses the actual installed count; disabling a circuit does not remove its area. The scenarios below retain the same inferred multiplier.
+The simulated configuration is 8~Gb/channel-rank, so the $60.92\,\mathrm{mm}^{2}$ 16~Gb reference cannot be treated as its measured die area. The Micron MT62F2G32D4DS reference uses four single-$\times16$ dies, one per channel-rank, with 16 datapaths per PIM die. For sensitivity, an alternative dual-$\times16$ die with 16 datapaths per channel would have 32 datapaths per die. Installing PIM on only one channel uses the actual installed count; disabling a circuit does not remove its area. The scenarios below retain the same inferred multiplier.
 \par\smallskip
 {\centering\scriptsize\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}lrrr@{}}

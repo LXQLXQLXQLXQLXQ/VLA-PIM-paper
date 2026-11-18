@@ -1,7 +1,7 @@
 % User-supplied package-level comparison, 2026-11-17.
 % Throughput normalization and AHASD scope assumptions are stated below.
 \begin{table}[!t]
-\caption{Key Specifications per PIM Package}
+\caption{Key Specifications Normalized to Four x16 PIM Dies}
 \label{tab:pim-spec}
 \centering
 \footnotesize
@@ -21,7 +21,8 @@ Output buffer & 128\,KiB & 128\,KiB & 8\,KiB$^{\P}$ & 8\,KiB \\
 \end{tabularx}
 \par\vspace{2pt}
 \parbox{\columnwidth}{\scriptsize\raggedright
-Package = x64, $4\times$x16 dies.
+Comparison basis: x64, $4\times$x16 PIM dies.
+Each dual-rank x32 \sys{} package uses two PIM dies (32 PIM banks).
 $^{*}$BF16-equivalent; 8-bit throughput halved (same datapath width).
 $^{\dagger}$One 256-bit access per bank per $t_{\mathrm{CCD\_L}}$ (4\,CK at 1066.7\,MHz), 16 BF16 MAC/access.
 $^{\ddagger}$One 256-bit access per bank per 5\,ns.
