@@ -28,8 +28,8 @@ GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms；双流�
 核对依据和原始文件哈希见 notes/performance-chart-pi05-h16-2026-11-18.json。
 
 图1、3、4分别为独立单页PDF，仅裁外围空白，保留原矢量文字、路径和完整子图。
-新版五页PDF保存在 figures/sources/figures1107-20261119-r2.pdf，采用第1、3页；图4来自 figures/sources/figures1107v3-20261119.pdf 的完整单页，仅裁外围空白，保留全部文字、矢量内容和原始嵌入位图。
-图4图注已对应新版bank内部微架构；裁剪及编译验证记录见 notes/fig4-v3-update-2026-11-19.json。
+新版五页PDF保存在 figures/sources/figures1107-20261119-r2.pdf，采用第1、3页；图4来自 figures/sources/figures1107v3-20261119-r2.pdf 的完整单页，仅裁外围空白，保留全部文字、矢量内容和原始嵌入位图。
+图4图注已对应新版bank内部微架构；裁剪及编译验证记录见 notes/fig4-v3-refresh-2026-11-19.json。
 新版PDF第2页仍是旧的1474×1119位图；图2采用本地新版矢量母版 figures/sources/vla-characterization-v17.pdf 直接导出PNG，横轴改为 Operational intensity (FLOP/B)。
 当前图2为1200 dpi、4914×3733无损PNG，未放大旧位图，未经过JPEG压缩；数据、标签、配色和布局保留。
 运行 python figures/export-vla-characterization.py --dpi 1200 可重新导出（需pypdfium2和Pillow）。

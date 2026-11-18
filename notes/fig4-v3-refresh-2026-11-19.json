@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-19",
+  "base_commit": "3272bacc4e86432d8321d4eb30c564ad263116dd",
+  "source": "figures/sources/figures1107v3-20261119-r2.pdf",
+  "source_sha256": "ba794b78cff6565869e118d94371c83ef82279d32c4c773637e894ea13b844f4",
+  "figure": 4,
+  "source_page": 1,
+  "output": "figures/microarchitecture.pdf",
+  "output_sha256": "0dd2ffd14c5b483e628ae2b91a72cf7c27bae166363199514dcc92e9722d9863",
+  "method": "Preserve the complete single-page figure; crop blank outer margins by changing PDF boxes only. No rasterization or image resampling.",
+  "crop_box_pt": [
+    61.25,
+    22.25,
+    636.5,
+    517.25
+  ],
+  "blank_border_padding_pt": 3,
+  "content_stream_byte_identical": true,
+  "extracted_text_identical": true,
+  "embedded_image_streams_identical": true,
+  "embedded_image_dimensions": [
+    [
+      92,
+      88
+    ]
+  ],
+  "single_page_output": true,
+  "render_comparison_288dpi_max_channel_difference": 1,
+  "validation": {
+    "engine": "pdfLaTeX / TeX Live 2026",
+    "passes": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "compile_errors": 0,
+    "undefined_references": false,
+    "missing_characters": 0,
+    "overfull_boxes": 0,
+    "underfull_hboxes": 7,
+    "main_document_and_sections_byte_preserved": true,
+    "other_figure_assets_byte_preserved": true,
+    "caption_label_size_and_float_settings_preserved": true,
+    "visual_review": "Inspected the supplied figure and the compiled manuscript page 4. Complete diagram, correct caption and references, no cropping loss or new layout collisions.",
+    "figures": [
+      {
+        "label": "fig:intro-overlap",
+        "number": 1,
+        "page": 1
+      },
+      {
+        "label": "fig:vla-characterization",
+        "number": 2,
+        "page": 2
+      },
+      {
+        "label": "fig:system-overview",
+        "number": 3,
+        "page": 3
+      },
+      {
+        "label": "fig:microarchitecture",
+        "number": 4,
+        "page": 4
+      },
+      {
+        "label": "fig:layout-dq",
+        "number": 5,
+        "page": 5
+      },
+      {
+        "label": "fig:timeline",
+        "number": 6,
+        "page": 6
+      },
+      {
+        "label": "fig:evaluation-summary",
+        "number": 7,
+        "page": 7
+      }
+    ]
+  }
+}
