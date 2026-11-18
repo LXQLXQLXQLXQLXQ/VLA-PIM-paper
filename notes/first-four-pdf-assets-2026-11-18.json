@@ -1,0 +1,158 @@
+{
+  "date": "2026-11-18",
+  "source": "figures/sources/figures1107-20261118.pdf",
+  "method": "Copy one source page per output and change PDF page boxes only. Preserve content streams, text, vector paths, fonts, and original image streams.",
+  "blank_border_padding_pt": 3,
+  "figures": [
+    {
+      "figure": 1,
+      "source": "figures/sources/figures1107-20261118.pdf",
+      "source_page": 1,
+      "source_sha256": "b358fc07fdab7697bbe9f3f2617b1552f50dd93bb7a06f11e9f86a376645c6a0",
+      "output": "figures/execution-overview.pdf",
+      "output_sha256": "be8624fef8d5d76ee616012e8a1e9196b47f070edd9b562e1fa1bef4f1657b45",
+      "source_media_box": [
+        0.0,
+        0.0,
+        720.0,
+        540.0
+      ],
+      "crop_box": [
+        169.25,
+        236.25,
+        526.25,
+        484.0
+      ],
+      "visible_size_pt": [
+        357.0,
+        247.75
+      ],
+      "content_stream_byte_identical": true,
+      "extracted_text_identical": true,
+      "image_streams_identical": true,
+      "drawing_operators_identical": true,
+      "image_count": 0,
+      "text_characters": 170,
+      "source_kind": "vector text and paths",
+      "rasterization_performed": false,
+      "image_resampling_performed": false,
+      "embedded_image_dimensions": [],
+      "single_page_output": true,
+      "render_matches_source_crop_at_288dpi": true
+    },
+    {
+      "figure": 2,
+      "source": "figures/sources/figures1107-20261118.pdf",
+      "source_page": 2,
+      "source_sha256": "b358fc07fdab7697bbe9f3f2617b1552f50dd93bb7a06f11e9f86a376645c6a0",
+      "output": "figures/vla-characterization.pdf",
+      "output_sha256": "efd45c24c4daba65b72f83d8b9bb9ea0a1e392d3cdb51541e474fe783de23665",
+      "source_media_box": [
+        0.0,
+        0.0,
+        720.0,
+        540.0
+      ],
+      "crop_box": [
+        34.0,
+        41.75,
+        666.5,
+        508.25
+      ],
+      "visible_size_pt": [
+        632.5,
+        466.5
+      ],
+      "content_stream_byte_identical": true,
+      "extracted_text_identical": true,
+      "image_streams_identical": true,
+      "drawing_operators_identical": true,
+      "image_count": 1,
+      "text_characters": 0,
+      "source_kind": "embedded raster image",
+      "rasterization_performed": false,
+      "image_resampling_performed": false,
+      "embedded_image_dimensions": [
+        [
+          1474,
+          1119
+        ]
+      ],
+      "single_page_output": true,
+      "render_matches_source_crop_at_288dpi": true
+    },
+    {
+      "figure": 3,
+      "source": "figures/sources/figures1107-20261118.pdf",
+      "source_page": 3,
+      "source_sha256": "b358fc07fdab7697bbe9f3f2617b1552f50dd93bb7a06f11e9f86a376645c6a0",
+      "output": "figures/system-overview.pdf",
+      "output_sha256": "aada948f79dc3a7b00e91ae1e81ce020aef605ba3def3ce07b52327ca473970b",
+      "source_media_box": [
+        0.0,
+        0.0,
+        720.0,
+        540.0
+      ],
+      "crop_box": [
+        4.0,
+        269.5,
+        691.75,
+        424.25
+      ],
+      "visible_size_pt": [
+        687.75,
+        154.75
+      ],
+      "content_stream_byte_identical": true,
+      "extracted_text_identical": true,
+      "image_streams_identical": true,
+      "drawing_operators_identical": true,
+      "image_count": 0,
+      "text_characters": 254,
+      "source_kind": "vector text and paths",
+      "rasterization_performed": false,
+      "image_resampling_performed": false,
+      "embedded_image_dimensions": [],
+      "single_page_output": true,
+      "render_matches_source_crop_at_288dpi": true
+    },
+    {
+      "figure": 4,
+      "source": "figures/sources/figures1107-20261118.pdf",
+      "source_page": 4,
+      "source_sha256": "b358fc07fdab7697bbe9f3f2617b1552f50dd93bb7a06f11e9f86a376645c6a0",
+      "output": "figures/microarchitecture.pdf",
+      "output_sha256": "a500d93e578d8582780fd509c34065a9846ea277093ea7f15607a9f18928971a",
+      "source_media_box": [
+        0.0,
+        0.0,
+        720.0,
+        540.0
+      ],
+      "crop_box": [
+        131.25,
+        136.25,
+        485.0,
+        448.0
+      ],
+      "visible_size_pt": [
+        353.75,
+        311.75
+      ],
+      "content_stream_byte_identical": true,
+      "extracted_text_identical": true,
+      "image_streams_identical": true,
+      "drawing_operators_identical": true,
+      "image_count": 0,
+      "text_characters": 373,
+      "source_kind": "vector text and paths",
+      "rasterization_performed": false,
+      "image_resampling_performed": false,
+      "embedded_image_dimensions": [],
+      "single_page_output": true,
+      "render_matches_source_crop_at_288dpi": true
+    }
+  ],
+  "original_filename": "figures1108/figures1107.pdf"
+}

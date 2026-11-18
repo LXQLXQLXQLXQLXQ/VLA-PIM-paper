@@ -1,11 +1,10 @@
 {
   "date": "2026-11-18",
   "main_document": "conference_101719.tex",
-  "scope": "Merge latest upstream manuscript changes with the pi0.5 / GR00T N1.6 performance comparison in two side-by-side panels within one column.",
-  "base_commit": "adfe9c5",
-  "restored_from": "c8e45c5",
+  "scope": "Replace Figures 1--4 with separate, cropped source-PDF pages in original page order.",
+  "base_commit": "884bb48011dd7bc7226398776a207d9e0aeaeaf5",
   "validation": {
-    "engine": "pdfLaTeX / TeX Live 2020",
+    "engine": "pdfLaTeX / TeX Live 2026",
     "passes": 2,
     "exit_code_each": 0,
     "compile_errors": 0,
@@ -14,26 +13,23 @@
     "missing_images": 0,
     "missing_characters": 0,
     "overfull_boxes": 0,
-    "underfull_hboxes": 24,
-    "underfull_vboxes": 1,
+    "underfull_hboxes": 4,
+    "underfull_vboxes": 0,
+    "each_source_page_maps_to_one_figure": true,
+    "four_single_page_pdf_assets": true,
+    "page_streams_byte_identical_to_source": true,
+    "rendered_crops_match_source_at_288dpi": true,
+    "no_rasterization_or_resampling": true,
     "main_document_byte_preserved": true,
-    "first_four_figure_sources_byte_preserved": true,
-    "restored_image_bytes_match_history": false,
-    "continuous_figure_numbering": true,
-    "all_eight_figure_sources_byte_preserved": false,
-    "table_I_no_placeholders": true,
-    "table_I_single_column": true,
-    "unmodified_figure_assets_preserved_from_upstream": true,
-    "performance_figure_updated_at_user_request": true,
-    "two_performance_panels_within_one_column": true,
-    "chart_values_match_archive": true,
-    "upstream_area_appendix_retained": true
+    "sections_and_tables_byte_preserved": true,
+    "figures_5_to_8_byte_preserved": true,
+    "captions_labels_and_float_settings_preserved": true
   },
   "figures": [
     {
       "label": "fig:intro-overlap",
       "number": 1,
-      "page": 2
+      "page": 1
     },
     {
       "label": "fig:vla-characterization",
@@ -71,144 +67,11 @@
       "page": 7
     }
   ],
-  "tables": 2,
-  "pages": 10,
-  "deferred_figure_inputs": [],
-  "restored_assets": [
-    {
-      "path": "figures/fig_layout_dq.pdf",
-      "sha256": "291606b396ce1c37548a96c91678f8b3de3592f53916fd75673e253f0b4f90c0",
-      "matches_original": true
-    },
-    {
-      "path": "figures/fig_layout_dq.png",
-      "sha256": "e33402719b223f301d4363f8aacf03326a871cabb5a0a63e66a179db0949c44c",
-      "matches_original": true
-    },
-    {
-      "path": "figures/fig7_step_timeline.pdf",
-      "sha256": "0885b293c2a140b28dd0654edca4865a30adb0de5d56a90cbcc74aca87adc0dc",
-      "matches_original": true
-    },
-    {
-      "path": "figures/fig7_step_timeline.png",
-      "sha256": "da44bb8a5227d6304f8a467bb3755790b693c29d6fc1d2dee79394f3c1d23cff",
-      "matches_original": true
-    },
-    {
-      "path": "figures/fig_async_vla_performance.pdf",
-      "sha256": "34671e33e98207b803496205d0e6533d8b011d800abcb5a1f10b5f50aaadc229",
-      "matches_original": false,
-      "restored_sha256_before_performance_revision": "2ca22147a544f5203db3e2e6364162f0598b8fe29ea3b8a2a2fa4e499b9b85da",
-      "intentionally_updated": "GR00T comparison in two side-by-side panels"
-    },
-    {
-      "path": "figures/fig_async_vla_performance.png",
-      "sha256": "3dfc61723dc7eac5fc41426ecb866a865ec8c8eb581520c444482addbf298f2d",
-      "matches_original": false,
-      "restored_sha256_before_performance_revision": "4695d1303d9b46cac29b9ecd564d19b013ac40a11d741a7871139d5b2a242e5a",
-      "intentionally_updated": "GR00T comparison in two side-by-side panels"
-    },
-    {
-      "path": "figures/fig_decoupled_rate.pdf",
-      "sha256": "544d40fac4550e42d0b0ce4b173b1f338e8283ba7031664eea52dbb480db2eef",
-      "matches_original": true
-    },
-    {
-      "path": "figures/fig_decoupled_rate.png",
-      "sha256": "5c5c16a2996758421ef44e2cf2e9f0123385d89367b4a9063908aac3b24e35da",
-      "matches_original": true
-    },
-    {
-      "path": "figures/fig_layout_dq.svg",
-      "sha256": "3f41ec9e68205f3fe818784a56c55e67c3b6af8ddfeee5bdeece68fa7dc1cfe7",
-      "matches_original": true
-    }
-  ],
-  "visual_review": "Merged manuscript page 7 inspected: two subplots fit in one column; figure is automatically numbered 7, with timeline 6 and decoupled rates 8. The appended area data on final page 10 also fits without clipping.",
-  "pdf_sha256": "545ca793b981281b71edaa791d8149b916729b35581611110a803498dc25ced1",
-  "remaining_author_items": "Existing editorial TBD entries retained from the latest upstream source.",
-  "table_I": {
-    "caption": "Key Specifications Normalized to Four x16 PIM Dies",
-    "page": 3,
-    "number": "I",
-    "values_source": "User-supplied table in this conversation",
-    "columns": [
-      "Item",
-      "VLA-PIM",
-      "LP-Spec",
-      "AHASD",
-      "Samsung"
-    ],
-    "citations": {
-      "lp_spec": "4",
-      "ahasd": "10",
-      "samsung_lpddr5x_pim": "2"
-    },
-    "AHASD_scope_assumption_explicit": true,
-    "BF16_equivalent_normalization_explicit": true
-  },
-  "performance_chart_verification": "notes/performance-chart-gr00t-2026-11-18.json",
-  "local_runtime": "Reused cached cite/Times metrics, placeins, and standard font maps; all runtime paths remain outside manuscript sources.",
-  "memory_reference_revision": {
-    "date": "2026-11-18",
-    "base_commit": "5aecaf2",
-    "part_number": "MT62F2G32D4DS",
-    "verified_capacity": "8 GB/package (64 Gb)",
-    "manuscript_capacity_added": false,
-    "organization": "Four single-x16 dies; two x16 channels; two ranks/channel. One PIM rank/channel gives two PIM dies and 32 PIM banks/package.",
-    "table_I_basis": "Four x16 PIM dies (x64); numeric comparison entries retained under the explicit normalization.",
-    "area_appendix": "Reference changed to single-x16 dies; dual-x16 organization retained only as an alternative sensitivity case.",
-    "unchanged": "Simulator density, experimental results, power/energy values, area estimates, and figure assets.",
-    "primary_source": {
-      "author": "Micron Technology",
-      "title": "Y42M LPDDR5X SDRAM",
-      "revision": "D, November 2022",
-      "pages": [
-        1,
-        2
-      ],
-      "url": "https://www.mouser.com/datasheet/2/671/Micron_05092023_315b_441b_y42m_sdp_ddp_qdp_8dp_lpd-3175540.pdf"
-    },
-    "validation": {
-      "pdflatex_passes": 2,
-      "exit_code_each": 0,
-      "pages": 10,
-      "undefined_references": false,
-      "overfull_boxes": 0,
-      "visual_review_pages": [
-        3,
-        10
-      ],
-      "upstream_integrated": "6db0ce4 (latest Overleaf wording update)"
-    }
-  },
-  "pi05_horizon_revision": {
-    "date": "2026-11-18",
-    "horizon": 16,
-    "chart_values_match_h16_archive": true,
-    "chart_cycles_unchanged": true,
-    "source_verification": "notes/performance-chart-pi05-h16-2026-11-18.json",
-    "validation": {
-      "pdflatex_passes": 2,
-      "exit_code_each": 0,
-      "pages": 10,
-      "overfull_boxes": 0,
-      "undefined_references": false,
-      "duplicate_labels": false,
-      "missing_characters": 0,
-      "regenerated_chart_png_byte_identical": true,
-      "visual_review": "Page 7 inspected; Figure 7 caption identifies pi0.5 H=16 and GR00T H=15; figure remains single-column with two panels.",
-      "review_page": "essay/reviews/async-vla-pi05-h16-merged-20261118/page-7.png"
-    },
-    "upstream_sync": {
-      "upstream_commit": "96635c8390dfa5e93e8b26a918c33a57d4482bfc",
-      "latest_overleaf_prose_retained": true,
-      "h16_setup_retained_from_upstream": true,
-      "reference_repairs": [
-        "Restore the vla-characterization figure input referenced by the updated background.",
-        "Retain the existing AttAcc citation for area scaling instead of the undefined devaux_upmem citation key."
-      ]
-    }
-  }
+  "pages": 8,
+  "template_class_unchanged": true,
+  "visual_review": "Reviewed the four cropped PDF assets individually and the manuscript pages containing them. Original source-page boundaries and all subpanels preserved; no clipping or figure/text overlap.",
+  "source_pdf": "figures/sources/figures1107-20261118.pdf",
+  "asset_manifest": "notes/first-four-pdf-assets-2026-11-18.json",
+  "source_precision_note": "Figures 1, 3, and 4 contain vector text and paths. Source page 2 contains a 1474x1119 raster image whose encoded stream is preserved without re-encoding.",
+  "pdf_sha256": "b87df1a4a348d7dab5a0bbb22c94d6fbba329c9ac5d41ca719be2f9c11c05930"
 }
