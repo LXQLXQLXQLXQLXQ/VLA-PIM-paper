@@ -24,7 +24,7 @@ This physical organization enables rank-level partitioning for heterogeneous exe
 
 \subsection{Challenges of Sharing the LPDDR Bus}
 \label{sec:background-c}
-Sharing external C/A and DQ buses among ranks within the same channel introduces two communication bottlenecks that degrade effective GPU bandwidth:
+Sharing external C/A and DQ buses among ranks within the same channel severely degrades effective GPU bandwidth: during AE execution, PIM bus occupancy leaves only 56.50\% of bus cycles available to the GPU. Specifically, this degradation stems from two communication bottlenecks.
 
 \textbf{Fragmented access windows.} Due to the small local input buffers in PIM units, conventional designs stream inputs over the DQ bus~\cite{samsung_lpddr5x_pim}. Alternating between input transfers and computation splits the DQ bus into short, scattered idle gaps. These gaps are often too brief to amortize cross-rank switching and read/write turnaround overheads or to sustain full GPU burst transfers, resulting in low bus utilization. Consolidating PIM transfers is therefore necessary to preserve contiguous access windows for the GPU.
 
