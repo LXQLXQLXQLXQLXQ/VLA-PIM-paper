@@ -1,35 +1,17 @@
-% Source: Google Docs "Methodology 翻译", 2026-11-17; original English, formatting conversion only.
-
-
 \section{Dataflow and Scheduling}
 \label{sec:dataflow}
 \subsection{DQ-Aware Dataflow: Data Layout and In-Bank RoPE}
 \label{sec:dataflow-a}
-
-% SOURCE-EN: 190
 Because the GPU and PIM share each channel's interface, the AE's data layout also determines DQ contention with the GPU. \sys{} therefore minimizes the AE's external DQ demand under compute and capacity constraints.
-% END-SOURCE-EN: 190
 
-% SOURCE-EN: 191
 Attention tensors can be partitioned across ranks feature-wise, where each rank stores all tokens but half of the feature dimensions, or token-wise, where each rank stores half of the tokens with all feature dimensions. Communication cost in LPDDR-PIM is hierarchical. Intra-rank communication bypasses the DQ bus: inputs are written to all banks at once through the broadcast datapath, and partial sums are reduced by the on-chip adder tree. Inter-rank communication, in contrast, consumes external DQ bandwidth, because without a logic die, cross-rank duplication and reduction must be routed through the MC.
-% END-SOURCE-EN: 191
 
-% USER-ADDED: approved layout/DQ figure and cross-reference, 2026-11-17.
+An efficient layout should therefore keep the reduction dimension within a rank and partition only independent dimensions across ranks (\textbf{Fig.~\ref{fig:layout-dq}(a)}). Based on the resulting external DQ traffic, \sys{} adopts the token-wise layout. For attention, it lowers the external DQ traffic per layer and denoising step from $1552\,\mathrm{KiB}$ to $936\,\mathrm{KiB}$, a $39.7\%$ reduction (\textbf{Fig.~\ref{fig:layout-dq}(b)}).
 
-
-% SOURCE-EN: 192
-An efficient layout should therefore keep the reduction dimension within a rank and partition only independent dimensions across ranks. Based on the resulting external DQ traffic, \sys{} adopts the token-wise layout. Measured as the AE's total external DQ traffic per layer and denoising step, it lowers the traffic from $6096\,\mathrm{KiB}$ to $5352\,\mathrm{KiB}$ ($12.2\%$).
-% END-SOURCE-EN: 192
-
-% SOURCE-EN: 207
 The prefix and suffix KV in the AE also have different lifetimes. The prefix KV is generated once by the VLM and stays read-only across all 10 denoising steps, so its RoPE is applied in the VLM forward pass at no denoising cost. The suffix KV is recomputed from $x_t$ in every layer and step, so its RoPE recurs across 10 steps and 18 layers; running it on the GPU would move Q/K back and forth over the DQ bus. Since RoPE's sine and cosine depend only on the position ID, \sys{} precomputes them into static BF16 lookup tables in the DRAM arrays. Because RoPE needs only MACs between adjacent element pairs, a pair-major feature mapping keeps each pair in one bank for in-place rotation. In-bank RoPE removes another $128\,\mathrm{KiB}$ per layer and step ($2.1\%$), cutting the AE's total DQ traffic from $6096\,\mathrm{KiB}$ to $5224\,\mathrm{KiB}$, a $14.3\%$ reduction.
-% END-SOURCE-EN: 207
 
 \subsection{GPU--PIM Co-Scheduling}
 \label{sec:dataflow-b}
-
-% SOURCE-EN: 215 (rewritten for the preemptive scheduler)
 Building on the input-preloading microarchitecture and the DQ-aware dataflow, \sys{} enables parallel execution through GPU--PIM co-scheduling. Rather than arbitrating individual memory requests, it assigns DQ bus ownership to the GPU or the PIM at kernel granularity. This coarse-grained allocation avoids the complex arbitration, frequent rank switching, and bus turnaround latency caused by interleaving host and PIM commands. \textbf{Fig.~\ref{fig:timeline}} shows the execution sequence within one denoising step.
 
 For $\pi_{0.5}$ with WCK resynchronized at every rank switch, combining all the above techniques reduces the total number of cross-rank switches from $11.845$ million to $28.8$ thousand ($411\times$ fewer) and increases the fraction of the DQ bus occupied by the GPU during PIM computation by $34\%$. Together, these effects improve both speedup and energy efficiency.
-% END-SOURCE-EN: 215
