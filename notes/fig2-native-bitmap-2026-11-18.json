@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-18",
+  "figure": 2,
+  "source": "figures/sources/vla-characterization-v16.pdf",
+  "source_sha256": "c0faeeb518483bd61c7169ad4bdbd3faa3a03f2ed98726151e117c8c305a2758",
+  "source_kind": "native vector master (zero embedded raster images)",
+  "native_master_origin": "paper/figures/vla-characterization-v16/",
+  "native_canvas_mm": [
+    104,
+    79
+  ],
+  "output": "figures/vla-characterization.png",
+  "output_sha256": "4cda12a353faa76e13b9402ac844172cb22f8c526277f03dd8155d857b148dd5",
+  "pixels": [
+    4914,
+    3733
+  ],
+  "format": "PNG",
+  "color_mode": "RGB",
+  "dpi": 1200,
+  "saved_dpi_metadata": [
+    1199.9976,
+    1199.9976
+  ],
+  "export_method": "Render the native vector page at 1200 dpi; no enlargement of the old bitmap and no JPEG recompression.",
+  "script": "figures/export-vla-characterization.py",
+  "previous_embedded_bitmap_pixels": [
+    1474,
+    1119
+  ],
+  "displayed_numeric_labels_verified": [
+    "78.3",
+    "55.9",
+    "57.1",
+    "53.4",
+    "19.5",
+    "43.9",
+    "40.0",
+    "46.1"
+  ],
+  "original_measurement_snapshot_hashes": {
+    "latency-values.csv": "546a50b0f015bccd5383523cd808242c29fcf5ca5bfcbdfa998f327631c824c5",
+    "thor-measured-points.csv": "93772dd4938f0bed2132476db70e9c4085f9ef787b3a3b4f50f7abb096855e60",
+    "roofline-model.json": "072789a325de2d83929305f0a69354c1780ca2e8d76ae77f7c05c44a7194c250"
+  },
+  "caption_and_float_settings_preserved": true,
+  "paper_contains_full_resolution_png": true,
+  "visual_review": "Rendered the manuscript page and inspected native-resolution plot labels and curves."
+}
