@@ -12,7 +12,7 @@
 % END-SOURCE-EN: 23
 
 % SOURCE-EN: 46
-\sys{} is configured with eight LPDDR5X-8533 packages (e.g., Micron MT62F2G32D4DS). Each package features a quad-die, dual-channel, and dual-rank architecture, collectively providing 16 independent x16 channels with a peak bandwidth of 273 GB/s. Each PIM rank comprises four bank groups (BGs), with four banks per BG. Each bank is equipped with a $16\times$BF16 MAC unit (with FP32 accumulation) and a dedicated RoPE unit, alongside a 1 KiB input buffer and a 2 KiB output buffer. Furthermore, BG-level and rank-level accumulators hierarchically aggregate the partial sums across their respective levels. Each package thus delivers $273\,\mathrm{GFLOPS}$ of BF16 compute, compared with $307\,\mathrm{GFLOPS}$ for Samsung LPDDR5X-PIM~\reviewcite{samsung_lpddr5x_pim} with its INT8 throughput converted to BF16-equivalent.
+\sys{} is configured with eight LPDDR5X-8533 packages (e.g., Micron MT62F2G32D4DS). Each package features a quad-die, dual-channel, and dual-rank architecture, collectively providing 16 independent x16 channels with a peak bandwidth of 273 GB/s. Each PIM rank comprises four bank groups (BGs), with four banks per BG. Each bank is equipped with a $16\times$BF16 MAC unit (with FP32 accumulation) and a dedicated RoPE unit, alongside a 1 KiB input buffer and a 2 KiB output buffer. Furthermore, BG-level and rank-level accumulators hierarchically aggregate the partial sums across their respective levels. Each package thus delivers $273\,\mathrm{GFLOPS}$ of BF16 compute, compared with $307\,\mathrm{GFLOPS}$ for Samsung LPDDR5X-PIM with its INT8 throughput converted to BF16-equivalent.
 % END-SOURCE-EN: 46
 
 % SOURCE-EN: 47

@@ -8,7 +8,7 @@
 \setlength{\tabcolsep}{2pt}
 \begin{tabularx}{\columnwidth}{@{}>{\raggedright\arraybackslash}p{0.135\columnwidth}*{4}{>{\raggedright\arraybackslash}X}@{}}
 \toprule
-\textbf{Item} & \textbf{\sys{}} & \textbf{LP-Spec~\reviewcite{lp_spec}} & \textbf{AHASD~\reviewcite{ahasd}} & \textbf{Samsung~\reviewcite{samsung_lpddr5x_pim}} \\
+\textbf{Item} & \textbf{\sys{}} & \textbf{LP-Spec~\cite{lp_spec}} & \textbf{AHASD~\cite{ahasd}} & \textbf{Samsung~\cite{samsung_lpddr5x_pim}} \\
 \midrule
 Interface & LPDDR5X-8533 & LPDDR5 & LPDDR5 & LPDDR5X-9600 \\
 Banks & 64 & 64 & 64 & 64 \\
@@ -26,8 +26,8 @@ Each dual-rank x32 \sys{} package uses two PIM dies (32 PIM banks).
 $^{*}$BF16-equivalent; 8-bit throughput halved (same datapath width).
 $^{\dagger}$One 256-bit access per bank per $t_{\mathrm{CCD\_L}}$ (4\,CK at 1066.7\,MHz), 16 BF16 MAC/access.
 $^{\ddagger}$One 256-bit access per bank per 5\,ns.
-$^{\S}$Scope not stated in~\reviewcite{ahasd}; compute assumes 102.4\,GOPS per die, BW as reported.
-$^{\P}$\texttt{GRF\_A}/\texttt{GRF\_B}, $8\times256$\,b each per PIM block (1 per 2 banks), from the open-source simulator of~\reviewcite{ahasd}.\\[2pt]
+$^{\S}$Scope not stated in~\cite{ahasd}; compute assumes 102.4\,GOPS per die, BW as reported.
+$^{\P}$\texttt{GRF\_A}/\texttt{GRF\_B}, $8\times256$\,b each per PIM block (1 per 2 banks), from the open-source simulator of~\cite{ahasd}.\\[2pt]
 \textit{Timing.} \sys{} (CK):
 $t_{\mathrm{FAW}}{=}16$, $t_{\mathrm{RAS}}{=}45$, $t_{\mathrm{RCD,RD}}{=}20$, $t_{\mathrm{RPpb}}{=}20$, $t_{\mathrm{CCD\_L}}{=}4$.
 LP-Spec: $t_{\mathrm{RP}}{=}15$, $t_{\mathrm{RCD}}{=}15$, $t_{\mathrm{RAS}}{=}34$, $t_{\mathrm{RRD}}{=}4$, $t_{\mathrm{FAW}}{=}16$, $t_{\mathrm{CCD}}{=}4$.
