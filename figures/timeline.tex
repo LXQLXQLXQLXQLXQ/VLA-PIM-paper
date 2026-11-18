@@ -1,5 +1,5 @@
 \begin{figure*}[!t]
 \centering
-\includegraphics[width=\textwidth]{figures/fig6_timeline.png}
-\caption{Layer~0 of denoising step~0: (a) streaming input and (b) input preloading. The inset enlarges six native down-input WR bursts on channel~0. A VLM RD requires $11+2+2=15$ CK (turnaround, data, turnaround), exceeding the 14-CK gap (13.1 ns) by 1 CK (red). The request row illustrates minimum DQ timing; a WR requires only 4 CK.}\label{fig:timeline}
+\includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
+\caption{Layer~0 of denoising step~0 with (a) streaming input and (b) input preloading. In the GPU lane, green numbered blocks are VLM kernels and orange blocks are AE GPU operators. An active VLM kernel completes before pending AE operators execute. During the same AE layer workload, (a) completes 15 VLM kernels and (b) completes 19. AE spans have equal display widths; block widths are adjusted for readability, with the same display transform applied to all lanes. The first AE interval after kernel~2 is labelled in orange below its block. DQ marks show channel~0 burst starts.}\label{fig:timeline}
 \end{figure*}
