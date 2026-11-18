@@ -7,7 +7,3 @@
 *.fdb_latexmk
 *.xdv
 .DS_Store
-
-# Reproducible figure scripts may cache fonts locally.
-.cache/
-__pycache__/

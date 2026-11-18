@@ -1,5 +1,8 @@
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig8_decoupled_rate.png}
-\caption{AE action-chunk rate and VLM KV refresh rate under decoupled execution. Thor dual-stream: decoupled VLM and AE loops sharing one Thor. 2$\times$ Thor: the VLM loop and the AE loop each run on a dedicated Thor.}\label{fig:decoupled-rates}
+\caption{AE action-chunk rate and VLM KV refresh rate under decoupled execution.
+Thor dual-stream: VLM and AE sharing one GPU;
+2$\times$ Thor: dedicated GPUs for VLM and AE.}
+\label{fig:decoupled-rates}
 \end{figure}

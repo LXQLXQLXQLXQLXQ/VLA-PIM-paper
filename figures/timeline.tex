@@ -1,5 +1,8 @@
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig7_step_timeline.pdf}
-\caption{Layer~0 of denoising step~0 with (a) streaming input and (b) input preloading. In the GPU lane, green numbered blocks are VLM kernels and orange blocks are AE GPU operators. An active VLM kernel completes before pending AE operators execute. During the same AE layer workload, (a) completes 15 VLM kernels and (b) completes 19. AE spans have equal display widths; block widths are adjusted for readability, with the same display transform applied to all lanes. The first AE interval after kernel~2 is labelled in orange below its block. DQ marks show channel~0 burst starts.}\label{fig:timeline}
+\caption{GPU--PIM co-scheduling.
+(a) Streaming input.
+(b) Input preloading.}
+\label{fig:timeline}
 \end{figure*}
