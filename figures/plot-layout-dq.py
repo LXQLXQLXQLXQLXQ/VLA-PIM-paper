@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render Fig. 5 with the typography and palette used by Figs. 7 and 8.
+"""Render Fig. 5 in Arial, matching Fig. 1's single-column text scale.
 
 Run: python3 figures/plot-layout-dq.py [--out OUTPUT_DIRECTORY]
 No simulator, external paths or new experiment is needed. Cache files use scratch.
@@ -20,8 +20,9 @@ from matplotlib.patches import Patch
 HERE = Path(__file__).resolve().parent
 BANKS = 16
 
-INK, MUTED, GREEN, GRID = "#303030", "#52514e", "#1baf7a", "#e6e5e1"
-TITLE_SIZE, LABEL_SIZE = 8, 7
+INK, MUTED, GREEN = "#303030", "#52514e", "#1baf7a"
+# Fig. 1 uses approximately 7 pt at 3.5-inch column width.
+TITLE_SIZE, LABEL_SIZE = 7, 7
 BAR_VALUE_SIZE = 6
 
 COLORS = {
@@ -56,8 +57,8 @@ def traffic_panel(fig, data):
     ax.set_xlim(0, totals["c"])
     ax.set_ylim(0, 76)
     ax.set_axis_off()
-    ax.text(0, 74, "External DQ traffic (Attention)", fontsize=TITLE_SIZE,
-            color="black", va="top")
+    ax.text(0, 74, "(b) External DQ traffic (Attention)", fontsize=TITLE_SIZE,
+            fontweight="bold", color="black", va="top")
 
     for case, y, label in (("c", 45, "Feature-wise"), ("d", 18, "Token-wise")):
         start = 0
@@ -140,11 +141,10 @@ def main():
     layout = fig.add_axes([0, 0, 1, 1])
     layout.set(xlim=(0, 252), ylim=(0, 2.15 * 72))
     layout.set_axis_off()
-    layout.text(9, 151, "KV features partitioning", fontsize=TITLE_SIZE,
-                color="black", va="top")
+    layout.text(9, 151, "(a) KV features partitioning", fontsize=TITLE_SIZE,
+                fontweight="bold", color="black", va="top")
     partition_schematic(layout, feature=True)
     partition_schematic(layout, feature=False)
-    layout.plot([9, 243], [78.5, 78.5], color=GRID, linewidth=0.45)
     traffic_panel(fig, data)
     save(fig, args.out, "fig_layout_dq")
     print(f"Saved layout/DQ figure to {args.out}")

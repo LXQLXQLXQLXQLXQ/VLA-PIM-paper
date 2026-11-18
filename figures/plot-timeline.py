@@ -7,7 +7,8 @@ Narrow kernel blocks are widened for labels; kernels 2 and 16 use the same
 initial compression in both panels. Kernel 2 retains its further 35%
 shortening; its following AE interval is drawn compactly with an external
 orange label. QK^T keeps its enlarged width. All lanes share a monotone
-transform; native CK timestamps stay intact.
+transform; native CK timestamps stay intact. Single-line stage labels and
+compact lane spacing keep the two panels short at the paper's full width.
 """
 import argparse
 import json
@@ -31,11 +32,13 @@ COMPRESSED_KERNELS = {2, 16}
 QKT_WIDTH_FACTOR = 1.5
 KERNEL2_FURTHER_FACTOR = 0.65
 FIRST_AE_WIDTH_FACTOR = 0.2
+PANEL_TITLES = ('(a) conventional GPU-PIM', '(b) VLA-PIM (ours)')
+GPU_Y, DQ_Y, PIM_Y = 0, 0.78, 1.56
 STAGE_LABELS = {
-    'qkv': 'QKV\nProjection',
+    'qkv': 'QKV proj.',
     'qkt': r'$\mathrm{QK}^{\mathrm{T}}$',
     'pv': 'PV',
-    'o': 'O\nProjection',
+    'o': 'O proj.',
     'gate_up': 'FFN Gate/Up',
     'down': 'FFN Down',
 }
@@ -172,52 +175,52 @@ def validate_case(case):
 
 
 def timeline(data):
-    fig, axes = plt.subplots(2, 1, figsize=(7.2, 3.15))
-    fig.subplots_adjust(left=0.175, right=0.985, top=0.865, bottom=0.035, hspace=0.48)
-    for ax, case in zip(axes, data['timeline_cases']):
+    fig, axes = plt.subplots(2, 1, figsize=(7.2, 1.9))
+    fig.subplots_adjust(left=0.175, right=0.985, top=0.89, bottom=0.045, hspace=0.64)
+    for index, (ax, case) in enumerate(zip(axes, data['timeline_cases'])):
         validate_case(case)
         x = display_transform(case)
         for event in case['events']:
             if event['kind'] != 'pim':
                 continue
             start, end = x(event['start_ck']), x(event['end_ck'])
-            ax.add_patch(Rectangle((start, 1.71), end-start, 0.58,
-                                   facecolor=BLUE, edgecolor='white', lw=0.5, zorder=3))
+            ax.add_patch(Rectangle((start, PIM_Y - 0.29), end-start, 0.58,
+                                   facecolor=INK, edgecolor='white', lw=0.5, zorder=3))
             if event['name'] in STAGE_LABELS:
                 label = STAGE_LABELS[event['name']]
-                ax.text((start+end)/2, 2, label,
+                ax.text((start+end)/2, PIM_Y, label,
                         ha='center', va='center',
-                        fontsize=7.2 if '\n' in label else 8,
-                        linespacing=0.9, color='white', zorder=4)
+                        fontsize=7.5, color='white', zorder=4)
         ax.vlines([x(start) for start, end in case['pim_dq_bursts_ck']],
-                  0.71, 1.29, colors=INK, linewidth=0.06, zorder=3)
+                  DQ_Y - 0.21, DQ_Y + 0.21, colors=BLUE, linewidth=0.06, zorder=3)
         kernel2 = next(k for k in case['vlm_kernels'] if k['number'] == 2)
         for start_ck, end_ck in ae_gpu_intervals(case):
             start, end = x(start_ck), x(end_ck)
-            ax.add_patch(Rectangle((start, -0.29), end-start, 0.58,
+            ax.add_patch(Rectangle((start, GPU_Y - 0.29), end-start, 0.58,
                                    facecolor=AE_FILL, edgecolor='white',
                                    lw=0.7, zorder=4))
-            if start_ck == kernel2['end_ck']:
-                ax.text((start+end)/2, 1.5, 'AE Non-Linear',
-                        ha='center', va='center', fontsize=7,
-                        color=AE_FILL, zorder=5)
+            if index == 0 and start_ck == kernel2['end_ck']:
+                ax.annotate('AE Non-Linear', xy=((start+end)/2, GPU_Y - 0.29),
+                            xytext=(0, -3), textcoords='offset points',
+                            ha='center', va='top', fontsize=7,
+                            color=AE_FILL, zorder=5, annotation_clip=False)
         for kernel in case['vlm_kernels']:
             start, end = x(kernel['start_ck']), x(kernel['end_ck'])
-            ax.add_patch(Rectangle((start, -0.29), end-start, 0.58,
+            ax.add_patch(Rectangle((start, GPU_Y - 0.29), end-start, 0.58,
                                    facecolor=GREEN_FILL, edgecolor=GREEN_EDGE,
                                    lw=0.7, zorder=4, joinstyle='miter'))
-            ax.text((start+end)/2, 0, str(kernel['number']), ha='center',
+            ax.text((start+end)/2, GPU_Y, str(kernel['number']), ha='center',
                     va='center', fontsize=6.7, color='white', zorder=5)
-        ax.set(xlim=(0, 1), ylim=(-0.44, 2.45), xticks=[], xlabel='')
-        ax.set_yticks([0, 1, 2])
+        ax.set(xlim=(0, 1), ylim=(-0.4, PIM_Y + 0.4), xticks=[], xlabel='')
+        ax.set_yticks([GPU_Y, DQ_Y, PIM_Y])
         ax.set_yticklabels(['GPU Kernels', 'PIM DQ bursts', 'PIM stages'], fontsize=7.5)
         ax.tick_params(axis='y', length=3, width=0.7, pad=5)
         ax.spines['bottom'].set_visible(False)
         ax.spines['left'].set_linewidth(0.75)
         ax.grid(False)
-        ax.set_title(case['title'], loc='left', fontsize=8.3, pad=6)
+        ax.set_title(PANEL_TITLES[index], loc='left', fontsize=8.3, pad=4)
         ax.set_title(f"{case['completed_vlm_kernels']} VLM kernels completed",
-                     loc='right', fontsize=7.6, color=GREEN_FILL, pad=6)
+                     loc='right', fontsize=7.6, color=GREEN_FILL, pad=4)
     assert len(fig.axes) == 2
     assert all(not ax.get_xticks().size and not ax.get_xlabel() and
                not ax.spines['bottom'].get_visible() for ax in axes)
