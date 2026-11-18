@@ -1,8 +1,12 @@
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/evaluation-summary.pdf}
-\caption{(a) Asynchronous inference cycle time for $\pi_{0.5}$ and GR00T N1.6 (axis starts at $50\,\mathrm{ms}$).
-(b) Energy per AE chunk for Thor (a-s, measured) and VLA-PIM (e, estimated).
-(c) AE chunk and VLM KV-cache refresh rates for $\pi_{0.5}$ under decoupled execution.}
+\caption{(a) Asynchronous inference cycle time for $\pi_{0.5}$ and GR00T N1.6.
+(b) Energy per AE chunk on Thor (measured) and VLA-PIM (estimated).
+(c) AE chunk and VLM KV-cache refresh rates under decoupled execution for $\pi_{0.5}$.\newline
+\textbf{a-s} runs the VLM and AE serially on one Thor GPU. \textbf{a-d} uses two CUDA streams on one Thor GPU.
+\textbf{b} offloads AE linear operators to PIM. \textbf{c} adds rank-partitioned GPU--PIM concurrency.
+\textbf{d} adds a DQ-aware data layout with streaming inputs. \textbf{e} adds input preloading (full VLA-PIM).
+\textbf{Thor~$\times$~2} uses one GPU each for the VLM and AE.}
 \label{fig:evaluation-summary}
 \end{figure*}
