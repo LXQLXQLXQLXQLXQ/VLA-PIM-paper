@@ -23,6 +23,8 @@ GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）�
 最终配置的 AE rate 倍率：π0.5 为 1.82× / 1.76×（相对串行/双流），GR00T 为 1.40×（相对推导串行基线）。
 绘图脚本：figures/plot-async-vla-performance.py；数据快照：figures/data/async-vla-performance.json。
 数据来源和验证见 notes/performance-chart-gr00t-2026-11-18.json。
+π0.5 六组结果已与 H=16 原始 Thor/仿真归档逐项核对，修正 JSON 中误写的 horizon=50；图注和正文已明确 H=16。
+核对依据和原始文件哈希见 notes/performance-chart-pi05-h16-2026-11-18.json。
 
 图1、3、4由 TIFF 无损转换为全分辨率 PNG，大块白边仅由 LaTeX 的 trim/clip 裁去。
 图2直接使用用户新上传的 1474×1119 PNG，逐字节复制原图，不缩放或裁切。

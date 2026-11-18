@@ -126,7 +126,7 @@
     }
   ],
   "visual_review": "Merged manuscript page 7 inspected: two subplots fit in one column; figure is automatically numbered 7, with timeline 6 and decoupled rates 8. The appended area data on final page 10 also fits without clipping.",
-  "pdf_sha256": "ef7e51af3aef21332e0ed680a4536e790dac5ad790132944e63f638aa9859c86",
+  "pdf_sha256": "545ca793b981281b71edaa791d8149b916729b35581611110a803498dc25ced1",
   "remaining_author_items": "Existing editorial TBD entries retained from the latest upstream source.",
   "table_I": {
     "caption": "Key Specifications Normalized to Four x16 PIM Dies",
@@ -181,6 +181,34 @@
         10
       ],
       "upstream_integrated": "6db0ce4 (latest Overleaf wording update)"
+    }
+  },
+  "pi05_horizon_revision": {
+    "date": "2026-11-18",
+    "horizon": 16,
+    "chart_values_match_h16_archive": true,
+    "chart_cycles_unchanged": true,
+    "source_verification": "notes/performance-chart-pi05-h16-2026-11-18.json",
+    "validation": {
+      "pdflatex_passes": 2,
+      "exit_code_each": 0,
+      "pages": 10,
+      "overfull_boxes": 0,
+      "undefined_references": false,
+      "duplicate_labels": false,
+      "missing_characters": 0,
+      "regenerated_chart_png_byte_identical": true,
+      "visual_review": "Page 7 inspected; Figure 7 caption identifies pi0.5 H=16 and GR00T H=15; figure remains single-column with two panels.",
+      "review_page": "essay/reviews/async-vla-pi05-h16-merged-20261118/page-7.png"
+    },
+    "upstream_sync": {
+      "upstream_commit": "96635c8390dfa5e93e8b26a918c33a57d4482bfc",
+      "latest_overleaf_prose_retained": true,
+      "h16_setup_retained_from_upstream": true,
+      "reference_repairs": [
+        "Restore the vla-characterization figure input referenced by the updated background.",
+        "Retain the existing AttAcc citation for area scaling instead of the undefined devaux_upmem citation key."
+      ]
     }
   }
 }

@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-18",
+  "figure_number": 7,
+  "change": "Correct pi0.5 horizon metadata from 50 to 16 and identify H=16 in the manuscript.",
+  "pi05_cycle_ms_unchanged": true,
+  "archived_cycle_ms": {
+    "a-serial": 141.290866,
+    "a-dual": 137.0738355,
+    "b": 122.883090526,
+    "c": 86.766105902,
+    "d": 83.570593162,
+    "e (VLA-PIM)": 77.677673822
+  },
+  "displayed_cycle_ms": [
+    141.29,
+    137.07,
+    122.88,
+    86.77,
+    83.57,
+    77.68
+  ],
+  "source": {
+    "source_directory": "experiments/2026-11-16/source/reference/2026-11-15",
+    "source_files_sha256": {
+      "benchmarks/bench_parallel.py": "ff10397c302e6b88fa403005cfd647e08cae709bb5be65d13612cbc3892f7d3b",
+      "thor/mha8/summary.json": "1117af8548e6e5ead3dddba77e2fd292e24957b688176cc4c5b98df85fa75491",
+      "thor/mha8/continuous-ae-compile-profile-options.json": "e8714960d9f00d4977a96f441904e9c9b271a88fdc39b2260ce84d7f482c6926",
+      "simulation/case-b-single-read-summary.json": "eee0572b4f8e90478080de9b5d4020583e7bfdf417e4b361ae5ee5bccc5f81eb",
+      "simulation/compiled-vlm-calibration.json": "db142defce711f0f5c98a6901f7246014fc7ef998c80d0d570ae9483049962c6",
+      "simulation/cg-single-read-compiled-vlm.csv": "b33190abb4967837de4633e222f9430a6e80650d39db8d20064846c77c34874e"
+    },
+    "configuration_mapping": {
+      "a-serial": "compile.mha8_pair_timings_ms.serial.pair_wall_ms.p50",
+      "a-dual": "compile.mha8_pair_timings_ms.parallel.pair_wall_ms.p50",
+      "b": "case-b AE solo + calibrated VLM solo",
+      "c": "c",
+      "d": "e",
+      "e": "g"
+    },
+    "notes": [
+      "GPU benchmark explicitly sets action_horizon=16; retained PIM programs use queries=16, prefix=968, valid_kv=984, padded_kv=992.",
+      "Each displayed cycle matches its archived H=16 source rounded to two decimal places; horizon=50 was an incorrect metadata value.",
+      "Configuration b sums simulated AE and VLM standalone times; c/e/g use native concurrent simulator results.",
+      "No measurements or simulations were rerun."
+    ]
+  },
+  "pim_program_shapes": {
+    "c": {
+      "heads": 8,
+      "head_dim": 256,
+      "hidden": 1024,
+      "ffn": 4096,
+      "queries": 16,
+      "prefix": 968,
+      "valid_kv": 984,
+      "padded_kv": 992
+    },
+    "e": {
+      "heads": 8,
+      "head_dim": 256,
+      "hidden": 1024,
+      "ffn": 4096,
+      "queries": 16,
+      "prefix": 968,
+      "valid_kv": 984,
+      "padded_kv": 992
+    },
+    "g": {
+      "heads": 8,
+      "head_dim": 256,
+      "hidden": 1024,
+      "ffn": 4096,
+      "queries": 16,
+      "prefix": 968,
+      "valid_kv": 984,
+      "padded_kv": 992
+    }
+  },
+  "gr00t_data_unchanged": true,
+  "simulation_rerun": false,
+  "hardware_measurements_rerun": false,
+  "validation": {
+    "pdflatex_passes": 2,
+    "exit_code_each": 0,
+    "pages": 10,
+    "overfull_boxes": 0,
+    "undefined_references": false,
+    "duplicate_labels": false,
+    "missing_characters": 0,
+    "regenerated_chart_png_byte_identical": true,
+    "visual_review": "Page 7 inspected; Figure 7 caption identifies pi0.5 H=16 and GR00T H=15; figure remains single-column with two panels.",
+    "review_page": "essay/reviews/async-vla-pi05-h16-merged-20261118/page-7.png"
+  },
+  "pdf_sha256": "545ca793b981281b71edaa791d8149b916729b35581611110a803498dc25ced1",
+  "upstream_sync": {
+    "upstream_commit": "96635c8390dfa5e93e8b26a918c33a57d4482bfc",
+    "latest_overleaf_prose_retained": true,
+    "h16_setup_retained_from_upstream": true,
+    "reference_repairs": [
+      "Restore the vla-characterization figure input referenced by the updated background.",
+      "Retain the existing AttAcc citation for area scaling instead of the undefined devaux_upmem citation key."
+    ]
+  }
+}

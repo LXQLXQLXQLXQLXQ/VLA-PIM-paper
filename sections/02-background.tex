@@ -11,6 +11,8 @@ In practice, limited off-chip memory bandwidth on edge GPUs restricts the gains 
 
 These motivate a heterogeneous hardware design. Processing-in-Memory (PIM) architectures offer high internal bandwidth and moderate compute capability, which aligns well with the low-OI, memory-bound profile of the AE. In contrast, the VLM has higher OI and compute requirements, making it a better fit for general-purpose GPUs. Therefore, we offload the AE's primary linear layers to PIM to access weights and the KV cache directly inside memory banks. This partitioning reduces data movement over the external memory bus (DRAM DQ pins). Consequently, it avoids cross-stage bandwidth contention and preserves off-chip memory bandwidth for the GPU-resident VLM.
 
+\input{figures/vla-characterization}
+
 \subsection{LPDDR-PIM for Edge Inference}
 \label{sec:background-b}
 

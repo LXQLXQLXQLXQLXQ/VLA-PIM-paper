@@ -6,8 +6,8 @@
     {
       "key": "pi05",
       "label": "π0.5",
-      "source": "Existing tables/performance.tex and tables/configs.tex, before the 2026-11-17 chart revision; no new measurements.",
-      "horizon": 50,
+      "source": "Archived H=16 MHA8 Thor GPU pair wall-time p50 and Ramulator2 single-read simulation results from experiments/2026-11-16/source/reference/2026-11-15; verified against original benchmark and PIM program shapes.",
+      "horizon": 16,
       "configurations": [
         {
           "label": "a-serial",
@@ -74,7 +74,32 @@
             "Epoch-exclusive"
           ]
         }
-      ]
+      ],
+      "provenance": {
+        "source_directory": "experiments/2026-11-16/source/reference/2026-11-15",
+        "source_files_sha256": {
+          "benchmarks/bench_parallel.py": "ff10397c302e6b88fa403005cfd647e08cae709bb5be65d13612cbc3892f7d3b",
+          "thor/mha8/summary.json": "1117af8548e6e5ead3dddba77e2fd292e24957b688176cc4c5b98df85fa75491",
+          "thor/mha8/continuous-ae-compile-profile-options.json": "e8714960d9f00d4977a96f441904e9c9b271a88fdc39b2260ce84d7f482c6926",
+          "simulation/case-b-single-read-summary.json": "eee0572b4f8e90478080de9b5d4020583e7bfdf417e4b361ae5ee5bccc5f81eb",
+          "simulation/compiled-vlm-calibration.json": "db142defce711f0f5c98a6901f7246014fc7ef998c80d0d570ae9483049962c6",
+          "simulation/cg-single-read-compiled-vlm.csv": "b33190abb4967837de4633e222f9430a6e80650d39db8d20064846c77c34874e"
+        },
+        "configuration_mapping": {
+          "a-serial": "compile.mha8_pair_timings_ms.serial.pair_wall_ms.p50",
+          "a-dual": "compile.mha8_pair_timings_ms.parallel.pair_wall_ms.p50",
+          "b": "case-b AE solo + calibrated VLM solo",
+          "c": "c",
+          "d": "e",
+          "e": "g"
+        },
+        "notes": [
+          "GPU benchmark explicitly sets action_horizon=16; retained PIM programs use queries=16, prefix=968, valid_kv=984, padded_kv=992.",
+          "Each displayed cycle matches its archived H=16 source rounded to two decimal places; horizon=50 was an incorrect metadata value.",
+          "Configuration b sums simulated AE and VLM standalone times; c/e/g use native concurrent simulator results.",
+          "No measurements or simulations were rerun."
+        ]
+      }
     },
     {
       "key": "gr00t_n16",
