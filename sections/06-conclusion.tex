@@ -4,7 +4,7 @@
 \label{sec:conclusion}
 
 % SOURCE-EN: 288
-This paper presents \sys{}, an architecture that executes VLM memory accesses on the GPU concurrently with AE computation on the PIM in edge LPDDR memory systems. Rank-level partitioning keeps every channel available for GPU data requests. The DQ-aware token-wise layout and in-bank RoPE together reduce the AE's total DQ traffic by $14.3\%$, and the input-preloaded dataflow with kernel-granularity co-scheduling consolidates the remaining transfers, allowing the GPU to sustain high bandwidth during PIM computation.
+This paper presents \sys{}, an architecture that executes VLM memory accesses on the GPU concurrently with AE computation on the PIM in edge LPDDR memory systems. Rank-level partitioning keeps every channel available for GPU data requests. The DQ-aware dataflow, comprising a token-wise layout and in-bank RoPE, reduces the AE's total DQ traffic by $14.3\%$, and the input-preloading microarchitecture with kernel-granularity co-scheduling consolidates the remaining transfers, allowing the GPU to sustain high bandwidth during PIM computation.
 % END-SOURCE-EN: 288
 
 % SOURCE-EN: 289
