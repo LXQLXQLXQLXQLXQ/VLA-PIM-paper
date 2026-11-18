@@ -13,7 +13,6 @@ We evaluate \sys{} by combining NVIDIA Thor measurements with cycle-accurate PIM
 We compare against four execution modes on Thor. The two \emph{coupled} modes run, per cycle, one VLM pass on the current frame and one AE chunk from the previous frame's KV cache (Eq.~(\ref{eq:ae-interval})): \textbf{single-GPU serial} executes them back-to-back ($141.29\,\mathrm{ms}$), and \textbf{single-GPU dual-stream} overlaps them on two CUDA streams of one Thor ($137.07\,\mathrm{ms}$). The two \emph{decoupled} modes run the VLM and the AE as independent loops, with the AE always using the latest KV cache: \textbf{decoupled dual-stream} shares one Thor, whereas \textbf{two-GPU} gives each loop a dedicated Thor. Sections~\ref{sec:evaluation-b} and~\ref{sec:evaluation-c} use the coupled and decoupled modes, respectively.
 
 Each PIM bank adds a $1\,\mathrm{KiB}$ input buffer, a $2\,\mathrm{KiB}$ output buffer, a MAC unit, a RoPE unit, and the row-buffer-to-input-buffer broadcast path. We synthesize these modules with Synopsys Design Compiler in the 7~nm ASAP7 PDK and scale them to a 1z-nm DRAM process, which is about $10\times$ less dense than a logic process of the same feature size~\cite{attacc}. With 16 PIM banks per die, the added logic occupies $12.25\,\mathrm{mm}^{2}$, or $20.11\%$ of a $60.92\,\mathrm{mm}^{2}$ 16~Gb LPDDR5 die~\cite{lp_spec}.
-
 \subsection{Overall Performance}
 \label{sec:evaluation-b}
 
@@ -26,11 +25,8 @@ T_{\text{async VLA}}=t_{\text{AE,solo}}+t_{\text{VLM,solo}}-t_{\text{overlap}}
  where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ are the standalone execution times of the AE and the VLM, and $t_{\mathrm{overlap}}$ is the effective overlap between the current VLM frame and the preceding AE frame. Figure~\ref{fig:async-vla-performance} breaks down $T_{\mathrm{async\ VLA}}$ across configurations a--e.
 
 \input{figures/async-vla-performance}
-
 For $\pi_{0.5}$, the full design (e) shortens the cycle to $77.68\,\mathrm{ms}$ ($12.87\,\mathrm{Hz}$), a $1.82\times$ and $1.76\times$ higher AE rate than the single-GPU serial and dual-stream baselines, with rank-partitioned concurrency (c) contributing the largest single gain. For GR00T N1.6, \sys{} reaches $13.44\,\mathrm{Hz}$, $1.40\times$ the single-GPU serial baseline.
-
 In terms of energy, \sys{} consumes about $5.32\,\mathrm{J}$ per $\pi_{0.5}$ AE output cycle, comprising $5.41\,\mathrm{W}$ of PIM logic power (ASAP7, $533\,\mathrm{MHz}$, fully active), $12.68\,\mathrm{W}$ of DRAM power estimated from Micron IDD values, and a $50.36\,\mathrm{W}$ GPU proxy. This is $60.8\%$ lower than the $13.55\,\mathrm{J}$ of the single-GPU dual-stream baseline.
-
 \subsection{Discussion: Decoupling the VLM and AE}
 \label{sec:evaluation-c}
 
