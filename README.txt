@@ -10,7 +10,7 @@ VLA-PIM 论文
 1. 2026-11-19 最新PDF（r2）第1页 → figures/execution-overview.pdf / .tex：Introduction。
 2. 原始矢量版 v17 → figures/vla-characterization.png / .tex：Background and Motivation（1200 dpi，4914×3733）。
 3. 2026-11-19 最新PDF（r2）第3页 → figures/system-overview.pdf / .tex：Architecture Design / System Overview（双栏）。
-4. figures1107v3 单页PDF → figures/microarchitecture.pdf / .tex：Architecture Design / Input-preloaded microarch（单栏；新版bank内部微架构）。
+4. figures1107(3).pdf（2026-11-19） → figures/microarchitecture.pdf / .tex：Architecture Design / Input-preloaded microarch（单栏；新版bank内部微架构）。
 5. KV 布局与 DQ 流量 → figures/layout-dq.tex（单栏）。
 6. 单步执行时间线 → figures/timeline.tex（双栏）。
 7. 评估三联图 → figures/evaluation-summary.tex（双栏）：(a) 异步周期，(b) 每个 AE chunk 的能耗，(c) 解耦频率。
@@ -33,8 +33,8 @@ GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms；双流�
 核对依据和原始文件哈希见 notes/performance-chart-pi05-h16-2026-11-18.json。
 
 图1、3、4分别为独立单页PDF，仅裁外围空白，保留原矢量文字、路径和完整子图。
-新版五页PDF保存在 figures/sources/figures1107-20261119-r2.pdf，采用第1、3页；图4来自 figures/sources/figures1107v3-20261119-r2.pdf 的完整单页，仅裁外围空白，保留全部文字、矢量内容和原始嵌入位图。
-图4图注已对应新版bank内部微架构；裁剪及编译验证记录见 notes/fig4-v3-refresh-2026-11-19.json。
+新版五页PDF保存在 figures/sources/figures1107-20261119-r2.pdf，采用第1、3页；图4来自 figures/sources/figures1107-3-20261119.pdf 的完整单页，仅裁外围空白，保留全部文字、矢量内容和原始嵌入位图。
+图4图注已对应新版bank内部微架构；本次更新沿用原575.25×495 pt图框；裁剪及编译验证记录见 notes/fig4-replacement-2026-11-19.json。
 新版PDF第2页仍是旧的1474×1119位图；图2采用本地新版矢量母版 figures/sources/vla-characterization-v17.pdf 直接导出PNG，横轴改为 Operational intensity (FLOP/B)。
 当前图2为1200 dpi、4914×3733无损PNG，未放大旧位图，未经过JPEG压缩；数据、标签、配色和布局保留。
 运行 python figures/export-vla-characterization.py --dpi 1200 可重新导出（需pypdfium2和Pillow）。

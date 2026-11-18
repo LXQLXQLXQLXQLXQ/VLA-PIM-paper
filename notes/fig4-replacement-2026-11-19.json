@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-19",
+  "base_commit": "76331e3e739394a79bd3089d5a1a21d09253ca83",
+  "figure": 4,
+  "source_original_name": "figures1107(3).pdf",
+  "source": "figures/sources/figures1107-3-20261119.pdf",
+  "source_sha256": "2a8c1db7dbc485630e3050ddc9898ef5a4d50ec1bc6ee708b4f9d85b45d4c300",
+  "output": "figures/microarchitecture.pdf",
+  "output_sha256": "491e878949ec80114b2caceec78464e13bce2d60b1a2d78cbf523fa3f04ca0ba",
+  "method": "Change PDF page boxes only, using exactly the previous Fig.4 boxes; preserve all vector content, text and embedded images.",
+  "crop_box_pt": [
+    61.25,
+    22.25,
+    636.5,
+    517.25
+  ],
+  "size_pt": [
+    575.25,
+    495.0
+  ],
+  "content_stream_byte_identical": true,
+  "extracted_text_identical": true,
+  "embedded_images_identical": true,
+  "embedded_image_dimensions": [
+    [
+      92,
+      88
+    ]
+  ],
+  "caption_label_width_and_float_settings_preserved": true,
+  "validation": {
+    "engine": "pdfLaTeX / TeX Live 2020, with existing Times/Courier font cache and temporary placeins package",
+    "successful_passes": 2,
+    "pages": 7,
+    "figure_number": 4,
+    "figure_page": 4,
+    "undefined_references": false,
+    "compile_errors": 0,
+    "missing_characters": 0,
+    "overfull_boxes": 0,
+    "underfull_hboxes": 8,
+    "comparison_to_same_source_with_previous_figure": {
+      "all_page_content_streams_byte_identical": true,
+      "auxiliary_labels_identical": true,
+      "other_pages_pixel_identical_at_100dpi": true,
+      "page_raster_differences": [
+        {
+          "page": 1,
+          "difference_bbox_px": null
+        },
+        {
+          "page": 2,
+          "difference_bbox_px": null
+        },
+        {
+          "page": 3,
+          "difference_bbox_px": null
+        },
+        {
+          "page": 4,
+          "difference_bbox_px": [
+            93,
+            153,
+            308,
+            318
+          ]
+        },
+        {
+          "page": 5,
+          "difference_bbox_px": null
+        },
+        {
+          "page": 6,
+          "difference_bbox_px": null
+        },
+        {
+          "page": 7,
+          "difference_bbox_px": null
+        }
+      ]
+    },
+    "visual_review": "Inspected original and cropped figure and compiled manuscript page 4; all supplied content retained and Fig.4 fits its original one-column box."
+  }
+}
