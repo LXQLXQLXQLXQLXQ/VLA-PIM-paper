@@ -15,6 +15,11 @@ VLA-PIM 论文
 6. 单步执行时间线 → figures/timeline.tex（双栏）。
 7. 评估三联图 → figures/evaluation-summary.tex（双栏）：(a) 异步周期，(b) 每个 AE chunk 的能耗，(c) 解耦频率。
 
+排版调整（2026-11-19）：Fig6提前到第5页，Fig7仍在第6页；完整PDF共7页（含参考文献）。
+按用户要求，将单栏/双栏浮动图表与正文的间距设为10pt plus 2pt minus 2pt；字号、行距、页边距和图片尺寸保持不变。
+Fig6在 sections/03-architecture.tex 中提前入队，Fig7在 sections/05-evaluation.tex 开头入队；图注和正文内容保留。
+验证记录：notes/fig6-placement-spacing-2026-11-19.json。
+
 图5–7统一使用Arial，包括数学符号和下标；PNG/TIFF位图均为600 dpi，TIFF采用无损LZW压缩。
 三个绘图脚本共用 figures/figure_style.py。重绘时需在系统中安装Arial，或将 VLA_PIM_FONT_DIR 指向含Arial常规、斜体、粗体和粗斜体字体文件的目录；缺少Arial时脚本会报错。
 

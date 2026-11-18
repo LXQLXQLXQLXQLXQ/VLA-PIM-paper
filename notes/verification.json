@@ -1,8 +1,8 @@
 {
   "date": "2026-11-19",
   "main_document": "conference_101719.tex",
-  "scope": "Refresh Figure 4 from the latest single-page figures1107v3.pdf, preserving PDF content and cropping blank outer margins only.",
-  "base_commit": "3272bacc4e86432d8321d4eb30c564ad263116dd",
+  "scope": "Move Fig6 from page 6 to page 5, reduce caption/body float spacing, and keep the complete paper within seven pages.",
+  "base_commit": "419375569b49b35cc48de8ec2f55b0cc36caf280",
   "validation": {
     "engine": "pdfLaTeX / TeX Live 2026",
     "passes": 2,
@@ -15,10 +15,10 @@
     "missing_characters": 0,
     "overfull_boxes": 0,
     "underfull_hboxes": 7,
-    "main_document_and_sections_byte_preserved": true,
-    "other_figure_assets_byte_preserved": true,
-    "caption_label_size_and_float_settings_preserved": true,
-    "visual_review": "Inspected the supplied figure and the compiled manuscript page 4. Complete diagram, correct caption and references, no cropping loss or new layout collisions.",
+    "scientific_text_preserved": true,
+    "all_figure_assets_captions_labels_and_sizes_byte_preserved": true,
+    "IEEEtran_class_byte_preserved": true,
+    "visual_review": "Reviewed all seven rendered pages and the full-size views of Fig6, evaluation results, and references. No overlap, clipping, or broken figure order.",
     "figures": [
       {
         "label": "fig:intro-overlap",
@@ -43,21 +43,21 @@
       {
         "label": "fig:layout-dq",
         "number": 5,
-        "page": 5
+        "page": 4
       },
       {
         "label": "fig:timeline",
         "number": 6,
-        "page": 6
+        "page": 5
       },
       {
         "label": "fig:evaluation-summary",
         "number": 7,
-        "page": 7
+        "page": 6
       }
     ]
   },
   "pages": 7,
-  "asset_manifest": "notes/fig4-v3-refresh-2026-11-19.json",
-  "pdf_sha256": "c868d9e7798af0fc1e9b307c077dfc73f7ab987328ffa7065b23c83b867d7bba"
+  "asset_manifest": "notes/fig6-placement-spacing-2026-11-19.json",
+  "pdf_sha256": "1680d24f1748e3c28d9eb2692e0c4513bcb3769d62b8b892a68c7bff3c90cbef"
 }

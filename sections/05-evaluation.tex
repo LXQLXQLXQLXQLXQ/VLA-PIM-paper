@@ -1,6 +1,9 @@
 % Source: Google Docs "Methodology 翻译", 2026-11-17.
 % Overall-performance prose revised at the user's request for the a--e chart.
 
+% Queue the double-column results early to keep them beside the evaluation.
+\input{figures/evaluation-summary}
+
 \section{Evaluation}
 \label{sec:evaluation}
 \subsection{Experimental Setup}
@@ -18,7 +21,6 @@ Each PIM bank adds a $1\,\mathrm{KiB}$ input buffer, a $2\,\mathrm{KiB}$ output 
 \label{sec:evaluation-b}
 We report the inference cycle, i.e., the interval between consecutive AE outputs: the standalone VLM and AE times minus the time saved by concurrency.
 
-\input{figures/evaluation-summary}
 The full VLA-PIM design shortens the inference cycle of $\pi_{0.5}$ to $77.68\,\mathrm{ms}$ ($12.87\,\mathrm{Hz}$), achieving a $1.76\times$ speedup over the single-GPU dual-stream baseline.
 These gains also generalize to GR00T N1.6, which achieves a $74.41\,\mathrm{ms}$ cycle ($13.44\,\mathrm{Hz}$, $1.40\times$ over the serial baseline).
 

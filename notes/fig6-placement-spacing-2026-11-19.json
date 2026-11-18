@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-19",
+  "base_commit": "419375569b49b35cc48de8ec2f55b0cc36caf280",
+  "scope": "Move Fig6 from page 6 to page 5, reduce caption/body float spacing, and keep the complete paper within seven pages.",
+  "fig6_page_before": 6,
+  "fig6_page_after": 5,
+  "fig7_page": 6,
+  "pages_including_references": 7,
+  "float_spacing": {
+    "textfloatsep_before": "1.55 baselineskip plus 0.2 baselineskip minus 0.4 baselineskip",
+    "dbltextfloatsep_before": "1.55 baselineskip plus 0.2 baselineskip minus 0.4 baselineskip",
+    "textfloatsep_after": "10pt plus 2pt minus 2pt",
+    "dbltextfloatsep_after": "10pt plus 2pt minus 2pt"
+  },
+  "placement": "Queue Fig6 immediately after Fig5 before the architecture boundary; queue Fig7 at the start of Evaluation so it stays on page6.",
+  "validation": {
+    "engine": "pdfLaTeX / TeX Live 2026",
+    "passes": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "compile_errors": 0,
+    "undefined_references": false,
+    "missing_characters": 0,
+    "overfull_boxes": 0,
+    "underfull_hboxes": 7,
+    "scientific_text_preserved": true,
+    "all_figure_assets_captions_labels_and_sizes_byte_preserved": true,
+    "IEEEtran_class_byte_preserved": true,
+    "visual_review": "Reviewed all seven rendered pages and the full-size views of Fig6, evaluation results, and references. No overlap, clipping, or broken figure order.",
+    "figures": [
+      {
+        "label": "fig:intro-overlap",
+        "number": 1,
+        "page": 1
+      },
+      {
+        "label": "fig:vla-characterization",
+        "number": 2,
+        "page": 2
+      },
+      {
+        "label": "fig:system-overview",
+        "number": 3,
+        "page": 3
+      },
+      {
+        "label": "fig:microarchitecture",
+        "number": 4,
+        "page": 4
+      },
+      {
+        "label": "fig:layout-dq",
+        "number": 5,
+        "page": 4
+      },
+      {
+        "label": "fig:timeline",
+        "number": 6,
+        "page": 5
+      },
+      {
+        "label": "fig:evaluation-summary",
+        "number": 7,
+        "page": 6
+      }
+    ]
+  },
+  "pdf_sha256": "1680d24f1748e3c28d9eb2692e0c4513bcb3769d62b8b892a68c7bff3c90cbef"
+}
