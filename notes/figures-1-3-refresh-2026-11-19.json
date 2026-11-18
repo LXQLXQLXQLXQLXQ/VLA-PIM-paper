@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-19",
+  "base_commit": "dbd18f5c17d4b3a52974520c3df012cde2d0b5e2",
+  "source": "figures/sources/figures1107-20261119-r2.pdf",
+  "source_sha256": "0046d2ed494f772ee6655900a5a9ec7a4f19d57219ebb75602a5851c09c97c25",
+  "source_page_count": 5,
+  "method": "One complete source page per figure; remove blank outer margins by modifying PDF page boxes only. Preserve text, vector paths, fonts and original content streams.",
+  "figures": [
+    {
+      "figure": 1,
+      "source_page": 1,
+      "output": "figures/execution-overview.pdf",
+      "output_sha256": "b3c1831e190223013c650c53727ac719445ad69ab26cebdf736c5bd6f68d4f76",
+      "crop_box_pt": [
+        169.25,
+        236.25,
+        526.25,
+        484.0
+      ],
+      "blank_border_padding_pt": 3,
+      "content_stream_byte_identical_to_source": true,
+      "content_stream_byte_identical_to_previous_figure": false,
+      "extracted_text_identical_to_source": true,
+      "embedded_image_count": 0,
+      "single_page_output": true,
+      "render_comparison_288dpi_max_channel_difference": 0
+    },
+    {
+      "figure": 3,
+      "source_page": 3,
+      "output": "figures/system-overview.pdf",
+      "output_sha256": "812491e6cea5b3018d95057db3cbf57354e2e131dafb6bdd89dfe5f4f18203fc",
+      "crop_box_pt": [
+        4.0,
+        269.5,
+        691.75,
+        424.25
+      ],
+      "blank_border_padding_pt": 3,
+      "content_stream_byte_identical_to_source": true,
+      "content_stream_byte_identical_to_previous_figure": false,
+      "extracted_text_identical_to_source": true,
+      "embedded_image_count": 0,
+      "single_page_output": true,
+      "render_comparison_288dpi_max_channel_difference": 0
+    }
+  ],
+  "validation": {
+    "engine": "pdfLaTeX / TeX Live 2026",
+    "passes": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "compile_errors": 0,
+    "undefined_references": false,
+    "missing_characters": 0,
+    "overfull_boxes": 0,
+    "underfull_hboxes": 7,
+    "main_document_and_sections_byte_preserved": true,
+    "other_figure_assets_byte_preserved": true,
+    "captions_labels_and_float_settings_preserved": true,
+    "visual_review": "Inspected compiled manuscript pages 1 and 3. Complete source figures, no cropping loss or new layout collisions.",
+    "figures": [
+      {
+        "label": "fig:intro-overlap",
+        "number": 1,
+        "page": 1
+      },
+      {
+        "label": "fig:vla-characterization",
+        "number": 2,
+        "page": 2
+      },
+      {
+        "label": "fig:system-overview",
+        "number": 3,
+        "page": 3
+      },
+      {
+        "label": "fig:microarchitecture",
+        "number": 4,
+        "page": 4
+      },
+      {
+        "label": "fig:layout-dq",
+        "number": 5,
+        "page": 5
+      },
+      {
+        "label": "fig:timeline",
+        "number": 6,
+        "page": 6
+      },
+      {
+        "label": "fig:evaluation-summary",
+        "number": 7,
+        "page": 7
+      }
+    ]
+  }
+}
