@@ -7,6 +7,8 @@ Vision-language-action (VLA) models map visual observations and language instruc
 
 The AE accounts for over half of serial inference time in our evaluated \(\pi_{0.5}\) configuration, making it a major target for acceleration. Its linear operators process few action tokens, resulting in limited weight reuse and low operational intensity. Repeated across denoising steps, these memory-bound operations are well suited to processing-in-memory (PIM). By computing near resident weights and KV data, PIM can accelerate AE execution while reducing external memory traffic.
 
+\input{figures/execution-overview}
+
 This mapping also creates an opportunity for heterogeneous parallel execution. Asynchronous VLA inference allows context updates and action generation to overlap, but a single GPU offers limited benefits when both stages compete for memory bandwidth. Although the VLM has higher operational intensity than the AE, it still places substantial demand on external memory. On NVIDIA Thor, optimized dual-stream execution achieves only a 1.03\(\times\) speedup over serial execution (Section~\ref{sec:background-a}). Running the VLM on the GPU and AE linear operators in PIM can both accelerate the AE and ease this bandwidth competition.\textbf{}
 
 However, GPU memory accesses and PIM transfers still share the LPDDR interface. Streaming inputs into PIM fragments bus idle time into short windows that the GPU cannot efficiently exploit. Intermediate transfers and inter-rank data redistribution further consume shared bandwidth. Effective overlap therefore requires jointly addressing the timing and volume of AE communication.
@@ -20,5 +22,3 @@ We present VLA-PIM, a GPU–LPDDR5X-PIM system that enables concurrent VLM and A
 \item We design an input-preloading microarchitecture that creates contiguous GPU access windows, together with communication-efficient layouts and in-PIM RoPE that reduce external transfers.
 \item We evaluate VLA-PIM using NVIDIA Thor measurements and a Ramulator-based cycle-accurate simulator. On the evaluated \(\pi_{0.5}\) configuration, VLA-PIM achieves a 1.76\(\times\) speedup over the dual-stream GPU baseline while retaining 92.1\% of standalone VLM bandwidth during PIM execution.
 \end{itemize}
-
-\input{figures/execution-overview}
