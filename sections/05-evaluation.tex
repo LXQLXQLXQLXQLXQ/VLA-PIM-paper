@@ -19,14 +19,14 @@ Each PIM bank adds a $1\,\mathrm{KiB}$ input buffer, a $2\,\mathrm{KiB}$ output 
 We evaluate overall performance using the inference cycle, defined as the interval between consecutive AE outputs.
 This cycle is calculated by summing the standalone execution times of the VLM and AE and subtracting the time saved through concurrent execution.
 
-\input{figures/async-vla-performance}
+\input{figures/evaluation-summary}
 The full VLA-PIM design shortens the inference cycle of $\pi_{0.5}$ to $77.68\,\mathrm{ms}$ ($12.87\,\mathrm{Hz}$), achieving a $1.76\times$ speedup over the single-GPU dual-stream baseline.
 These gains also generalize to GR00T N1.6, which achieves a $74.41\,\mathrm{ms}$ cycle ($13.44\,\mathrm{Hz}$, $1.40\times$ over the serial baseline).
 
-As shown in the breakdown in Figure~\ref{fig:async-vla-performance}, the largest performance gain comes from rank-partitioned concurrency~(c), which enables effective overlap between VLM and AE execution.
+As shown in the breakdown in Figure~\ref{fig:evaluation-summary}(a), the largest performance gain comes from rank-partitioned concurrency~(c), which enables effective overlap between VLM and AE execution.
 Building on this concurrency, the DQ-aware layout and input preloading~(d--e) further shorten the overall cycle by alleviating shared-bus contention.
 
-In addition to latency, energy per $\pi_{0.5}$ AE output is reduced by approximately $60.8\%$ compared to the dual-stream baseline, calculated over the inference cycle from synthesized PIM logic power (ASAP7 at $533\,\mathrm{MHz}$), Micron IDD-based DRAM power models, and a GPU power proxy.
+Figure~\ref{fig:evaluation-summary}(b) compares energy per AE output. For $\pi_{0.5}$, the full design uses an estimated $5.32\,\mathrm{J}$ per output versus $13.42\,\mathrm{J}$ for the measured Thor baseline, a $60.4\%$ reduction. The estimate combines synthesized PIM logic power (ASAP7 at $533\,\mathrm{MHz}$), Micron IDD-based DRAM power models, and a GPU power proxy.
 
 % %%%%%
 % We adopt an asynchronous VLA execution paradigm, in which the current frame's VLM runs concurrently with the previous frame's AE, and each AE inference uses the latest KV cache. The inference cycle, i.e., the interval between two consecutive AE outputs, is
@@ -35,14 +35,13 @@ In addition to latency, energy per $\pi_{0.5}$ AE output is reduced by approxima
 % =\frac{1}{f_{\text{AE}}}
 % \label{eq:ae-interval}
 % \end{equation}
-%  where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ are the standalone execution times of the AE and the VLM, and $t_{\mathrm{overlap}}$ is the effective overlap between the current VLM frame and the preceding AE frame. Figure~\ref{fig:async-vla-performance} breaks down $T_{\mathrm{async\ VLA}}$ across configurations a--e.
+%  where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ are the standalone execution times of the AE and the VLM, and $t_{\mathrm{overlap}}$ is the effective overlap between the current VLM frame and the preceding AE frame. Figure~\ref{fig:evaluation-summary}(a) breaks down $T_{\mathrm{async\ VLA}}$ across configurations a--e.
 % For $\pi_{0.5}$, the full design (e) shortens the cycle to $77.68\,\mathrm{ms}$ ($12.87\,\mathrm{Hz}$), a $1.82\times$ and $1.76\times$ higher AE rate than the single-GPU serial and dual-stream baselines, with rank-partitioned concurrency (c) contributing the largest single gain. For GR00T N1.6, \sys{} reaches $13.44\,\mathrm{Hz}$, $1.40\times$ the single-GPU serial baseline.
 % In terms of energy, \sys{} consumes about $5.32\,\mathrm{J}$ per $\pi_{0.5}$ AE output cycle, comprising $5.41\,\mathrm{W}$ of PIM logic power (ASAP7, $533\,\mathrm{MHz}$, fully active), $12.68\,\mathrm{W}$ of DRAM power estimated from Micron IDD values, and a $50.36\,\mathrm{W}$ GPU proxy. This is $60.8\%$ lower than the $13.55\,\mathrm{J}$ of the single-GPU dual-stream baseline.
 
 \subsection{Discussion: Decoupling the VLM and AE}
 \label{sec:evaluation-c}
 
-\input{figures/decoupled-rates}
 
 % SOURCE-EN: 273
 The heterogeneous architecture of \sys{} naturally supports decoupling the VLM and the AE. With suitable action fine-tuning algorithms~\cite{eaglevla,duocore_fs}, the VLM can refresh the KV cache at a lower rate while the PIM runs AE inference at a much higher rate, achieving truly asynchronous execution.
@@ -53,4 +52,4 @@ On a single GPU, such decoupling is inefficient. In the decoupled dual-stream mo
 % END-SOURCE-EN: 274
 
 % SOURCE-EN: 275
-In contrast, decoupled execution on \sys{} runs the AE at about $14.57\,\mathrm{Hz}$, $2.87\times$ the decoupled dual-stream rate and higher than the two-GPU mode, while the VLM still refreshes at about $12.56\,\mathrm{Hz}$. This is $16.1\%$ lower than in the two-GPU mode, where the VLM has a dedicated Thor, and $23.9\%$ higher than in the decoupled dual-stream mode Figure~\ref{fig:decoupled-rates} also reveals a tradeoff that arises only under full decoupling. In the coupled setting of Section~\ref{sec:evaluation-b}, where each AE output consumes the latest KV cache, input preloading (e) is strictly faster than streaming inputs (d), at $77.68$ versus $83.57\,\mathrm{ms}$ per cycle. Once the two loops run independently, neither configuration dominates. With streaming inputs, the AE reaches a higher $17.60\,\mathrm{Hz}$, but its interleaved transfers limit the VLM to $10.45\,\mathrm{Hz}$. Preloading instead returns contiguous DQ windows to the GPU and favors the VLM refresh rate. Decoupled execution thus opens a design space between context freshness and action frequency, which \sys{} can explore by selecting the dataflow.
+In contrast, decoupled execution on \sys{} runs the AE at about $14.57\,\mathrm{Hz}$, $2.87\times$ the decoupled dual-stream rate and higher than the two-GPU mode, while the VLM still refreshes at about $12.56\,\mathrm{Hz}$. This is $16.1\%$ lower than in the two-GPU mode, where the VLM has a dedicated Thor, and $23.9\%$ higher than in the decoupled dual-stream mode. Figure~\ref{fig:evaluation-summary}(c) also reveals a tradeoff that arises only under full decoupling. In the coupled setting of Section~\ref{sec:evaluation-b}, where each AE output consumes the latest KV cache, input preloading (e) is strictly faster than streaming inputs (d), at $77.68$ versus $83.57\,\mathrm{ms}$ per cycle. Once the two loops run independently, neither configuration dominates. With streaming inputs, the AE reaches a higher $17.60\,\mathrm{Hz}$, but its interleaved transfers limit the VLM to $10.45\,\mathrm{Hz}$. Preloading instead returns contiguous DQ windows to the GPU and favors the VLM refresh rate. Decoupled execution thus opens a design space between context freshness and action frequency, which \sys{} can explore by selecting the dataflow.

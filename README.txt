@@ -6,25 +6,23 @@ VLA-PIM 论文
 格式：用户提供的 IEEEtran conference 双栏模板，IEEEtran.cls 未修改。
 作者栏：Anonymous Authors / Paper under double-blind review。
 
-当前排入八张图；图1、3、4沿用用户PDF的对应完整页面，图2重新从原始矢量版导出高清PNG：
+当前排入七张图；图1、3、4沿用用户PDF的对应完整页面，图2重新从原始矢量版导出高清PNG：
 1. 2026-11-19 新PDF第1页 → figures/execution-overview.pdf / .tex：Introduction。
 2. 原始矢量版 v17 → figures/vla-characterization.png / .tex：Background and Motivation（1200 dpi，4914×3733）。
 3. 2026-11-19 新PDF第3页 → figures/system-overview.pdf / .tex：Architecture Design / System Overview（双栏）。
 4. 2026-11-18 PDF第4页 → figures/microarchitecture.pdf / .tex：Architecture Design / Input-preloaded microarch（单栏；本次未改）。
 5. KV 布局与 DQ 流量 → figures/layout-dq.tex（单栏）。
 6. 单步执行时间线 → figures/timeline.tex（双栏）。
-7. 总体性能对比 → figures/async-vla-performance.tex（单栏）。
-8. 解耦频率 → figures/decoupled-rates.tex（单栏）。
+7. 评估三联图 → figures/evaluation-summary.tex（双栏）：(a) 异步周期，(b) 每个 AE chunk 的能耗，(c) 解耦频率。
 
-图5–8统一使用Arial，包括数学符号和下标；PNG/TIFF位图均为600 dpi，TIFF采用无损LZW压缩。
-四个绘图脚本共用 figures/figure_style.py。重绘时需在系统中安装Arial，或将 VLA_PIM_FONT_DIR 指向含Arial常规、斜体、粗体和粗斜体字体文件的目录；缺少Arial时脚本会报错。
+图5–7统一使用Arial，包括数学符号和下标；PNG/TIFF位图均为600 dpi，TIFF采用无损LZW压缩。
+三个绘图脚本共用 figures/figure_style.py。重绘时需在系统中安装Arial，或将 VLA_PIM_FONT_DIR 指向含Arial常规、斜体、粗体和粗斜体字体文件的目录；缺少Arial时脚本会报错。
 
-总体性能图已扩展为单列宽度内的左右两张独立小图：(a) π0.5；(b) GR00T N1.6。
-两图共用纵轴刻度，指标标注为 T_Async，a-s/a-d 表示串行/双流 GPU 基线。
+Fig7(a) 中的 π0.5 和 GR00T N1.6 共用纵轴刻度，指标标注为 T_Async，a-s/a-d 表示串行/双流 GPU 基线。
 GR00T 数据来自 Important data/gr00t-n16-h15-640x480-2026-11-18；原 n16-b/c/d/f 映射为 b/c/d/e，不含 RoPE。
-GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）；双流柱补入用户指定的 compile AE p50 98.27 ms（柱顶按整数显示 98）。
+GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms；双流柱补入用户指定的 compile AE p50 98.27 ms（柱顶按整数显示 98）。
 最终配置的 AE rate 倍率：π0.5 为 1.82× / 1.76×（相对串行/双流），GR00T 为 1.40×（相对推导串行基线）。
-绘图脚本：figures/plot-async-vla-performance.py；数据快照：figures/data/async-vla-performance.json。
+绘图脚本：figures/plot-evaluation-summary.py；周期数据快照：figures/data/async-vla-performance.json。
 原始数据来源和验证见 notes/performance-chart-gr00t-2026-11-18.json；双流补充数据见 figures/data/gr00t-dual-stream-cache-snapshot-20261118.json。
 π0.5 六组结果已与 H=16 原始 Thor/仿真归档逐项核对，修正 JSON 中误写的 horizon=50；图注和正文已明确 H=16。
 核对依据和原始文件哈希见 notes/performance-chart-pi05-h16-2026-11-18.json。
@@ -39,7 +37,7 @@ GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）�
 图片采用自动编号，正文相应引用已更新。
 
 后四张图已从 c8e45c5 恢复原版 PDF/PNG 和 LaTeX 包装文件，并恢复正文引用。
-所有图统一自动编号为 1–8；时间线仍采用已确认的双栏版本。
+恢复时所有图统一自动编号为 1–8；时间线仍采用已确认的双栏版本。
 恢复记录见 notes/restored-back-figures-2026-11-17.txt。
 
 Table I 已按四个 x16 PIM 裸片（x64）统一归一化，比较 VLA-PIM、LP-Spec、AHASD 和 Samsung 四种方案。
@@ -64,15 +62,14 @@ Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然�
 - 汇总数据：figures/data/power-energy-comparison.json、.csv、.zh-CN.md。
 - 图：figures/power-energy-ratios.png、.pdf、.svg；绘图入口：figures/plot-power-energy-ratios.py。
 - 标准库核对入口：notes/power-energy-2026-11-18/scripts/verify_power_data.py。
-- 本次上传未将新图插入正文；Overleaf 从 GitHub Pull 后即可使用上述文件。
+- 正文 Fig7(b) 使用上述能耗数据；单独的功耗比图保留在归档中。
 
-Fig5–8 绘图脚本与数据
+Fig5–7 绘图脚本与数据
 
-所有路径均相对仓库根目录；这四张图可仅使用本仓库中的脚本和JSON快照重绘，无需父目录中的仿真仓库或实验结果。
+所有路径均相对仓库根目录；这三张图可仅使用本仓库中的脚本和JSON快照重绘，无需父目录中的仿真仓库或实验结果。
 - Fig5：figures/plot-layout-dq.py；数据 figures/data/layout-dq-20261117.json。
 - Fig6（当前双面板、VLM kernel 编号版）：figures/plot-timeline.py；数据 figures/data/timeline-vlm-priority.json。
-- Fig7：figures/plot-async-vla-performance.py；数据 figures/data/async-vla-performance.json；GR00T双流补充快照 figures/data/gr00t-dual-stream-cache-snapshot-20261118.json。
-- Fig8：figures/plot-decoupled-rates.py；数据 figures/data/decoupled-rates.json。
+- Fig7：figures/plot-evaluation-summary.py；三个面板分别使用 figures/data/ 下的 async-vla-performance.json、power-energy-comparison.json 和 decoupled-rates.json。
 - 共用模块：figures/figure_style.py，配置Arial文字/公式字体并导出600 dpi无损TIFF。
 - 历史Fig6数据：figures/data/timeline.json、figures/data/streaming-input-gap.json，为旧版带DQ放大图保留，当前脚本不读取这两份快照。
 
@@ -81,8 +78,7 @@ Arial字体文件不随仓库分发；若系统未安装Arial，先将环境变�
 在仓库根目录运行：
   python figures/plot-layout-dq.py
   python figures/plot-timeline.py
-  python figures/plot-async-vla-performance.py
-  python figures/plot-decoupled-rates.py
+  python figures/plot-evaluation-summary.py --out figures
 默认输出到 figures/；可加 --out 输出目录，以便预览而不覆盖现有图片。
 注意：Fig6脚本保留历史文件名 fig7_step_timeline.pdf/png/svg；论文实际使用的位图别名为 fig6_timeline.png/tif。
 Overleaf从GitHub拉取后会保存这些源文件；LaTeX编译使用已导出的图片，不会自动执行Python脚本。
