@@ -1,0 +1,29 @@
+2026-11-17 — Complete Table I from the user-supplied comparison
+
+Replaced the rank-level two-device placeholder table with the supplied
+x64 / four-x16-die package comparison: VLA-PIM, LP-Spec, AHASD, Samsung.
+All numeric entries and the stated throughput/scope assumptions follow the
+user's table. Retained BF16-equivalent normalization, the AHASD per-die
+compute assumption, its as-reported bandwidth, and GRF buffer explanation.
+Included the supplied timing parameters and Samsung's not-disclosed entry.
+
+Used a single-column tabularx table and corrected pasted escaping.
+Preserved tab:pim-spec and table numbering. Updated only the architecture
+sentence introducing the expanded comparison.
+
+Replaced [x]/[y] with citations: LP-Spec [4], AHASD [10]. Samsung remains [2].
+Added the AHASD DAC 2026 bibliography entry; filled the existing Samsung
+bibliography placeholder with its Hot Chips 2026 presentation.
+Primary sources for bibliography and published context:
+- LP-Spec: https://arxiv.org/abs/2508.07227
+- AHASD: https://arxiv.org/abs/2604.25326
+  DOI: 10.1145/3770743.3803965
+- Samsung: https://hc2026.hotchips.org/ (Memory session, 2026-08-25)
+
+Validation: two successful pdfLaTeX passes; 8 pages, 8 figures, 2 tables.
+No missing images/characters, undefined references/citations, duplicate
+labels, or overfull boxes. Table I rendered and visually inspected on page 3.
+All figure sources/assets and the main document (including power estimate)
+are unchanged. See verification.json for the current PDF checksum.
+
+Pre-edit archive: essay/backups/TableI_before_completion_20261117_c7211e4.tar.gz

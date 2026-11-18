@@ -1,43 +1,46 @@
-VLA-PIM 论文初稿（全英文正文）
+VLA-PIM 论文
 
+标题：VLA-PIM: LPDDR-PIM Architecture–Dataflow Co-Design for Heterogeneous Acceleration of Edge VLA Inference
 主文件：conference_101719.tex
-编译器：默认 pdfLaTeX；也支持 XeLaTeX/LuaLaTeX。
-格式：原版 IEEEtran conference 双栏，IEEEtran.cls 未修改。
+编译器：pdfLaTeX
+格式：用户提供的 IEEEtran conference 双栏模板，IEEEtran.cls 未修改。
+作者栏：Anonymous Authors / Paper under double-blind review。
 
-Motivation 沿用用户从 Overleaf 推送的 05a7804 英文版本。
-从 System Overview 到 Conclusion，正文逐段采用 Google Docs《Methodology 翻译》的英文原句。
-英文同步以原文为准；Overall Performance 已按用户本次要求重写为 a--e 五组配置的分析。
-Thor/Ramulator 实验设置段因缺少原文英文，按用户指示暂移至 notes/experimental-setup-awaiting-english.txt。
-摘要、Introduction 和匿名作者栏沿用上游；methodology-zh-v3.md 仅为历史中文备份，不参与编译。
-来源及核对记录见 notes/methodology-sync-2026-11-17.txt 和 notes/english-source-audit-2026-11-17.json。
+当前排入八张图，其中图2为用户提供的高清版本：
+1. 幻燈片1.tif → figures/execution-overview.tex：Introduction 结束处。
+2. 用户新上传的高清 PNG → figures/vla-characterization.tex：Background and Motivation（已替换原幻燈片2）。
+3. 幻燈片3.tif → figures/system-overview.tex：Architecture Design / System Overview（双栏）。
+4. 幻燈片4.tif → figures/microarchitecture.tex：Architecture Design / Input-preloaded microarch（单栏）。
+5. KV 布局与 DQ 流量 → figures/layout-dq.tex（单栏）。
+6. 单步执行时间线 → figures/timeline.tex（双栏）。
+7. 总体性能对比 → figures/async-vla-performance.tex（单栏）。
+8. 解耦频率 → figures/decoupled-rates.tex（单栏）。
 
-图片：
-- 系统概览（figures/system-overview.tex）；
-- 输入预装载微架构（figures/microarchitecture.tex）；
-- KV 布局与外部 DQ 流量（figures/layout-dq.tex，IV-A 的单栏图 6）；
-- 单步执行时间线（figures/timeline.tex）；
-- 解耦频率（figures/decoupled-rates.tex）。
-原 RD 字段图已删除，字段格式合入 Table II 的单行注释；新增图 6 为用户确认的 KV 布局与 DQ 流量图。
-Table II 采用已确认的 v3：BG/BA、Cmd.、Operation、Function 四列，RD/WR 指令逐行列出。
-原性能表已替换为图 9：仅画 T_async VLA（async 与 VLA 之间用空格），在一个单列宽度内并排放两张独立小图，左图为 π0.5，右图为 GR00T N1.6，共用纵轴刻度。
-原 e、g 配置分别重命名为 d、e；原 d、f 不再出现在配置列表或正文分析中。
-图 9 采用单栏布局，柱宽统一收窄、间距相等；图内仅保留配置编号，图注和正文按 b--e 的累加顺序交代新增方法。
-每张小图各用一个箭头标注最终 e 的 AE rate 倍率：π0.5 相对 a-serial / a-dual 为 1.82× / 1.76×，GR00T 相对推导串行基线为 1.40×。横轴 a-s/a-d 分别为 serial/dual 基线。
-GR00T 数据来自 Important data/gr00t-n16-h15-640x480-2026-11-18；原 n16-b/c/d/f 映射为 b/c/d/e，该模型无 RoPE。
-GR00T a-serial 由归档实测 AE/VLM 单跑均值相加得 104.13 ms（†）；a-dual 无数据，标为 N/A。
-原 Table III 内存配置表已删除；关键时序以“参数=数值”的紧凑形式列在 Table I 下方注释中，单位为 CK，数值沿用 LPDDR5X-8533 配置。
-表格和章节自动编号；图片采用 4、5、6、7、9、10 的编号，共六张图、两张表。
+总体性能图已扩展为单列宽度内的左右两张独立小图：(a) π0.5；(b) GR00T N1.6。
+两图共用纵轴刻度，指标为 T_async VLA（async 与 VLA 之间为空格），a-s/a-d 表示串行/双流 GPU 基线。
+GR00T 数据来自 Important data/gr00t-n16-h15-640x480-2026-11-18；原 n16-b/c/d/f 映射为 b/c/d/e，不含 RoPE。
+GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）；双流基线缺测，标为 N/A。
+最终配置的 AE rate 倍率：π0.5 为 1.82× / 1.76×（相对串行/双流），GR00T 为 1.40×（相对推导串行基线）。
+绘图脚本：figures/plot-async-vla-performance.py；数据快照：figures/data/async-vla-performance.json。
+数据来源和验证见 notes/performance-chart-gr00t-2026-11-18.json。
 
-原英文版备份：backup/english-2026-11-16-7e7442d 分支。
-本次图表修改前另有 79239f0 源码归档，见 notes/figure-revision-2026-11-17.txt。
-图 7、图 10 的矢量 PDF 与 600 dpi PNG 可用 figures/plot-timeline-rates.py 从已提交快照重绘。
-图 9 的矢量 PDF 与 600 dpi PNG 可用 figures/plot-async-vla-performance.py 从原性能表数值重绘。
-图 6 的 PDF/SVG 与 PNG 可用 figures/plot-layout-dq.py 从已提交字节计数快照重绘；插入与核验记录见 notes/layout-dq-insertion-2026-11-17.txt。
+图1、3、4由 TIFF 无损转换为全分辨率 PNG，大块白边仅由 LaTeX 的 trim/clip 裁去。
+图2直接使用用户新上传的 1474×1119 PNG，逐字节复制原图，不缩放或裁切。
+上述四张用户提供图片的内容均未重画。
+源文件映射、校验和、裁切坐标见 notes/figures1107-manifest.json。
+图片采用自动编号，正文相应引用已更新。
+
+后四张图已从 c8e45c5 恢复原版 PDF/PNG 和 LaTeX 包装文件，并恢复正文引用。
+所有图统一自动编号为 1–8；时间线仍采用已确认的双栏版本。
+恢复记录见 notes/restored-back-figures-2026-11-17.txt。
+
+Table I 已按每个 x64 PIM 封装补齐 VLA-PIM、LP-Spec、AHASD 和 Samsung 四种方案。
+保留 BF16-equivalent 折算、AHASD 统计范围假设、缓冲区来源和时序说明；引用改为正式文献。
+详见 notes/tableI-completion-2026-11-17.txt。
+
+已移除 Architecture 中意外残留的空嵌套 href 命令。
+正文论述、实验数值及已有待补条目保留；只调整与图片绑定的交叉引用。
+构建验证记录见 notes/verification.json。
+历史修改和原始数据来源记录仍保存在 notes/ 与 Git 历史中。
+
 Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然后重新编译。
-
-图 7 绘图源码与原数据已按类别整理到 figures/fig7/，详见其中 README.md：
-- scripts/：绘图、原数据校验与处理脚本，以及依赖版本；
-- data/raw/：Streaming input / Input preloading 两组完整原始实验输出的无损压缩包、时序矩阵和 SHA-256 清单；
-- data/processed/：从原数据重建的绘图 JSON。PDF/PNG 成图仍位于 figures/。
-可直接执行 figures/fig7/scripts/plot_figure.py 绘图；rebuild_data.py 可在不依赖仓库外文件的情况下重新生成输入数据。
-原 figures/plot-timeline-rates.py 和 figures/analyze-streaming-gaps.py 入口继续保留。

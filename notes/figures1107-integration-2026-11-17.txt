@@ -1,0 +1,19 @@
+本次请求：替换论文标题；按指定章节排入 figures1107 四张图；其余图片后续再提供。
+
+基于远端 cbc5382（Updates from Overleaf）进行修改。
+输入目录：/Users/huangshiyu/Documents/ust/LPDDR-PIM4VLA/dac2610-lpddrpim4vla/figures1107/
+四张原图为 1030×1246 RGBA TIFF；所有 alpha 均为 255。
+PNG 转换后的 RGB 像素逐字节与源图相同；无重绘或重采样。
+
+图1对应 intro 收尾；图2对应 Background and Motivation（原 Fig. 1(a--c) 引用改为当前图2）；图3/4分别对应架构总览、输入预装载微架构。
+系统图横向较宽，使用跨双栏图；其余三张单栏。
+按章节加入 FloatBarrier，避免图漂移到后续章节。
+
+编译修复：
+- 补齐 figures/system-overview.tex、figures/microarchitecture.tex 为这次指定图片。
+- 暂时注释不存在的 layout-dq、timeline、async-vla-performance、decoupled-rates 输入。
+- 暂缓纯图示介绍句；数值分析仅去掉已不存在图的指代，不改动数据。
+- 删除空嵌套 href 命令。
+- 移除不再使用的 TikZ 依赖；四张图均直接由 graphicx 插入。
+
+未修订任何实验结论、文献或尚未确定的源稿 TBD 内容。

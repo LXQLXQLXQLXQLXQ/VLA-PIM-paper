@@ -1,0 +1,113 @@
+[
+  {
+    "original_file": "幻燈片1.tif",
+    "source_sha256": "c33a7230f2cd07e63c0bb01661204ee4345bf58c50d04a0db36ec433b127e8cb",
+    "png_file": "figures/execution-overview.png",
+    "png_sha256": "edf9a38c51cd72502cbecbd4e32b68a2514c0c7067bc972b532b20785e0c16a0",
+    "full_raster_size": [
+      1030,
+      1246
+    ],
+    "png_pixels_identical_to_original_rgb": true,
+    "visible_box_pixels": [
+      522,
+      57,
+      1030,
+      354
+    ],
+    "latex_trim_bp": [
+      522,
+      892,
+      0,
+      57
+    ],
+    "latex_input": "figures/execution-overview.tex",
+    "label": "fig:intro-overlap",
+    "placement": "Introduction (end)",
+    "float_environment": "figure"
+  },
+  {
+    "original_file": "codex-clipboard-125c7ccf-563e-40c4-823c-fefb74a536ad.png",
+    "source_sha256": "60729f03dfd6515b2830cf4bf34d358cd4102be6f665e6f621ce4c7192389c4d",
+    "png_file": "figures/vla-characterization.png",
+    "png_sha256": "60729f03dfd6515b2830cf4bf34d358cd4102be6f665e6f621ce4c7192389c4d",
+    "full_raster_size": [
+      1474,
+      1119
+    ],
+    "png_pixels_identical_to_original_rgb": true,
+    "visible_box_pixels": [
+      0,
+      0,
+      1474,
+      1119
+    ],
+    "latex_trim_bp": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "latex_input": "figures/vla-characterization.tex",
+    "label": "fig:vla-characterization",
+    "placement": "Background and Motivation, execution characteristics",
+    "float_environment": "figure",
+    "previous_source": "figures1107/幻燈片2.tif",
+    "source_kind": "user-supplied high-resolution PNG replacement",
+    "file_byte_identical_to_source": true
+  },
+  {
+    "original_file": "幻燈片3.tif",
+    "source_sha256": "258fb96014b40487de0846e3656b8b64f6b3c28f00b6ed86848605cb930f6e83",
+    "png_file": "figures/system-overview.png",
+    "png_sha256": "0e7402e4c4dd987af54ebeb02b71b2cfaddc9fec014dc70ba34efa72e94eadb8",
+    "full_raster_size": [
+      1030,
+      1246
+    ],
+    "png_pixels_identical_to_original_rgb": true,
+    "visible_box_pixels": [
+      1,
+      399,
+      995,
+      628
+    ],
+    "latex_trim_bp": [
+      1,
+      618,
+      35,
+      399
+    ],
+    "latex_input": "figures/system-overview.tex",
+    "label": "fig:system-overview",
+    "placement": "Architecture Design, System Overview",
+    "float_environment": "figure*"
+  },
+  {
+    "original_file": "幻燈片4.tif",
+    "source_sha256": "fd507bfddedc416254fdf1851d3f798bacf18391705800812959276ac4f3fb09",
+    "png_file": "figures/microarchitecture.png",
+    "png_sha256": "76ac9ee70186ba66d683fb22ac61cd2aabcffc5bbe52c198f3c3eeffc6b5f0c6",
+    "full_raster_size": [
+      1030,
+      1246
+    ],
+    "png_pixels_identical_to_original_rgb": true,
+    "visible_box_pixels": [
+      5,
+      652,
+      516,
+      1105
+    ],
+    "latex_trim_bp": [
+      5,
+      141,
+      514,
+      652
+    ],
+    "latex_input": "figures/microarchitecture.tex",
+    "label": "fig:microarchitecture",
+    "placement": "Architecture Design, Input-preloaded microarchitecture",
+    "float_environment": "figure"
+  }
+]

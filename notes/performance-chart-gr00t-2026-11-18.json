@@ -1,6 +1,6 @@
 {
   "date": "2026-11-18",
-  "figure_number": 9,
+  "figure_number": 7,
   "request": "Two independent bar-chart panels side by side within one paper column: pi0.5 left, GR00T N1.6 right.",
   "layout": "1 row x 2 panels, combined width 3.5 inches; common vertical scale 0–220 ms; six equally spaced configuration positions per panel; bar width 0.44",
   "metric": "T_async VLA (ms)",
@@ -79,13 +79,28 @@
     "undefined_references": false,
     "input_hashes_unchanged_during_compile": true
   },
-  "visual_review": "Standalone figure and rendered page 7 inspected. Two independent panels fit inside one column, with aligned baselines and shared vertical scale; numerical labels and each panel rate arrow do not overlap.",
+  "visual_review": "Merged manuscript page 7 inspected: two subplots fit in one column; figure is automatically numbered 7, with timeline 6 and decoupled rates 8.",
   "experiment_data_modified": false,
   "simulation_rerun": false,
   "pre_edit_backup": "../essay/backups/async-vla-before-gr00t-20261118.tar.gz",
-  "review_page": "../essay/reviews/async-vla-gr00t-panels-20261118/page-7.png",
-  "pdf_sha256": "804ad866d198eb8ccd7a1dd7924548df9d15c26f0c0e5055e0b98152e80fc938",
+  "review_page": "../essay/reviews/async-vla-gr00t-merged-20261118/page-7.png",
+  "pdf_sha256": "76818ac677449853f4d4014ad38f163d286584602a7d791b8a9dbd8fe84d72a5",
   "unrelated_edits_preserved": "Existing one-line inference-cycle equation and area value retained.",
   "configuration_labels": "a-s/a-d denote serial/dual-stream GPU baselines; b/c/d/e retain their mapping.",
-  "data_changed_in_layout_correction": false
+  "data_changed_in_layout_correction": false,
+  "upstream_sync": {
+    "merged_upstream": "1158b33",
+    "automatic_figure_numbering_retained": true,
+    "first_four_images_and_package_table_retained": true,
+    "performance_figure_now_number": 7,
+    "rerendered_after_merge": true,
+    "pdfLaTeX_passes": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "overfull_boxes": 0,
+    "undefined_references": false,
+    "missing_characters": 0
+  }
 }

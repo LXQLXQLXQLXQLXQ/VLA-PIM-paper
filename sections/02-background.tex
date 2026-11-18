@@ -6,11 +6,13 @@
 \subsection{Execution Characteristics and Bandwidth Bottlenecks of Asynchronous VLAs}
 \label{sec:background-a}
 
-Embodied Vision-Language-Action (VLA) models, such as $\pi_{0.5}$, typically combine a Vision-Language Model (VLM) with an Action Expert (AE). The VLM encodes multimodal inputs (images and text instructions), and the AE reuses this context to generate action chunks through multi-step denoising (Fig.~1(a)). Because AE inference accounts for over half of the total latency (Fig.~1(b)), it limits the system's control frequency. To improve throughput, recent approaches use asynchronous pipelining. This allows the AE to generate actions from a cached context while the VLM concurrently processes new observations. Ideally, a two-stage pipeline reduces the per-step latency from the sum of both stages to the latency of the slower stage.
+Embodied Vision-Language-Action (VLA) models, such as $\pi_{0.5}$, typically combine a Vision-Language Model (VLM) with an Action Expert (AE). The VLM encodes images and text instructions, and the AE reuses this context to generate action chunks through multi-step denoising (Fig.~\ref{fig:vla-characterization}(a)). Because AE inference accounts for over half of the total latency (Fig.~\ref{fig:vla-characterization}(b)), it limits the system's control frequency. To improve throughput, recent approaches use asynchronous pipelining. This allows the AE to generate actions from a cached context while the VLM concurrently processes new observations. Ideally, a two-stage pipeline reduces the per-step latency from the sum of both stages to the latency of the slower stage.
 
-In practice, limited off-chip memory bandwidth on edge GPUs restricts the gains from asynchronous execution. As shown in the Roofline analysis (Fig.~1(c)), the AE processes only a few action tokens per step. This leads to low weight reuse, low operational intensity (OI), and a memory-bound execution profile. The VLM processes more visual and text tokens and achieves a higher OI, operating closer to the ridge point of edge platforms like NVIDIA Thor. However, most VLM operators remain memory-bound. As a result, running both modules concurrently creates contention for shared off-chip memory bandwidth. Our profiling on NVIDIA Thor confirms this bottleneck. Even with \texttt{torch.compile} enabled, dual-stream execution only reduces latency from $141.29\text{ ms}$ to $137.07\text{ ms}$, resulting in a $1.031\times$ speedup (Figure~\ref{fig:async-vla-performance}).
+In practice, limited off-chip memory bandwidth on edge GPUs restricts the gains from asynchronous execution. As shown in the Roofline analysis (Fig.~\ref{fig:vla-characterization}(c)), the AE processes only a few action tokens per step. This leads to low weight reuse, low operational intensity (OI), and a memory-bound execution profile. The VLM processes more visual and text tokens and achieves a higher OI, operating closer to the ridge point of edge platforms like NVIDIA Thor. However, most VLM operators remain memory-bound. As a result, running both modules concurrently creates contention for shared off-chip memory bandwidth. Our profiling on NVIDIA Thor confirms this bottleneck. Even with \texttt{torch.compile} enabled, dual-stream execution only reduces latency from $141.29\text{ ms}$ to $137.07\text{ ms}$, resulting in a $1.031\times$ speedup.
 
 These execution patterns motivate a heterogeneous hardware design. Processing-in-Memory (PIM) architectures offer high internal bandwidth and moderate compute capability, which aligns well with the low-OI, memory-bound profile of the AE. In contrast, the VLM has higher OI and compute requirements, making it a better fit for general-purpose GPUs. Therefore, we offload the AE's primary linear layers to PIM to access weights and the KV cache directly inside memory banks. This partitioning reduces data movement over the external memory bus (DRAM DQ pins). Consequently, it avoids cross-stage bandwidth contention and preserves off-chip memory bandwidth for the GPU-resident VLM.
+
+\input{figures/vla-characterization}
 
 \subsection{LPDDR-PIM for Edge Inference}
 \label{sec:background-b}
@@ -31,36 +33,3 @@ Because ranks share the external buses, concurrent execution introduces two comm
 Existing PIM designs address bus contention by modifying the memory hardware. For instance, NeuPIMs adds dual row buffers inside each bank~\cite{neupims}, while LP-Spec introduces a near-data memory controller with separate command paths and buffers~\cite{lp_spec}. However, these approaches do not apply to standard LPDDR interfaces that retain conventional row buffers and shared C/A and DQ buses.
 
 These constraints motivate the design of VLA-PIM. Building on rank-level partitioning on unmodified LPDDR interfaces, VLA-PIM combines input preloading with communication-aware data mapping. This design minimizes external data transfers and consolidates contiguous bus access windows for the GPU.
-
-% \subsection{异步 VLA 的执行特征与带宽瓶颈}
-% \label{sec:background-a}
-
-
-% 以 \(\pi_{0.5}\)等具身视觉语言动作（VLA）模型为代表的架构通常由视觉语言模型（VLM）与动作专家（AE）协同构成：VLM 负责编码多模态观测（图像与语言指令），AE 则复用其上下文通过多步去噪生成动作块（图 1(a)）。然而，AE 的推理耗时占总体的一半以上（图 1(b)），严重制约了系统的控制频率。为此，现有研究引入异步流水线执行机制——允许 AE 基于已就绪的上下文并行生成动作，同时由 VLM 处理新观测。在理想的双阶段流水中，单轮执行周期可由两阶段耗时之和缩短至接近瓶颈阶段的水平。
-
-% 然而，边缘端 GPU 有限的片外带宽严重削弱了这种流水线重叠效益。如图 1(c) 所示，AE 处理的动作 Token 数量较少、权重复用率低，其核心算子具有较低的算术强度（Arithmetic Intensity, OI），呈现出典型的存储带宽受限（Memory-bound）特征。尽管 VLM 处理的视觉与文本 Token 规模更大、OI 更高且接近目标平台（如 Thor）的 Roofline 模型拐点，但其多数算子仍处于带宽受限区。因此，双阶段并发执行会导致严重的片外内存带宽竞争。我们在 Thor 平台的 MHA8 配置下的实测表明，经 \texttt{torch.compile} 优化后的双 Stream 并发仅将执行延迟从 141.29 ms 微降至 137.07 ms，加速比仅为 1.031\(\times\)（表 I）。
-
-% 基于上述分析，处理内存（PIM）架构凭借极高的内部带宽和适度的算力，非常契合 AE 这类低 OI、访存主导型的计算负载。相比之下，VLM 的算术强度与计算吞吐需求显著更高，更适合保留在通用 GPU 上运行。因此，本文提出异构协同计算方案：将 AE 的主要线性计算卸载至 PIM，使其在存储端直接完成权重与 KV Cache 的读取，从而大幅削减经由外部总线（如 DRAM 的 DQ 引脚）的数据传输量，为 GPU 上的 VLM 释放宝贵的片外带宽。这种软硬件协同的分工策略不仅精准匹配了双阶段的计算特征，也为根本缓解并发场景下的带宽竞争提供了有效途径。
-
-% \subsection{面向边端的 LPDDR-PIM 协同执行}
-% \label{sec:background-b}
-
-
-% 低功耗双倍数据速率内存（LPDDR）兼顾高能效与紧凑封装，是 NVIDIA Orin、Thor 等边缘平台的主流主存方案 (micron.com)。LPDDR-PIM 在此基础上将计算单元直接集成于 DRAM 内部——例如三星提出的 LPDDR5X-PIM 便将处理单元与各 DRAM Bank 一一对应耦合，从而在主存内部提供了直接利用高聚合内部带宽的计算能力。
-
-% 从存储微架构层级来看，LPDDR 的外部总线接口与内部存储阵列呈现出显著的解耦特性：每个通道（Channel）配备独立的命令/地址总线（C/A）与数据总线（DQ），并可挂载多个由片选信号（CS）独立控制的 Rank；同通道内的各 Rank 拥有独立的存储阵列，但在对外接口上共享该 Channel 的 C/A 与 DQ 总线；而在 Rank 内部，存储空间进一步划分为多个 Bank，PIM 逻辑正是通过 Bank 级本地数据通路直接读取阵列数据进行运算。
-
-% 本文的多 Bank 协同计算模式，\textbf{Rank 级划分}最为契合：它能够直接复用现有的 CS 片选机制与独立存储阵列，将 AE 计算与 VLM 访存分别映射至不同 Rank，从而在 PIM 执行片内计算期间，确保所有 Channel 仍能满载响应 GPU 的常规访存请求。
-
-% 为提升并发度，既有研究多依赖激进的硬件微架构改动——例如 NeuPIMs 在 Bank 内增设双行缓冲（Dual Row-buffer），LP-Spec 则引入近存控制器（NMC）、独立 C/A 通路及额外缓冲，均在阵列外围或接口侧引入了不可忽视的面积与控制开销 。本文坚持低侵入性（Low-overhead）设计原则，不引入额外的 Logic Die，完整保留原有的行缓冲组织以及共享的 C/A、DQ 物理接口，仅对 PIM 的局部数据通路进行轻量级扩展。在这一严格的硬件约束下，系统设计的核心便聚焦于如何精简并重排外部总线通信，使 Rank 级物理隔离真正转化为高效的实际并发。
-
-% \subsection{共享总线下的协同挑战}
-% \label{sec:background-c}
-
-
-% 尽管 Rank 级分工为 GPU 保留了全通道访问的物理潜力，但实际可获得的带宽收益仍受制于 PIM 对共享总线的占用模式，主要面临两方面瓶颈：
-
-% \begin{enumerate}
-% \item \textbf{访存窗口碎片化与总线时序开销}：受限于 PIM 有限的输入缓冲区，传统的流式供数模式迫使 PIM 交替执行数据接收与计算，导致 DQ 总线上充斥着零散、短暂的空闲窗口。GPU 在此类碎片化窗口内访存，不仅需承受跨 Rank 切换与读写转向的时序开销，过窄的窗口更难以承载有效突发传输，严重拉低总线利用率，LPDDR5X-PIM 的相关技术分析亦证实了细粒度输入写入的显著开销。因此，亟需将 PIM 的外部传输集中调度，为 GPU 留出连续的访存窗口。
-% \item \textbf{数据映射决定了 AE 的外部 DQ 通信开销。} 在 LPDDR-PIM 中，rank 内广播可通过本地通路完成，而跨 rank 交换需要经主机内存控制器读出并写回，占用共享 DQ。因此，数据分片方式直接影响外部通信量。例如，沿特征维度切分注意力计算会产生需要跨 rank 汇聚的局部结果；动作侧 Q/K 的位置编码虽然只涉及局部元素，若交由 GPU 执行，也会在每个去噪步产生额外的数据往返。这些传输既增加 AE 的执行开销，也压缩 VLM 可用的访存时间。因此，需要采用 DQ 感知的数据映射，将通信发生的位置及其外部传输代价纳入布局与算子执行位置的选择。
-% \end{enumerate}

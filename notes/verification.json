@@ -1,207 +1,152 @@
 {
   "date": "2026-11-18",
   "main_document": "conference_101719.tex",
-  "scope": "Correct the comparison layout to two independent side-by-side subplots inside a single-column Figure 9: pi0.5 left, GR00T N1.6 right.",
-  "source": {
-    "document_url": "https://docs.google.com/document/d/1FDunLhNVnp1Y-fDiI7ExW8Hhs9szmCd0S6ng7uxmqWc/edit",
-    "document_title": "Methodology 翻译",
-    "revision_id": "AHj4eMTwOQNaQAbrMlnLFG-tQMjnAziOiw9ULc5G3Zjj7vHsMmiSt21ClmWVI8v6BtKPwU-Ijqnx4x618tGV8tFIJdE19Q1YSQ4RBPTq-7s",
-    "motivation_upstream_commit": "05a7804",
-    "source_word_document_xml_sha256": "bd14f8cbbea0e6a4128d9b3f1121fc3b6a3a5ab6b8ae634e76ecd5f5068d2eb3"
-  },
+  "scope": "Merge latest upstream manuscript changes with the pi0.5 / GR00T N1.6 performance comparison in two side-by-side panels within one column.",
+  "base_commit": "1158b33",
+  "restored_from": "c8e45c5",
   "validation": {
-    "pdfLaTeX": {
-      "passes_after_final_edits": 2,
-      "exit_code_each": 0,
-      "overfull_boxes": 0,
-      "underfull_boxes": 7,
-      "missing_characters": 0,
-      "undefined_references": false,
-      "duplicate_labels": false
-    },
-    "performance_chart": {
-      "six_values_match_original_table": true,
-      "plotted_cycle_ms": [
-        141.29,
-        137.07,
-        122.88,
-        86.77,
-        83.57,
-        77.68
-      ],
-      "original_configuration_ids": [
-        "a-serial",
-        "a-dual",
-        "b",
-        "c",
-        "e",
-        "g"
-      ],
-      "display_configuration_ids": [
-        "a-serial",
-        "a-dual",
-        "b",
-        "c",
-        "d",
-        "e"
-      ],
-      "single_rate_gain_arrow": false,
-      "ae_rate_gain_vs_serial": 1.82,
-      "ae_rate_gain_vs_dual": 1.76,
-      "metric": "T_async VLA (ms)",
-      "vector_pdf": true,
-      "png_dpi": 600,
-      "figures_7_and_10_relabelled": true,
-      "experiment_data_modified": false,
-      "single_column": true,
-      "uniform_bar_width": 0.44,
-      "uniform_center_spacing": 1.0,
-      "full_configuration_descriptions_in_plot": false,
-      "methods_explained_as_cumulative_additions": true,
-      "async_and_vla_separated_by_space": true,
-      "models": [
-        "pi0.5",
-        "GR00T N1.6"
-      ],
-      "gr00t_serial_baseline_marked_as_derived": true,
-      "gr00t_dual_stream_missing_marked_NA": true,
-      "gr00t_rate_gain_vs_derived_serial": 1.4,
-      "detailed_verification": "notes/performance-chart-gr00t-2026-11-18.json",
-      "panel_count": 2,
-      "panel_arrangement": "horizontal",
-      "common_vertical_scale_ms": [
-        0,
-        220
-      ],
-      "rate_gain_arrow_per_panel": true
-    },
-    "original_english_policy": "Overall Performance intentionally revised at user request; other source-English body retained apart from the performance figure cross-reference. Input-preloaded latency definitions moved from equation (1) into its following paragraph at user request.",
-    "figure7": {
-      "overview_panel_count": 2,
-      "zoom_inset_count": 1,
-      "overview_horizontal_ticks": false,
-      "overview_horizontal_labels": false,
-      "overview_bottom_spines": false,
-      "inset_relative_time_axis": false,
-      "full_vlm_kernel_lanes": false,
-      "boxed_operator": "down",
-      "boxed_stage_id": 8,
-      "native_burst_count": 6,
-      "native_interval_ck": [
-        359538,
-        359572
-      ],
-      "native_gap_interval_ck": [
-        359548,
-        359562
-      ],
-      "native_gap_ck": 14,
-      "native_gap_ns": 13.132,
-      "minimum_vlm_read_window_ck": 15,
-      "minimum_vlm_write_window_ck": 4,
-      "gpu_read_window_components_ck": [
-        11,
-        2,
-        2
-      ],
-      "minimum_read_overrun_ck": 1,
-      "gpu_request_row_is_timing_illustration": true,
-      "claim": "VLM RD excluded; WR not excluded by DQ timing alone; no measured GPU request service or SM pause claimed",
-      "vector_pdf": true,
-      "png_dpi": 600,
-      "native_trace_checksum_verified": true,
-      "native_matrix_verified": true,
-      "native_bursts_match_overview": true,
-      "experiment_modified": false,
-      "manuscript_body_modified_by_this_revision": false,
-      "figure10_modified_by_this_revision": false,
-      "io_epoch_background_bands": false,
-      "legend": false,
-      "figure_width_pt": 517.77,
-      "figure_height_pt": 137.756,
-      "font_sizes_unchanged": true,
-      "all_horizontal_axes_removed": true,
-      "channel_suffix": false,
-      "colored_annotation_text": false,
-      "overview_annotation_arrows": false,
-      "overview_locator": "orange rectangle only",
-      "connector": "horizontal dashed arrow",
-      "request_lane_label": "VLM Request",
-      "native_dq_aligned_with_overview_a": true,
-      "request_aligned_with_overview_b": true,
-      "lane_heights_match_overview": true,
-      "lane_alignment_tolerance_px": 1e-08,
-      "single_column": false,
-      "latex_float": "figure*",
-      "latex_width": "textwidth",
-      "blue_label_font_pt": 7.5,
-      "previous_blue_label_font_pt": 6.1,
-      "narrow_blue_labels_rotated": false,
-      "gate_up_label_wrapped": false,
-      "request_alignment_reference": "panel (b) PIM stages",
-      "native_dq_alignment_reference": "panel (a) PIM DQ",
-      "visual_review_page": 7,
-      "configuration_suffixes": false,
-      "panel_titles": [
-        "(a) Streaming input",
-        "(b) Input preloading"
-      ],
-      "double_column": true,
-      "green_data_burst_label": "2CK Data Burst",
-      "red_rank_switching_shortfall_label": "1CK too short for rank switching",
-      "callout_leaders": "black dashed arrows"
-    },
-    "memory_timing_note": {
-      "removed_table": "tab:sim-params",
-      "destination_table": "tab:pim-spec",
-      "units": "CK",
-      "parameters": {
-        "tFAW": 16,
-        "tRAS": 45,
-        "tRCD_RD": 20,
-        "tRPpb": 20,
-        "tCCD_L": 4
-      },
-      "values_retained_from_original_configuration": true,
-      "format_reference": "https://arxiv.org/html/2508.07227v1#S6.T2",
-      "note_fits_one_line": true,
-      "revision_notes": "notes/memory-timing-revision-2026-11-17.txt"
-    },
-    "input_preload_equations": {
-      "labels": [
-        "eq:pim-gpu-pim-gap",
-        "eq:rank-resync-command-gap"
-      ],
-      "single_line_displays": true,
-      "equation_numbers_on_same_line": true,
-      "equation_1_definitions_moved_inline": true,
-      "equation_2_local_font_pt": 9,
-      "equation_2_compact_fractions": true,
-      "equation_2_uses_full_column_width": true,
-      "formula_tokens_match_before_after_spacing_normalization": true,
-      "visual_review_page": 3
-    },
-    "async_vla_equation": {
-      "label": "eq:ae-interval",
-      "single_line_display": true,
-      "equation_number_on_same_line": true,
-      "normal_font_size_retained": true,
-      "equivalent_chained_equality": true,
-      "original_cycle_and_rate_relations_retained": true,
-      "visual_review_page": 6
-    }
+    "engine": "pdfLaTeX / TeX Live 2020",
+    "passes": 2,
+    "exit_code_each": 0,
+    "compile_errors": 0,
+    "undefined_references": false,
+    "duplicate_labels": false,
+    "missing_images": 0,
+    "missing_characters": 0,
+    "overfull_boxes": 0,
+    "underfull_hboxes": 6,
+    "underfull_vboxes": 1,
+    "main_document_byte_preserved": true,
+    "first_four_figure_sources_byte_preserved": true,
+    "restored_image_bytes_match_history": false,
+    "continuous_figure_numbering": true,
+    "all_eight_figure_sources_byte_preserved": false,
+    "table_I_no_placeholders": true,
+    "table_I_single_column": true,
+    "unmodified_figure_assets_preserved_from_upstream": true,
+    "performance_figure_updated_at_user_request": true,
+    "two_performance_panels_within_one_column": true,
+    "chart_values_match_archive": true
   },
-  "pages": 8,
-  "figures": 6,
+  "figures": [
+    {
+      "label": "fig:intro-overlap",
+      "number": 1,
+      "page": 2
+    },
+    {
+      "label": "fig:vla-characterization",
+      "number": 2,
+      "page": 2
+    },
+    {
+      "label": "fig:system-overview",
+      "number": 3,
+      "page": 4
+    },
+    {
+      "label": "fig:microarchitecture",
+      "number": 4,
+      "page": 4
+    },
+    {
+      "label": "fig:layout-dq",
+      "number": 5,
+      "page": 6
+    },
+    {
+      "label": "fig:timeline",
+      "number": 6,
+      "page": 7
+    },
+    {
+      "label": "fig:async-vla-performance",
+      "number": 7,
+      "page": 7
+    },
+    {
+      "label": "fig:decoupled-rates",
+      "number": 8,
+      "page": 7
+    }
+  ],
   "tables": 2,
-  "template_class_unchanged": true,
-  "visual_review": "Rendered page 7 inspected after the correction: both subplots occupy one column; labels, rates, shared vertical scale, and captions fit without clipping or overlap.",
-  "pdf_sha256": "804ad866d198eb8ccd7a1dd7924548df9d15c26f0c0e5055e0b98152e80fc938",
-  "remaining_author_items": "See notes/editorial-checklist.txt.",
-  "deferred_setup_note": "notes/experimental-setup-awaiting-english.txt",
-  "revision_notes": "notes/performance-chart-gr00t-2026-11-18.json",
-  "previous_figure_revision_notes": "notes/figure-revision-2026-11-17.txt",
-  "previous_verification_archive": "../essay/backups/async-vla-before-gr00t-20261118.tar.gz:notes/verification.json",
-  "local_runtime_note": "Cached standard Times/Courier fonts and explicit standard font maps were used for this incomplete local TeX installation. No cache paths or font-map workarounds were added to the manuscript.",
-  "previous_revision_notes": "notes/fig7-single-column-2026-11-17.txt"
+  "pages": 8,
+  "deferred_figure_inputs": [],
+  "restored_assets": [
+    {
+      "path": "figures/fig_layout_dq.pdf",
+      "sha256": "291606b396ce1c37548a96c91678f8b3de3592f53916fd75673e253f0b4f90c0",
+      "matches_original": true
+    },
+    {
+      "path": "figures/fig_layout_dq.png",
+      "sha256": "e33402719b223f301d4363f8aacf03326a871cabb5a0a63e66a179db0949c44c",
+      "matches_original": true
+    },
+    {
+      "path": "figures/fig7_step_timeline.pdf",
+      "sha256": "0885b293c2a140b28dd0654edca4865a30adb0de5d56a90cbcc74aca87adc0dc",
+      "matches_original": true
+    },
+    {
+      "path": "figures/fig7_step_timeline.png",
+      "sha256": "da44bb8a5227d6304f8a467bb3755790b693c29d6fc1d2dee79394f3c1d23cff",
+      "matches_original": true
+    },
+    {
+      "path": "figures/fig_async_vla_performance.pdf",
+      "sha256": "34671e33e98207b803496205d0e6533d8b011d800abcb5a1f10b5f50aaadc229",
+      "matches_original": false,
+      "restored_sha256_before_performance_revision": "2ca22147a544f5203db3e2e6364162f0598b8fe29ea3b8a2a2fa4e499b9b85da",
+      "intentionally_updated": "GR00T comparison in two side-by-side panels"
+    },
+    {
+      "path": "figures/fig_async_vla_performance.png",
+      "sha256": "3dfc61723dc7eac5fc41426ecb866a865ec8c8eb581520c444482addbf298f2d",
+      "matches_original": false,
+      "restored_sha256_before_performance_revision": "4695d1303d9b46cac29b9ecd564d19b013ac40a11d741a7871139d5b2a242e5a",
+      "intentionally_updated": "GR00T comparison in two side-by-side panels"
+    },
+    {
+      "path": "figures/fig_decoupled_rate.pdf",
+      "sha256": "544d40fac4550e42d0b0ce4b173b1f338e8283ba7031664eea52dbb480db2eef",
+      "matches_original": true
+    },
+    {
+      "path": "figures/fig_decoupled_rate.png",
+      "sha256": "5c5c16a2996758421ef44e2cf2e9f0123385d89367b4a9063908aac3b24e35da",
+      "matches_original": true
+    },
+    {
+      "path": "figures/fig_layout_dq.svg",
+      "sha256": "3f41ec9e68205f3fe818784a56c55e67c3b6af8ddfeee5bdeece68fa7dc1cfe7",
+      "matches_original": true
+    }
+  ],
+  "visual_review": "Merged manuscript page 7 inspected: two subplots fit in one column; figure is automatically numbered 7, with timeline 6 and decoupled rates 8.",
+  "pdf_sha256": "76818ac677449853f4d4014ad38f163d286584602a7d791b8a9dbd8fe84d72a5",
+  "remaining_author_items": "Existing editorial TBD entries retained from the latest upstream source.",
+  "table_I": {
+    "caption": "Key Specifications per PIM Package",
+    "page": 3,
+    "number": "I",
+    "values_source": "User-supplied table in this conversation",
+    "columns": [
+      "Item",
+      "VLA-PIM",
+      "LP-Spec",
+      "AHASD",
+      "Samsung"
+    ],
+    "citations": {
+      "lp_spec": "4",
+      "ahasd": "10",
+      "samsung_lpddr5x_pim": "2"
+    },
+    "AHASD_scope_assumption_explicit": true,
+    "BF16_equivalent_normalization_explicit": true
+  },
+  "performance_chart_verification": "notes/performance-chart-gr00t-2026-11-18.json",
+  "local_runtime": "Reused cached cite/Times metrics, placeins, and standard font maps; all runtime paths remain outside manuscript sources."
 }
