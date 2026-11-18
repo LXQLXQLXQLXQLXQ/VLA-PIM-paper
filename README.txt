@@ -7,10 +7,10 @@ VLA-PIM 论文
 作者栏：Anonymous Authors / Paper under double-blind review。
 
 当前排入八张图；图1、3、4沿用用户PDF的对应完整页面，图2重新从原始矢量版导出高清PNG：
-1. PDF 第1页 → figures/execution-overview.pdf / .tex：Introduction。
-2. 原始矢量版 v16 → figures/vla-characterization.png / .tex：Background and Motivation（1200 dpi，4914×3733）。
-3. PDF 第3页 → figures/system-overview.pdf / .tex：Architecture Design / System Overview（双栏）。
-4. PDF 第4页 → figures/microarchitecture.pdf / .tex：Architecture Design / Input-preloaded microarch（单栏）。
+1. 2026-11-19 新PDF第1页 → figures/execution-overview.pdf / .tex：Introduction。
+2. 原始矢量版 v17 → figures/vla-characterization.png / .tex：Background and Motivation（1200 dpi，4914×3733）。
+3. 2026-11-19 新PDF第3页 → figures/system-overview.pdf / .tex：Architecture Design / System Overview（双栏）。
+4. 2026-11-18 PDF第4页 → figures/microarchitecture.pdf / .tex：Architecture Design / Input-preloaded microarch（单栏；本次未改）。
 5. KV 布局与 DQ 流量 → figures/layout-dq.tex（单栏）。
 6. 单步执行时间线 → figures/timeline.tex（双栏）。
 7. 总体性能对比 → figures/async-vla-performance.tex（单栏）。
@@ -30,11 +30,11 @@ GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）�
 核对依据和原始文件哈希见 notes/performance-chart-pi05-h16-2026-11-18.json。
 
 图1、3、4分别为独立单页PDF，仅裁外围空白，保留原矢量文字、路径和完整子图。
-原始四页PDF保存在 figures/sources/figures1107-20261118.pdf；裁剪记录见 notes/first-four-pdf-assets-2026-11-18.json。
-图2旧PDF内只有1474×1119位图，因此改用匹配的原始矢量母版 figures/sources/vla-characterization-v16.pdf 直接导出PNG。
+新版五页PDF保存在 figures/sources/figures1107-20261119.pdf，本次仅采用第1、3页；图4仍来自原始四页PDF figures/sources/figures1107-20261118.pdf。
+新版PDF第2页仍是旧的1474×1119位图；图2采用本地新版矢量母版 figures/sources/vla-characterization-v17.pdf 直接导出PNG，横轴改为 Operational intensity (FLOP/B)。
 当前图2为1200 dpi、4914×3733无损PNG，未放大旧位图，未经过JPEG压缩；数据、标签、配色和布局保留。
 运行 python figures/export-vla-characterization.py --dpi 1200 可重新导出（需pypdfium2和Pillow）。
-图2导出与验证记录见 notes/fig2-native-bitmap-2026-11-18.json。
+本次图1–3更新与验证记录见 notes/figures-1-3-update-2026-11-19.json；历史记录见 notes/first-four-pdf-assets-2026-11-18.json 和 notes/fig2-native-bitmap-2026-11-18.json。
 旧PNG/TIFF及四页PDF转换记录保留为历史记录；图2的LaTeX当前明确引用PNG，其余三张仍引用PDF。
 图片采用自动编号，正文相应引用已更新。
 

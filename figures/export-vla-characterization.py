@@ -13,7 +13,7 @@ args = parser.parse_args()
 if args.dpi <= 0:
     parser.error("dpi must be positive")
 root = Path(__file__).resolve().parent
-source = root / "sources/vla-characterization-v16.pdf"
+source = root / "sources/vla-characterization-v17.pdf"
 output = root / "vla-characterization.png"
 with pdfium.PdfDocument(str(source)) as document:
     if len(document) != 1:
