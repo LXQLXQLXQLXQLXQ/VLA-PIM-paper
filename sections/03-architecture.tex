@@ -87,7 +87,7 @@ A remaining concern is whether PIM commands on the shared C/A bus interfere with
 \label{sec:architecture-c}
 
 % SOURCE-EN: 168
-\sys{} extends the JEDEC LPDDR5X command set with a dedicated PIM mode, supported by a memory-side command decode state machine and a custom ISA. During LPDDR initialization, the host uses Mode Register Write (MRW) commands to configure functional rows, including a mode-switching row and an input-buffer row. The MC then switches a rank between DRAM and PIM modes simply by issuing an ACT to the mode-switching row.
+\sys{} extends the JEDEC LPDDR5X command set~\cite{jedec_lpddr5} with a dedicated PIM mode, supported by a memory-side command decode state machine and a custom ISA. During LPDDR initialization, the host uses Mode Register Write (MRW) commands to configure functional rows, including a mode-switching row and an input-buffer row. The MC then switches a rank between DRAM and PIM modes simply by issuing an ACT to the mode-switching row.
 % END-SOURCE-EN: 168
 
 % SOURCE-EN: 169
