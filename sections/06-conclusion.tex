@@ -4,7 +4,7 @@
 \label{sec:conclusion}
 
 % SOURCE-EN: 288
-This paper proposes \sys{}, a novel architecture that enables the concurrent execution of VLM memory accesses (on the GPU) and AE computations (on the PIM) within edge LPDDR memory systems. By employing rank-level partitioning, \sys{} completely preserves the full channel capacity for serving GPU data requests. Furthermore, the DQ-aware token-wise data layout and the in-bank RoPE mechanism jointly reduce the AE's per-layer DQ traffic by $14.3\%$. To orchestrate this, the input-preloaded dataflow and kernel-granularity co-scheduling consolidate the remaining data transfers, enabling the GPU to sustain high bandwidth during the PIM computation phase.
+This paper proposes \sys{}, a novel architecture that enables the concurrent execution of VLM memory accesses (on the GPU) and AE computations (on the PIM) within edge LPDDR memory systems. By employing rank-level partitioning, \sys{} completely preserves the full channel capacity for serving GPU data requests. Furthermore, the DQ-aware token-wise data layout and the in-bank RoPE mechanism jointly reduce the AE's total per-layer DQ traffic by $14.3\%$. To orchestrate this, the input-preloaded dataflow and kernel-granularity co-scheduling consolidate the remaining data transfers, enabling the GPU to sustain high bandwidth during the PIM computation phase.
 % END-SOURCE-EN: 288
 
 % SOURCE-EN: 289
