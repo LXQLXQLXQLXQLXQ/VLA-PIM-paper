@@ -8,9 +8,10 @@
 - Motivation 沿用用户的 Overleaf 英文提交 05a7804。
 
 保留的作者待补项（本次不自行补写）：
-- 原文面积占位符 [TBD-M11: Area Value]。
 - 原文动作微调算法占位符 [TBD: Cite action fine-tuning algorithms]。
 - Thor/Ramulator 实验设置段待提供英文后恢复。
 - Motivation 提及的图 1 尚未提供；图号 9 的原有空缺保留。
 
 2026-11-17 更新：Table I 已按用户提供的每封装比较表补齐，LP-Spec/AHASD/Samsung 引用已落实；原图号与插图待补记录为历史状态，当前共八张图。
+
+2026-11-18：M11已填20.11%；全部面积数据在文末独立附录，详见 sections/area-overhead-complete.tex。

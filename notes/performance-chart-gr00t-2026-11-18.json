@@ -73,7 +73,7 @@
       0,
       0
     ],
-    "pages": 8,
+    "pages": 10,
     "overfull_boxes": 0,
     "missing_characters": 0,
     "undefined_references": false,
@@ -84,12 +84,12 @@
   "simulation_rerun": false,
   "pre_edit_backup": "../essay/backups/async-vla-before-gr00t-20261118.tar.gz",
   "review_page": "../essay/reviews/async-vla-gr00t-merged-20261118/page-7.png",
-  "pdf_sha256": "76818ac677449853f4d4014ad38f163d286584602a7d791b8a9dbd8fe84d72a5",
+  "pdf_sha256": "cf4292ff866306d1ee845bf3d61faa5172c6e4f65ac906a9dbc26054359d0a4e",
   "unrelated_edits_preserved": "Existing one-line inference-cycle equation and area value retained.",
   "configuration_labels": "a-s/a-d denote serial/dual-stream GPU baselines; b/c/d/e retain their mapping.",
   "data_changed_in_layout_correction": false,
   "upstream_sync": {
-    "merged_upstream": "1158b33",
+    "merged_upstream": "adfe9c5",
     "automatic_figure_numbering_retained": true,
     "first_four_images_and_package_table_retained": true,
     "performance_figure_now_number": 7,
@@ -101,6 +101,8 @@
     ],
     "overfull_boxes": 0,
     "undefined_references": false,
-    "missing_characters": 0
+    "missing_characters": 0,
+    "area_appendix_retained": true,
+    "final_pages": 10
   }
 }

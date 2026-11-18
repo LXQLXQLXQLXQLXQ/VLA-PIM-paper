@@ -1,0 +1,65 @@
+ActPIM：第一轮硬件面积快速估算
+日期：2026-11-15（Asia/Hong_Kong）
+
+主要结果
+四类单元合计：16,668.4 um²/bank = 0.016668 mm²/bank。
+16-bank PIM channel-rank：0.266694 mm²；256 个活动 bank 合计：4.267102 mm²。
+Buffer 合计占 77.3%；RoPE 占 4.7%。
+
+分项（ASAP7 标准单元面积，不是 DRAM 工艺面积）
+MAC: BF16 x16, FP32 accumulate: 2,999.86 um²/bank；目标 533.05 MHz；setup slack 0.19 ps；setup 满足
+RoPE: one pair/cycle: 785.05 um²/bank；目标 1066.10 MHz；setup slack -70.33 ps；setup 未满足
+Input RF: 1 KiB, 1R1W: 3,859.66 um²/bank；目标 1066.10 MHz；setup slack 3.67 ps；setup 满足
+Output RF: 2 KiB, 2R1W: 9,023.80 um²/bank；目标 1066.10 MHz；setup slack 0.18 ps；setup 满足
+
+匹配算术单元的容量基线
+基线与目标使用完全相同 MAC；基线没有 RoPE，Input/Output RF 为 512 B / 128 B，端口组织相同。
+基线 input RF：1927.78 um²；基线 output RF：726.40 um²。
+基线总面积：5654.05 um²/bank；目标增量：11014.32 um²/bank。
+增量按16-bank汇总为 0.176229 mm²，按256-bank汇总为 2.819665 mm²。
+相对这个 PIM 数据通路基线增长 194.8%。这不是相对整个 DRAM die 的增长率。
+这个基线只借用已公开的两类缓冲容量，不是 Samsung 实际器件的复刻。
+
+方法与范围
+VCS V-2023.12-SP2-4；Design Compiler W-2024.09-SP5；ASAP7 7.5-track revision 28 RVT TT NLDM，0.7 V、25 C。
+原始综合采用 compile -map_effort medium；MAC 533 MHz 与 RoPE 进一步使用 compile_ultra -retime。
+时序以 ps 计；时钟不确定性为周期5%，I/O delay为10%，输入slew 25 ps、输出负载0.5 fF。
+Liberty DFFASRHQNx1 面积0.37908与1x LEF尺寸1.404x0.27 um一致，已排除4x LEF缩放混淆。
+每项独立综合后相加：这是 bank-equivalent 组成面积，不是已完成集成/布局布线的单 bank。
+不包含 DRAM 阵列、PHY/PLL、rank 级控制器、跨 bank 广播/归约网络及物理布线。
+存储采用标准单元 DFF 阵列，包含读写选择器及输出寄存器；不采用 SRAM 宏，也不使用 CACTI。
+Input RF: 32x256 bit、1R1W；Output RF: 64x256 bit、2R1W、32-bit word write enable。
+双缓冲是对1 KiB容量分区，不是再额外增加1 KiB；DRAM内预加载区、KV与系数表不计为新增 SRAM。
+MAC：16路BF16输入精确扩为FP32，16个乘法器，4层FP32加法树和FP32部分和加法器，含权重寄存器。
+RoPE：4个乘法器+2个FP32加减法器，BF16 RNE输出；sin/cos作为输入，不包含三角函数计算。
+算术使用 DesignWare，IEEE compliance=1；上层状态接口不导出异常标志。
+实验主目录：/fact_data/shiyuhuang/projects/actpim-hw-overhead/；环境脚本 scripts/env.sh，只作用于项目shell。
+全部计算通过 eda/enterprise 的 Slurm CPU allocation，8 CPU、32 GiB，无 GPU。
+
+验证与限制
+RTL验证：512组MAC + 512组RoPE，包含连续II=1输入；RF全地址、双读与字写使能检查通过。
+自动重定时网表的数值验证结果见 verification-logs 下的对应日志；无SDF功能仿真不能代替时序签核。
+MAC具有6级端到端流水线、II=1；M个连续输入的理想输出完成需M+5个计算周期，并非模型中的零尾延迟。
+输出部分和依赖由外部RF/调度负责；连续更新同一输出要考虑反馈间隔，II=1要求交错独立部分和。
+RoPE保留4级端到端流水线、II=1；尚未达到1.066GHz的配置不能按模型目标宣称已实现。
+这里的时序结论只指综合setup约束，未做CTS、布线或hold收敛。RF裕量很小，不等同于物理实现保证。
+系统汇总按16 channel x 1 active PIM rank x 16 banks；若MEM rank也安装同样PIM硬件，安装面积仍须另计。
+未把7nm面积直接当成LPDDR die面积，也未用封装尺寸作为die面积分母；没有给出真实DRAM面积百分比。
+本轮结论：RoPE自身面积较小；额外开销主要来自扩大且采用寄存器阵列实现的Buffer。
+
+所有综合记录
+firstpass/actpim_input_1k: 3859.66 um², 1066.10 MHz, slack 3.67 ps, blackboxes=0, errors=0
+firstpass/actpim_input_512b: 1927.78 um², 1066.10 MHz, slack 130.76 ps, blackboxes=0, errors=0
+firstpass/actpim_output_128b: 726.40 um², 1066.10 MHz, slack 39.17 ps, blackboxes=0, errors=0
+firstpass/actpim_output_2k: 9023.80 um², 1066.10 MHz, slack 0.18 ps, blackboxes=0, errors=0
+firstpass/actpim_rope_pair: 803.58 um², 1066.10 MHz, slack -653.73 ps, blackboxes=0, errors=0
+k1/actpim_mac16: 3054.17 um², 266.52 MHz, slack 54.36 ps, blackboxes=0, errors=0
+k2/actpim_mac16: 4324.65 um², 533.05 MHz, slack -479.25 ps, blackboxes=0, errors=0
+k4/actpim_mac16: 4291.78 um², 1066.10 MHz, slack -1436.83 ps, blackboxes=0, errors=0
+retime/actpim_rope_pair: 785.05 um², 1066.10 MHz, slack -70.33 ps, blackboxes=0, errors=0
+retime_k2/actpim_mac16: 2999.86 um², 533.05 MHz, slack 0.19 ps, blackboxes=0, errors=0
+
+Paper-ready method paragraph
+We implemented the bank-level BF16/FP32 MAC datapath, a pairwise RoPE unit, and local input/output register files in SystemVerilog, and synthesized them using Synopsys Design Compiler W-2024.09-SP5 with the ASAP7 7.5-track RVT standard-cell library at the TT corner (0.7 V, 25 C). Buffers were implemented as standard-cell register arrays, including access logic, rather than ideal memories. Reported areas are sums of independently synthesized blocks and exclude DRAM arrays, rank-level interconnect/control, PHY, clock-tree and routing overhead. They are logic-process area estimates, not measured DRAM-die overheads.
+
+时序未通过的配置不能在正文中写成工作于目标频率；引用性能模拟时需单独披露流水线尾延迟。

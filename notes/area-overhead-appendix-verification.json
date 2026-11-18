@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-18",
+  "base_revision": "1158b33195f4c5c261f4fe70366f0e7eaca78fe7",
+  "scope": "Full numerical data and accounting conditions from both supplied area reports, appended after the existing energy note.",
+  "main_input": "sections/area-overhead-complete.tex",
+  "pdf_pages": 10,
+  "appendix_pages": [
+    9,
+    10
+  ],
+  "synthesis_records": 10,
+  "selected_blocks": 4,
+  "source_reports_copied_verbatim_and_hash_checked": true,
+  "all_synthesis_and_original_aggregate_values_present_in_pdf": true,
+  "normalization_and_sensitivity_values_checked": true,
+  "existing_body_and_figures_unchanged_except_prior_M11_single_number": true,
+  "final_pdflatex_passes": 2,
+  "overfull_boxes": 0,
+  "missing_characters": 0,
+  "undefined_references": false,
+  "duplicate_labels": false,
+  "visual_review": "Pages 9 and 10 inspected; all four tables remain inline in the final appendix; no overlap or clipping.",
+  "pdf_sha256": "2dac6ab72a4c0e684489a0a11fab0ceb166e0dcb581ba3241efed26f3def615d",
+  "publication_target": "origin/main, linked to Overleaf through GitHub integration"
+}

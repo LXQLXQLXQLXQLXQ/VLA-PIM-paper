@@ -1,0 +1,224 @@
+{
+  "date": "2026-11-17",
+  "source_documents": [
+    {
+      "file": "README.zh-CN.txt",
+      "original_path": "/fact_data/xinyaowang/.codex/attachments/6c8c6444-ecd0-468a-b88e-c527952c5613/README.zh-CN.txt",
+      "sha256": "7ded9a00555d1ff05487f16e90279bd7664f3dabc4ae885e3506aa8cad259c61"
+    },
+    {
+      "file": "REPORT.zh-CN.txt",
+      "original_path": "/fact_data/xinyaowang/.codex/attachments/6c8c6444-ecd0-468a-b88e-c527952c5613/REPORT.zh-CN.txt",
+      "sha256": "be861646c657b0197efdf0e7b9f16e1fd172b8c09c39970615656305082b0464"
+    }
+  ],
+  "scope": "Four independently synthesized bank-local blocks; reference-normalized estimate, not measured full-die area.",
+  "multiplier": {
+    "dram_softmax_mm2": "63.4",
+    "logic_softmax_mm2": "1.38",
+    "s": "45.94202898550724637681159420",
+    "basis": "Derived effective ratio from AttAcc; uniform reuse for arithmetic and DFF arrays is an assumption."
+  },
+  "installed_datapaths_per_die": 16,
+  "reference_dram_mm2": "60.92",
+  "reference_density_gb": 16,
+  "simulated_density_gb_per_channel_rank": 8,
+  "formula": "A_mm2 = sum(A_um2_per_bank) * installed_datapaths_per_die * s / 1e6",
+  "blocks": [
+    {
+      "block": "MAC",
+      "target_asap7_um2_per_bank": "2999.86",
+      "baseline_asap7_um2_per_bank": "2999.86",
+      "target_dram_mm2": "2.205114481159420289855072464",
+      "added_dram_mm2": "0E-27"
+    },
+    {
+      "block": "RoPE",
+      "target_asap7_um2_per_bank": "785.05",
+      "baseline_asap7_um2_per_bank": "0",
+      "target_dram_mm2": "0.5770686376811594202898550724",
+      "added_dram_mm2": "0.5770686376811594202898550724"
+    },
+    {
+      "block": "Input buffer",
+      "target_asap7_um2_per_bank": "3859.66",
+      "baseline_asap7_um2_per_bank": "1927.78",
+      "target_dram_mm2": "2.837129785507246376811594203",
+      "added_dram_mm2": "1.420071791304347826086956522"
+    },
+    {
+      "block": "Output buffer",
+      "target_asap7_um2_per_bank": "9023.80",
+      "baseline_asap7_um2_per_bank": "726.40",
+      "target_dram_mm2": "6.63314689855072463768115942",
+      "added_dram_mm2": "6.099190260869565217391304347"
+    }
+  ],
+  "totals": {
+    "target_asap7_um2_per_bank": "16668.37",
+    "baseline_asap7_um2_per_bank": "5654.04",
+    "increment_asap7_um2_per_bank": "11014.33",
+    "target_dram_mm2": "12.25245980289855072463768116",
+    "baseline_dram_mm2": "4.156129113043478260869565217",
+    "added_dram_mm2": "8.096330689855072463768115943",
+    "total_over_bare_reference_percent": "20.11237656418015549021287124",
+    "added_over_bare_reference_percent": "13.29010290521187206790564009",
+    "added_over_reference_plus_baseline_percent": "12.44132187978017172661577454",
+    "buffers_share_percent": "77.29286066963956283667809150",
+    "output_buffer_share_percent": "54.13726717129509364142984587",
+    "rope_share_percent": "4.709818656533302296505297159"
+  },
+  "rounding_note": "Inputs are attachment values rounded to 0.01 um2. They sum to 5654.04 um2 for the baseline and 11014.33 um2 added; the report gives 5654.05 and 11014.32 from unrounded source values. All manuscript mm2 and percentage results round identically.",
+  "references": [
+    {
+      "key": "attacc",
+      "url": "https://scale.snu.ac.kr/papers/2024-04-Conference-ASPLOS-AttAcc.pdf",
+      "verified_passages": "Section 4.1, printed p.109: estimated softmax 63.4 mm2 in 1z-nm DRAM; Section 7.7, printed p.115: softmax 1.38 mm2 in 7 nm logic. Section 7.1, printed p.113: density factor 10 at the same feature size.",
+      "verified_on": "2026-11-17"
+    },
+    {
+      "key": "lp_spec",
+      "url": "https://arxiv.org/html/2508.07227v1#S6.SS1",
+      "verified_passages": "Section VI-A (not V-A in attachment): 60.92 mm2 16 Gb LPDDR5 die, citing ISSCC 2021 paper 25.2. Original ISSCC micrograph not independently obtained.",
+      "verified_on": "2026-11-17"
+    }
+  ],
+  "excluded": [
+    "DRAM arrays",
+    "rank-level control",
+    "shared broadcast and reduction networks",
+    "PHY",
+    "clock trees",
+    "routing",
+    "placement utilization adjustment"
+  ],
+  "timing": {
+    "MAC_target_MHz": "533.05",
+    "MAC_setup_slack_ps": "0.19",
+    "RoPE_target_MHz": "1066.10",
+    "RoPE_setup_slack_ps": "-70.33",
+    "dram_process_timing_verified": false
+  },
+  "sensitivity_32_installed_datapaths_same_reference": {
+    "total_over_bare_reference_percent": "40.22475312836031098042574248",
+    "added_over_bare_reference_percent": "26.58020581042374413581128019",
+    "added_over_reference_plus_baseline_percent": "23.38889672908097284468819029"
+  },
+  "sensitivity_multiplier_plus_minus_25_percent": {
+    "total_over_bare_reference_percent": [
+      "15.08428242313511661765965343",
+      "25.14047070522519436276608905"
+    ],
+    "added_over_bare_reference_percent": [
+      "9.967577178908904050929230068",
+      "16.61262863151484008488205011"
+    ],
+    "interpretation": "Scenario range, not a confidence interval."
+  },
+  "appendix_added_on": "2026-11-18",
+  "latest_paper_base_revision": "1158b33195f4c5c261f4fe70366f0e7eaca78fe7",
+  "all_synthesis_runs": [
+    {
+      "run": "firstpass/actpim_input_1k",
+      "cell_area_um2": "3859.66",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "3.67",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "firstpass/actpim_input_512b",
+      "cell_area_um2": "1927.78",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "130.76",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "firstpass/actpim_output_128b",
+      "cell_area_um2": "726.40",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "39.17",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "firstpass/actpim_output_2k",
+      "cell_area_um2": "9023.80",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "0.18",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "firstpass/actpim_rope_pair",
+      "cell_area_um2": "803.58",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "-653.73",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "k1/actpim_mac16",
+      "cell_area_um2": "3054.17",
+      "target_MHz": "266.52",
+      "setup_slack_ps": "54.36",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "k2/actpim_mac16",
+      "cell_area_um2": "4324.65",
+      "target_MHz": "533.05",
+      "setup_slack_ps": "-479.25",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "k4/actpim_mac16",
+      "cell_area_um2": "4291.78",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "-1436.83",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "retime/actpim_rope_pair",
+      "cell_area_um2": "785.05",
+      "target_MHz": "1066.10",
+      "setup_slack_ps": "-70.33",
+      "blackboxes": "0",
+      "errors": "0"
+    },
+    {
+      "run": "retime_k2/actpim_mac16",
+      "cell_area_um2": "2999.86",
+      "target_MHz": "533.05",
+      "setup_slack_ps": "0.19",
+      "blackboxes": "0",
+      "errors": "0"
+    }
+  ],
+  "original_report_totals": {
+    "target_cell_um2_per_bank": "16668.4",
+    "target_logic_mm2_per_bank": "0.016668",
+    "target_logic_mm2_16_banks": "0.266694",
+    "target_logic_mm2_256_banks": "4.267102",
+    "baseline_cell_um2_per_bank": "5654.05",
+    "added_cell_um2_per_bank": "11014.32",
+    "added_logic_mm2_16_banks": "0.176229",
+    "added_logic_mm2_256_banks": "2.819665",
+    "added_over_baseline_blocks_percent": "194.8"
+  },
+  "original_report_files": [
+    {
+      "path": "notes/area-overhead-sources/README.zh-CN.txt",
+      "sha256": "7ded9a00555d1ff05487f16e90279bd7664f3dabc4ae885e3506aa8cad259c61"
+    },
+    {
+      "path": "notes/area-overhead-sources/REPORT.zh-CN.txt",
+      "sha256": "be861646c657b0197efdf0e7b9f16e1fd172b8c09c39970615656305082b0464"
+    }
+  ],
+  "coverage": "All numerical area data and all ten synthesis records from both supplied reports; original report text retained verbatim."
+}
