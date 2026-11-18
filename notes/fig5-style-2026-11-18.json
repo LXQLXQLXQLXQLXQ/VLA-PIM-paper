@@ -57,7 +57,7 @@
   },
   "compile": {
     "engine": "pdfLaTeX",
-    "successful_passes": 1,
+    "successful_passes": 2,
     "pages": 8,
     "overfull_boxes": 0,
     "undefined_references": false,
@@ -72,5 +72,12 @@
     "figures/plot-layout-dq.py": "e87f0e99f83693219df2900bac0fa1c102f71fc98372ffc44d57216933135dec"
   },
   "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-bar-values-20261118T181305",
-  "follow_up": "Reduce only the seven numbers inside stacked bars from 7 pt to 6 pt; other text retains its existing size."
+  "follow_up": "Reduce only the seven numbers inside stacked bars from 7 pt to 6 pt; other text retains its existing size.",
+  "push_integration": {
+    "remote_head_merged": "283f34b",
+    "overleaf_title_and_evaluation_updates_preserved": true,
+    "title_compile_fix": "Provide texorpdfstring fallback when hyperref is not loaded",
+    "preview_rebuilt_after_merge": true,
+    "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-bar-values-20261118T181305/push-integration"
+  }
 }
