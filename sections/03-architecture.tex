@@ -23,16 +23,16 @@ To enable the parallel execution of VLM and AE, \sys{} partitions memory resourc
 Based on this architecture, \sys{} mitigates shared bus contention through two primary strategies: coordinating transfer timing and minimizing data traffic. At the microarchitectural level, \sys{} introduces a direct datapath from the row buffer to the input buffer. Inputs are first written in bulk to the PIM rank's DRAM array, and then broadcast internally to all banks. This approach confines the cycle-level data feeding during the computation phase entirely within the rank, thereby exposing contiguous memory access windows for the GPU (Section~\ref{sec:architecture-b}). The corresponding commands are encoded in a strictly JEDEC-compatible manner (Section~\ref{sec:architecture-c}). At the dataflow level, \sys{} adopts a token-wise data layout tailored for the shared bus and executes RoPE directly within the banks, substantially reducing the data traffic that must traverse the DQ bus (Section~\ref{sec:dataflow-a}). Finally, the GPU--PIM co-scheduler partitions the ownership of the DQ bus at the kernel granularity, combining these mechanisms to enable parallel execution
 % END-SOURCE-EN: 47
 
-\subsection{Input-preloaded microarch}
+\subsection{Input-Preloaded Microarchitecture}
 \label{sec:architecture-b}
 \input{figures/microarchitecture}
 
 % SOURCE-EN: 112
-Existing LPDDR-PIM designs stream inputs from the host, leaving the DQ bus intermittently occupied throughout the entire operator execution. This paradigm is highly suboptimal for the frequent rank switching required in \sys{}. Specifically, LPDDR rank switching can be managed in two ways: either by continuously maintaining WCK synchronization across both ranks, which incurs significant power consumption due to high-frequency data clock idling, or via on-demand resynchronization, which severely increases switching latency. Furthermore, both approaches must strictly adhere to cross-rank timing and bus read/write (R/W) turnaround constraints.
+Existing LPDDR-PIM designs stream inputs from the host, so the DQ bus remains intermittently occupied throughout operator execution. This conflicts with the frequent rank switching in \sys{}. LPDDR supports rank switching in two ways: keeping WCK synchronized on both ranks, which wastes power on an idling high-frequency data clock, or resynchronizing on demand, which lengthens switching latency. Either way, cross-rank timing and bus read/write (R/W) turnaround constraints still apply.
 % END-SOURCE-EN: 112
 
 % SOURCE-EN: 113
-Let $X,Y,Z\in\{\mathrm{RD},\mathrm{WR}\}$ denote the types of the preceding PIM access, the interleaved GPU access, and the subsequent PIM access, respectively. The minimum DQ gap required to interleave a single GPU access between two adjacent PIM data bursts is calculated as:
+Let $X,Y,Z\in\{\mathrm{RD},\mathrm{WR}\}$ denote the preceding PIM access, the interleaved GPU access, and the subsequent PIM access, respectively. The minimum DQ gap needed to fit one GPU access between two adjacent PIM data bursts is
 % END-SOURCE-EN: 113
 % USER-FORMAT: SOURCE-EN 114--122; keep the equation on one line and
 % move the read/write latency definitions into the following paragraph.
@@ -41,7 +41,7 @@ t_{X-Y-Z}=t_{XY}+t_{YZ}+L_Z-L_X-\frac{BL}{n_{\min}},
 \label{eq:pim-gpu-pim-gap}
 \end{equation}
 % SOURCE-EN: 123; latency definitions moved here from the display above.
-where $L_{\mathrm{RD}}=RL$, $L_{\mathrm{WR}}=WL$, and $t_{XY}$ is the minimum cross-rank command interval for $X\rightarrow Y$ in clock cycles (CK). Under our LPDDR5X-8533 configuration ($RL=23$, $WL=12$, $BL/n_{\min}=2$), we analyze two scenarios:
+where $L_{\mathrm{RD}}=RL$, $L_{\mathrm{WR}}=WL$, and $t_{XY}$ is the minimum cross-rank command interval for $X\rightarrow Y$ in clock cycles (CK). For our LPDDR5X-8533 configuration ($RL=23$, $WL=12$, $BL/n_{\min}=2$), we consider two cases:
 % END-SOURCE-EN: 123
 
 % SOURCE-EN: 124
@@ -49,11 +49,11 @@ where $L_{\mathrm{RD}}=RL$, $L_{\mathrm{WR}}=WL$, and $t_{XY}$ is the minimum cr
 % END-SOURCE-EN: 124
 
 % SOURCE-EN: 125
-\item \textbf{Both ranks maintain WCK synchronization:} $t_{XY}$ is dictated by the cross-rank column command timing and R/W turnaround constraints. Depending on the specific read/write combination, $t_{X-Y-Z}$ ranges from $4$ to $14\,\mathrm{CK}$.
+\item \textbf{Both ranks keep WCK synchronized:} $t_{XY}$ is set by cross-rank column command timing and R/W turnaround, yielding $t_{X-Y-Z}$ of $4$--$14\,\mathrm{CK}$ depending on the R/W combination.
 % END-SOURCE-EN: 125
 
 % SOURCE-EN: 126
-\item \textbf{The target rank requires WCK resynchronization:} The target rank must first be resynchronized via a CAS(\texttt{WS\_RD}/\texttt{WS\_WR}) command. In this case, $t_{XY}$ is jointly determined by the completion time of the preceding transfer, the WCK postamble, and the synchronization preparation time:
+\item \textbf{The target rank needs WCK resynchronization:} A CAS(\texttt{WS\_RD}/\texttt{WS\_WR}) command must first resynchronize the target rank, so $t_{XY}$ depends on the completion of the preceding transfer, the WCK postamble, and the synchronization preparation time:
 % END-SOURCE-EN: 126
 \end{itemize}
 
@@ -71,38 +71,42 @@ t_{XY}=L_X+\tfrac{BL}{n_{\max}}
 \label{eq:rank-resync-command-gap}
 \end{equation}
 \endgroup
-where $t_{\mathrm{WCKPST}}$ represents the WCK postamble, $t_{\mathrm{WCKENL},Y}$ denotes the synchronization preparation latency for the corresponding read or write operation, and the trailing $1\,\mathrm{CK}$ accounts for the interval between the CAS synchronization command and the immediately following RD/WR command. Under this scenario, $t_{X-Y-Z}$ significantly increases to $24\text{--}40\,\mathrm{CK}$.
+where $t_{\mathrm{WCKPST}}$ is the WCK postamble, $t_{\mathrm{WCKENL},Y}$ is the synchronization preparation latency for the read or write, and the trailing $1\,\mathrm{CK}$ is the interval between the CAS command and the following RD/WR. In this case, $t_{X-Y-Z}$ grows to $24\text{--}40\,\mathrm{CK}$.
 % END-SOURCE-EN: 127
 
 % SOURCE-EN: 128
-Ramulator simulation of streaming inputs (assuming maintained WCK synchronization) reveals a severe limitation. By evaluating each interval between adjacent PIM data bursts, we find that approximately $50.6\%$ of these gaps are too narrow to accommodate a single GPU read or write without postponing the subsequent PIM transfer. Exploiting the remaining intervals would require the memory controller (MC) to implement a "DQ lookahead" mechanism. Based on the R/W direction and data return timing, the MC would have to proactively predict whether a GPU data burst can completely fit within the available window while satisfying the bidirectional timing constraints, which drastically increases the complexity of the arbitration logic.
+Ramulator simulation of streaming inputs, even with WCK synchronization maintained, shows that about $50.6\%$ of the gaps between adjacent PIM data bursts are too narrow for a single GPU read or write without delaying the next PIM transfer. Exploiting the remaining gaps would require the memory controller (MC) to perform ``DQ lookahead'': predicting, from the R/W direction and data return timing, whether a GPU burst fits the window under bidirectional timing constraints. This substantially complicates the arbitration logic.
 % END-SOURCE-EN: 128
 
 % SOURCE-EN: 149
-\sys{} proposes a microarchitecture highly amenable to rank-level partitioning. Specifically, it introduces a direct datapath from the Row Buffer to the Input Buffer within each bank to support an input-preloaded dataflow (Figure~\ref{fig:microarchitecture}):
+To suit rank-level partitioning, \sys{} adds a direct datapath from the row buffer to the input buffer in each bank, enabling an input-preloaded dataflow (Figure~\ref{fig:microarchitecture}):
 % END-SOURCE-EN: 149
 
 % SOURCE-EN: 150
-\begin{enumerate} \item \textbf{Bulk Loading:} While the PIM rank operates in standard DRAM mode, the host leverages standard WR commands to write all inputs for a given operator into the PIM rank's designated input region (Row I) in a single burst at full bandwidth. \item \textbf{Internal Broadcasting:} Once the PIM rank switches to PIM mode, the MC issues an ACT command to Row I. The subsequent column data fetched via RD commands is then broadcast internally to the Input Buffers across all 16 banks. \item \textbf{Local Computation and Write-back:} The MAC results are directly written back to the DRAM. Upon completion of the computation, the host reads out the final results in a single burst after switching back to DRAM mode. \end{enumerate}
+\begin{enumerate}
+\item \textbf{Bulk Loading:} In standard DRAM mode, the host writes all inputs of an operator to the PIM rank's input region (Row I) with standard WR commands, in a single burst at full bandwidth.
+\item \textbf{Internal Broadcasting:} After the rank switches to PIM mode, the MC activates Row I, and each subsequent RD broadcasts the fetched column data to the input buffers of all 16 banks.
+\item \textbf{Local Computation and Write-back:} MAC results are written directly back to the DRAM array. After computation, the rank switches back to DRAM mode and the host reads out all results in a single burst.
+\end{enumerate}
 % END-SOURCE-EN: 150
 
 % SOURCE-EN: 151
-By consolidating the previously scattered input transfers to the beginning of the operator, the ownership of the DQ bus is fully relinquished to the GPU during the PIM computation phase. This grants the GPU a long and contiguous memory access window. Moreover, because the fragmented DQ gaps are merged into a unified window, the MC is no longer required to employ a "DQ lookahead" mechanism to determine whether a GPU command can fit within a narrow gap, thereby completely eliminating the complexity of fine-grained arbitration.
+Concentrating input transfers at the start of each operator frees the DQ bus for the GPU throughout PIM computation, giving it a long, contiguous access window. Because the fragmented gaps merge into a single window, the MC no longer needs DQ lookahead, eliminating fine-grained arbitration altogether.
 % END-SOURCE-EN: 151
 
 % SOURCE-EN: 152
-A potential concern regarding the shared C/A bus is whether the PIM command traffic might interfere with the GPU's memory accesses and degrade parallel performance. However, because the linear operators in the AE are dominated by skinny GEMMs, a single RD column command can drive the MAC operations for $M$ rows of inputs, resulting in a very low command density for the PIM. Under the input-preloaded dataflow, the C/A bus utilization by the PIM rank remains at approximately $13.5\%$ during the computation window when the PIM does not occupy the DQ bus. Even when accounting for potential C/A conflicts and permitting the delayed issuance of GPU memory commands, the total latency increases by merely $0.51\%$. This demonstrates that C/A contention has a negligible impact on overall system latency.
+A remaining concern is whether PIM commands on the shared C/A bus interfere with GPU accesses. Since AE linear operators are dominated by skinny GEMMs, a single RD command drives MAC operations for $M$ input rows, keeping PIM command density low. Under the input-preloaded dataflow, the PIM rank uses only about $13.5\%$ of the C/A bus during the computation window, when it does not occupy the DQ bus. Even if C/A conflicts delay GPU commands, total latency rises by only $0.51\%$, so C/A contention is negligible.
 % END-SOURCE-EN: 152
 
 \subsection{PIM Command Interface and ISA Extension}
 \label{sec:architecture-c}
 
 % SOURCE-EN: 168
-\sys{} extends the standard JEDEC LPDDR5X command set to introduce a dedicated PIM mode, incorporating a memory-side command decode state machine and a customized ISA. During the LPDDR initialization phase, the host utilizes Mode Register Write (MRW) commands to configure specific functional rows, including a mode-switching row and an input-buffer row. Subsequently, the memory controller (MC) can flexibly switch the rank between standard DRAM mode and PIM mode simply by asserting an ACT command to the designated functional row.
+\sys{} extends the JEDEC LPDDR5X command set with a dedicated PIM mode, supported by a memory-side command decode state machine and a custom ISA. During LPDDR initialization, the host uses Mode Register Write (MRW) commands to configure functional rows, including a mode-switching row and an input-buffer row. The MC then switches a rank between DRAM and PIM modes simply by issuing an ACT to the mode-switching row.
 % END-SOURCE-EN: 168
 
 % SOURCE-EN: 169
-In PIM mode, a single RD/WR command is executed concurrently across all 16 banks. Consequently, the four address bits conventionally used for bank group (BG) and bank (BA) selection become vacant. \sys{} repurposes these four bits to encode the specific computation type (Table~\ref{tab:isa}) and to designate the source module from which the results are written back to the DRAM arrays. Importantly, because all extended commands strictly preserve standard JEDEC timing constraints and pin semantics, the proposed interface remains fully compatible with standard memory controllers.
+In PIM mode, each RD/WR command executes on all 16 banks simultaneously, freeing the four address bits normally used for BG and bank (BA) selection. \sys{} repurposes these bits to encode the computation type (Table~\ref{tab:isa}) and the source module whose results are written back to the DRAM array. Because all extended commands preserve JEDEC timing constraints and pin semantics, the interface remains compatible with standard memory controllers.
 % END-SOURCE-EN: 169
 
 \input{tables/isa}

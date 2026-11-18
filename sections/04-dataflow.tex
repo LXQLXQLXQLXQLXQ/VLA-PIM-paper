@@ -2,15 +2,15 @@
 
 \section{Dataflow and Scheduling}
 \label{sec:dataflow}
-\subsection{DQ-aware Data Layout \& On-die RoPE}
+\subsection{DQ-aware Data Layout \& In-bank RoPE}
 \label{sec:dataflow-a}
 
 % SOURCE-EN: 190
-Since the GPU and PIM share the external interface of the LPDDR channel, the AE's data layout affects not only the internal PIM execution efficiency but also the extent of DQ contention with the GPU. \sys{} integrates the shared-channel communication overhead into its layout exploration to minimize the AE's external bandwidth demand under computation and storage capacity constraints.
+Because the GPU and PIM share the external interface of each LPDDR channel, the AE's data layout determines not only PIM execution efficiency but also DQ contention with the GPU. \sys{} therefore includes shared-channel communication cost in its layout exploration, minimizing the AE's external bandwidth demand under compute and capacity constraints.
 % END-SOURCE-EN: 190
 
 % SOURCE-EN: 191
-Attention tensors can be partitioned across ranks in two manners: feature-wise, where each rank stores all tokens but only half of the feature dimensions; or token-wise, where each rank stores half of the tokens across all feature dimensions. The communication cost within the LPDDR-PIM architecture is fundamentally hierarchical. Within a rank, communication bypasses the DQ bus entirely, as inputs can be simultaneously written to all banks via the broadcast datapath, and partial sums are reduced via the on-chip adder tree. Conversely, inter-rank communication consumes external DQ bandwidth, as cross-rank data duplication and reduction must be routed through the MC due to the lack of a logic die.
+Attention tensors can be partitioned across ranks feature-wise, where each rank stores all tokens but half of the feature dimensions, or token-wise, where each rank stores half of the tokens with all feature dimensions. Communication cost in LPDDR-PIM is hierarchical. Intra-rank communication bypasses the DQ bus: inputs are written to all banks at once through the broadcast datapath, and partial sums are reduced by the on-chip adder tree. Inter-rank communication, in contrast, consumes external DQ bandwidth, because without a logic die, cross-rank duplication and reduction must be routed through the MC.
 % END-SOURCE-EN: 191
 
 % USER-ADDED: approved layout/DQ figure and cross-reference, 2026-11-17.
@@ -19,18 +19,18 @@ Figure~\ref{fig:layout-dq} illustrates both layouts and isolates the DQ traffic 
 \input{figures/layout-dq}
 
 % SOURCE-EN: 192
-Consequently, an optimal layout must confine the reduction dimension within the rank and partition only the independent dimensions across ranks. Based on a quantitative evaluation of external DQ traffic, \sys{} adopts the token-wise layout. Measured as the AE's total external DQ traffic per layer and denoising step (summed over 16 channels), the token-wise layout lowers the traffic from $6096\,\mathrm{KiB}$ to $5352\,\mathrm{KiB}$ ($12.2\%$). Most of this saving ($616\,\mathrm{KiB}$) comes from QK$^{T}$ and PV (Figure~\ref{fig:layout-dq}).
+An efficient layout should therefore keep the reduction dimension within a rank and partition only independent dimensions across ranks. Based on the resulting external DQ traffic, \sys{} adopts the token-wise layout. Measured as the AE's total external DQ traffic per layer and denoising step (summed over 16 channels), it lowers the traffic from $6096\,\mathrm{KiB}$ to $5352\,\mathrm{KiB}$ ($12.2\%$), mostly ($616\,\mathrm{KiB}$) from QK$^{T}$ and PV (Figure~\ref{fig:layout-dq}).
 % END-SOURCE-EN: 192
 
 % SOURCE-EN: 207
-Furthermore, we observe that the prefix KV and suffix KV in the AE exhibit distinct lifetimes. The prefix KV is generated only once by the VLM and remains read-only across all 10 denoising steps. Consequently, its RoPE can be computed alongside the VLM's forward pass, eliminating any prefix positional encoding overhead during the denoising phase. Conversely, the suffix KV is iteratively recomputed with $x_t$ and remains valid only within the current layer and time step. As a result, its RoPE is repeatedly executed across the 10 steps and 18 layers. If the suffix RoPE were executed on the GPU, it would necessitate reading the Q/K tensors from the PIM, performing the rotation, and writing them back, incurring prohibitive data movement. To mitigate this, \sys{} leverages the property that the sine and cosine values in RoPE are determined solely by the position ID, independent of the time step $t$. Accordingly, \sys{} precomputes these values into static BF16 lookup tables and stores them directly within the DRAM arrays. Moreover, based on the fact that RoPE merely involves MAC operations between adjacent element pairs, \sys{} adopts a pair-major feature mapping across the banks. This data layout guarantees that each pair of rotating elements strictly resides within the same bank, enabling in-place rotation natively within each bank. In-bank RoPE removes a further $128\,\mathrm{KiB}$ per layer and denoising step ($2.1\%$). Together with the token-wise layout, it lowers the AE's total DQ traffic from $6096\,\mathrm{KiB}$ to $5224\,\mathrm{KiB}$, a $14.3\%$ reduction.
+The prefix and suffix KV in the AE also have different lifetimes. The prefix KV is generated once by the VLM and stays read-only across all 10 denoising steps, so its RoPE can be applied during the VLM forward pass, adding no positional-encoding overhead to the denoising phase. The suffix KV, in contrast, is recomputed from $x_t$ and is valid only within the current layer and step, so its RoPE recurs across 10 steps and 18 layers. Running it on the GPU would require reading Q/K from the PIM, rotating them, and writing them back, incurring prohibitive data movement. Instead, \sys{} exploits the fact that RoPE's sine and cosine values depend only on the position ID, not on $t$, and precomputes them into static BF16 lookup tables stored in the DRAM arrays. Since RoPE involves only MAC operations between adjacent element pairs, \sys{} further adopts a pair-major feature mapping that keeps each rotation pair in the same bank, enabling in-place rotation within each bank. In-bank RoPE removes another $128\,\mathrm{KiB}$ per layer and denoising step ($2.1\%$). Combined with the token-wise layout, it reduces the AE's total DQ traffic from $6096\,\mathrm{KiB}$ to $5224\,\mathrm{KiB}$, a $14.3\%$ reduction.
 % END-SOURCE-EN: 207
 
 \subsection{GPU--PIM Co-Scheduling}
 \label{sec:dataflow-b}
 
 % SOURCE-EN: 215
-Building upon the proposed microarchitecture and dataflow, \sys{} achieves parallel execution via GPU--PIM co-scheduling. The core scheduling principle is to partition the ownership of the DQ bus between the GPU and the PIM at the kernel granularity, rather than relying on fine-grained arbitration at the memory request level. This coarse-grained allocation successfully avoids the complex arbitration, frequent rank switching, and bus turnaround latencies inherently caused by interleaving host and PIM commands. The overall execution sequence within a single denoising step is illustrated in Figure~\ref{fig:timeline}.
+Building on this microarchitecture and dataflow, \sys{} enables parallel execution through GPU--PIM co-scheduling. Rather than arbitrating individual memory requests, it assigns DQ bus ownership to the GPU or the PIM at kernel granularity. This coarse-grained allocation avoids the complex arbitration, frequent rank switching, and bus turnaround latency caused by interleaving host and PIM commands. Figure~\ref{fig:timeline} shows the execution sequence within one denoising step.
 % END-SOURCE-EN: 215
 
 \input{figures/timeline}
