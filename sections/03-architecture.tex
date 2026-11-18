@@ -12,7 +12,7 @@
 % END-SOURCE-EN: 23
 
 % SOURCE-EN: 46
-\sys{} is configured with eight LPDDR5X-8533 packages (e.g., Micron MT62F2G32D4DS). Each package features a quad-die, dual-channel, and dual-rank architecture, collectively providing 16 independent x16 channels with a peak bandwidth of 273 GB/s. Each PIM rank comprises four bank groups (BGs), with four banks per BG. Each bank is equipped with a $16\times$BF16 MAC unit (with FP32 accumulation) and a dedicated RoPE unit, alongside a 1 KiB input buffer and a 2 KiB output buffer. Furthermore, BG-level and rank-level accumulators hierarchically aggregate the partial sums across their respective levels. Each package thus delivers $273\,\mathrm{GFLOPS}$ of BF16 compute, compared with $307\,\mathrm{GFLOPS}$ for Samsung LPDDR5X-PIM with its INT8 throughput converted to BF16-equivalent.
+\sys{} is configured with eight LPDDR5X-8533 packages (e.g., Micron MT62F2G32D4DS). Each package features a quad-die, dual-channel, and dual-rank architecture, collectively providing 16 independent x16 channels with a peak bandwidth of 273 GB/s. Each PIM rank comprises four bank groups (BGs), with four banks per BG. Each bank is equipped with a $16\times$BF16 MAC unit (with FP32 accumulation) and a dedicated RoPE unit, alongside a 1 KiB input buffer and a 2 KiB output buffer. BG- and rank-level accumulators hierarchically aggregate partial sums. Each package thus delivers $273\,\mathrm{GFLOPS}$ of BF16 compute, compared with $307\,\mathrm{GFLOPS}$ for Samsung LPDDR5X-PIM with its INT8 throughput converted to BF16-equivalent.
 % END-SOURCE-EN: 46
 
 % SOURCE-EN: 47
@@ -70,7 +70,7 @@ where $t_{\mathrm{WCKPST}}$ is the WCK postamble, $t_{\mathrm{WCKENL},Y}$ is the
 % END-SOURCE-EN: 127
 
 % SOURCE-EN: 128
-Ramulator simulation of streaming inputs, even with WCK synchronization maintained, shows that about $50.6\%$ of the gaps between adjacent PIM data bursts are too narrow for a single GPU read or write without delaying the next PIM transfer. Exploiting the remaining gaps would require the memory controller (MC) to perform data-bus slot-reservation arbitration: predicting, from the R/W direction and data return timing, whether a GPU burst fits the window under bidirectional timing constraints. This substantially complicates the arbitration logic.
+Ramulator simulation of streaming inputs, even with WCK synchronization maintained, shows that about $50.6\%$ of the gaps between adjacent PIM data bursts are too narrow for a single GPU read or write. Exploiting the remaining gaps would require the memory controller (MC) to perform data-bus slot-reservation arbitration, predicting from the R/W direction and data return timing whether a GPU burst fits each window, which substantially complicates the arbitration logic.
 % END-SOURCE-EN: 128
 
 % SOURCE-EN: 149
