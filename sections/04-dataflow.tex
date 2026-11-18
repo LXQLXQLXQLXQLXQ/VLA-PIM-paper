@@ -6,7 +6,7 @@
 \label{sec:dataflow-a}
 
 % SOURCE-EN: 190
-Because the GPU and PIM share the external interface of each LPDDR channel, the AE's data layout determines not only PIM execution efficiency but also DQ contention with the GPU. \sys{} therefore includes shared-channel communication cost in its layout exploration, minimizing the AE's external bandwidth demand under compute and capacity constraints.
+Because the GPU and PIM share the external interface of each LPDDR channel, the AE's data layout determines not only PIM execution efficiency but also DQ contention with the GPU. \sys{} therefore includes shared-bus communication cost in its layout exploration, minimizing the AE's external bandwidth demand under compute and capacity constraints.
 % END-SOURCE-EN: 190
 
 % SOURCE-EN: 191
@@ -14,23 +14,24 @@ Attention tensors can be partitioned across ranks feature-wise, where each rank 
 % END-SOURCE-EN: 191
 
 % USER-ADDED: approved layout/DQ figure and cross-reference, 2026-11-17.
-Figure~\ref{fig:layout-dq} illustrates both layouts and isolates the DQ traffic of Q exchange, QK$^{T}$, and PV.
 
-\input{figures/layout-dq}
 
 % SOURCE-EN: 192
-An efficient layout should therefore keep the reduction dimension within a rank and partition only independent dimensions across ranks. Based on the resulting external DQ traffic, \sys{} adopts the token-wise layout. Measured as the AE's total external DQ traffic per layer and denoising step (summed over 16 channels), it lowers the traffic from $6096\,\mathrm{KiB}$ to $5352\,\mathrm{KiB}$ ($12.2\%$), mostly ($616\,\mathrm{KiB}$) from QK$^{T}$ and PV (Figure~\ref{fig:layout-dq}).
+An efficient layout should therefore keep the reduction dimension within a rank and partition only independent dimensions across ranks. Based on the resulting external DQ traffic, \sys{} adopts the token-wise layout. Measured as the AE's total external DQ traffic per layer and denoising step, it lowers the traffic from $6096\,\mathrm{KiB}$ to $5352\,\mathrm{KiB}$ ($12.2\%$).
 % END-SOURCE-EN: 192
 
 % SOURCE-EN: 207
 The prefix and suffix KV in the AE also have different lifetimes. The prefix KV is generated once by the VLM and stays read-only across all 10 denoising steps, so its RoPE can be applied during the VLM forward pass, adding no positional-encoding overhead to the denoising phase. The suffix KV, in contrast, is recomputed from $x_t$ and is valid only within the current layer and step, so its RoPE recurs across 10 steps and 18 layers. Running it on the GPU would require reading Q/K from the PIM, rotating them, and writing them back, incurring prohibitive data movement. Instead, \sys{} exploits the fact that RoPE's sine and cosine values depend only on the position ID, not on $t$, and precomputes them into static BF16 lookup tables stored in the DRAM arrays. Since RoPE involves only MAC operations between adjacent element pairs, \sys{} further adopts a pair-major feature mapping that keeps each rotation pair in the same bank, enabling in-place rotation within each bank. In-bank RoPE removes another $128\,\mathrm{KiB}$ per layer and denoising step ($2.1\%$). Combined with the token-wise layout, it reduces the AE's total DQ traffic from $6096\,\mathrm{KiB}$ to $5224\,\mathrm{KiB}$, a $14.3\%$ reduction.
 % END-SOURCE-EN: 207
 
-\subsection{GPU--PIM Co-Scheduling}
+\subsection{GPU-PIM Co-scheduling}
 \label{sec:dataflow-b}
 
-% SOURCE-EN: 215
+% SOURCE-EN: 215 (rewritten for the preemptive scheduler)
 Building on this microarchitecture and dataflow, \sys{} enables parallel execution through GPU--PIM co-scheduling. Rather than arbitrating individual memory requests, it assigns DQ bus ownership to the GPU or the PIM at kernel granularity. This coarse-grained allocation avoids the complex arbitration, frequent rank switching, and bus turnaround latency caused by interleaving host and PIM commands. Figure~\ref{fig:timeline} shows the execution sequence within one denoising step.
 % END-SOURCE-EN: 215
 
+% END-SOURCE-EN: 215
+
+\input{figures/layout-dq}
 \input{figures/timeline}
