@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-18",
+  "figure_number": 9,
+  "request": "Two independent bar-chart panels side by side within one paper column: pi0.5 left, GR00T N1.6 right.",
+  "layout": "1 row x 2 panels, combined width 3.5 inches; common vertical scale 0–220 ms; six equally spaced configuration positions per panel; bar width 0.44",
+  "metric": "T_async VLA (ms)",
+  "pi05_original_values_unchanged": true,
+  "gr00t_native_cases_match_csv_and_summary": true,
+  "gr00t_native_case_mapping": {
+    "n16-b": "b",
+    "n16-c": "c",
+    "n16-d": "d",
+    "n16-f": "e"
+  },
+  "gr00t_no_rope": true,
+  "gr00t_cycle_ms": [
+    104.12645282745362,
+    null,
+    104.57966296400001,
+    78.358496734,
+    77.823911774,
+    74.409591774
+  ],
+  "gr00t_serial_baseline": "Derived as 45.578651428222656 + 58.547801399230956 = 104.12645282745362 ms; separately measured standalone means, not an end-to-end measurement; dagger in plot and caption.",
+  "gr00t_dual_stream": "Unavailable; JSON null, no bar, N/A annotation.",
+  "gr00t_final_hz": 13.439127619961184,
+  "gr00t_rate_gain_vs_derived_serial": 1.3993686881620173,
+  "source": {
+    "archive_directory": "Important data/gr00t-n16-h15-640x480-2026-11-18",
+    "source_files_sha256": {
+      "matrix/evaluation-b-g.csv": "d8b1da299416aaf8b201864d8cd1bb6ecdb681e217c577492aa833db9d54fc8b",
+      "matrix/summary.json": "b76c69154e1a5eb5ce9ed13da9fb87ef0127da95b04bbde0e6ecaf9b0049664f",
+      "local-evidence-checks.json": "35e3cd9b37c43e9fae7c8b7252fb007e09de106de484f89be628198944f15ddb",
+      "matrix/640x480-checks.json": "87c524a0a1bf25417c813fd8ea6823768512cae9baa48d04ed4be243973ebf47",
+      "ARCHIVE_MANIFEST.json": "5a5c590a9944f9b80d5993742dc0790bf8e0212fb7b8e67edd7294cbf8878125"
+    },
+    "thor_archive": "thor-captures.tar.gz",
+    "thor_members_sha256": {
+      "thor/sim640x480-20261118/ae-latency.json": "ef2bb62ba9af1b6254daf52573cd2a5be4ae66ec2e5ddf2df5025790a5deb02b",
+      "thor/sim640x480-20261118/capture-summary.json": "b4da37b8be55e32f40cc7b6fe76c921ac3f5f7e8d2f0b5130b71f94824796b07"
+    },
+    "configuration_mapping": {
+      "n16-b": "b",
+      "n16-c": "c",
+      "n16-d": "d",
+      "n16-f": "e"
+    },
+    "notes": [
+      "GR00T does not use RoPE; d adds token-wise layout and e adds preloading.",
+      "a-serial is a sum of separately measured phase means, not an independently measured end-to-end serial run.",
+      "No GR00T a-dual measurement is included in the archive.",
+      "Each model retains its archived workload settings; this is a within-model method comparison."
+    ]
+  },
+  "fixture": {
+    "horizon": 15,
+    "cameras": 3,
+    "raw_image_size_wh": [
+      640,
+      480
+    ],
+    "vit_image_size_wh": [
+      336,
+      252
+    ],
+    "vl_tokens": 371,
+    "denoising_steps": 4
+  },
+  "source_verification": "Archived local-evidence-checks.json passed; selected Thor capture members hash-match ARCHIVE_MANIFEST.json.",
+  "compile": {
+    "passes": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "pages": 8,
+    "overfull_boxes": 0,
+    "missing_characters": 0,
+    "undefined_references": false,
+    "input_hashes_unchanged_during_compile": true
+  },
+  "visual_review": "Standalone figure and rendered page 7 inspected. Two independent panels fit inside one column, with aligned baselines and shared vertical scale; numerical labels and each panel rate arrow do not overlap.",
+  "experiment_data_modified": false,
+  "simulation_rerun": false,
+  "pre_edit_backup": "../essay/backups/async-vla-before-gr00t-20261118.tar.gz",
+  "review_page": "../essay/reviews/async-vla-gr00t-panels-20261118/page-7.png",
+  "pdf_sha256": "804ad866d198eb8ccd7a1dd7924548df9d15c26f0c0e5055e0b98152e80fc938",
+  "unrelated_edits_preserved": "Existing one-line inference-cycle equation and area value retained.",
+  "configuration_labels": "a-s/a-d denote serial/dual-stream GPU baselines; b/c/d/e retain their mapping.",
+  "data_changed_in_layout_correction": false
+}

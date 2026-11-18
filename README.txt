@@ -19,10 +19,12 @@ Thor/Ramulator 实验设置段因缺少原文英文，按用户指示暂移至 n
 - 解耦频率（figures/decoupled-rates.tex）。
 原 RD 字段图已删除，字段格式合入 Table II 的单行注释；新增图 6 为用户确认的 KV 布局与 DQ 流量图。
 Table II 采用已确认的 v3：BG/BA、Cmd.、Operation、Function 四列，RD/WR 指令逐行列出。
-原性能表已替换为图 9：仅画 T_async VLA（async 与 VLA 之间用空格），a 的 serial/dual 两根柱及 b、c、d、e 各一根柱。
+原性能表已替换为图 9：仅画 T_async VLA（async 与 VLA 之间用空格），在一个单列宽度内并排放两张独立小图，左图为 π0.5，右图为 GR00T N1.6，共用纵轴刻度。
 原 e、g 配置分别重命名为 d、e；原 d、f 不再出现在配置列表或正文分析中。
 图 9 采用单栏布局，柱宽统一收窄、间距相等；图内仅保留配置编号，图注和正文按 b--e 的累加顺序交代新增方法。
-单个箭头标注最终 e 相对 a-serial / a-dual 的 AE rate 倍率 1.82× / 1.76×。
+每张小图各用一个箭头标注最终 e 的 AE rate 倍率：π0.5 相对 a-serial / a-dual 为 1.82× / 1.76×，GR00T 相对推导串行基线为 1.40×。横轴 a-s/a-d 分别为 serial/dual 基线。
+GR00T 数据来自 Important data/gr00t-n16-h15-640x480-2026-11-18；原 n16-b/c/d/f 映射为 b/c/d/e，该模型无 RoPE。
+GR00T a-serial 由归档实测 AE/VLM 单跑均值相加得 104.13 ms（†）；a-dual 无数据，标为 N/A。
 原 Table III 内存配置表已删除；关键时序以“参数=数值”的紧凑形式列在 Table I 下方注释中，单位为 CK，数值沿用 LPDDR5X-8533 配置。
 表格和章节自动编号；图片采用 4、5、6、7、9、10 的编号，共六张图、两张表。
 

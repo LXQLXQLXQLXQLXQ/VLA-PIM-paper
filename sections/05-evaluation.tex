@@ -12,7 +12,7 @@ Compared to standard LPDDR5X, each PIM bank in \sys{} incorporates a $1\,\mathrm
 % END-SOURCE-EN: 235
 
 % SOURCE-EN: 236
-To evaluate the area overhead, we implement these modules in Verilog and synthesize them using Synopsys Design Compiler with a 7~nm predictive process design kit (ASAP7). Because DRAM processes are fundamentally optimized for capacitor integration rather than logic routing, they typically exhibit a $10\times$ lower logic density than equivalent logic processes. Applying this $10\times$ density penalty, we scale the synthesized area to a 1z-nm class DRAM process. Consequently, the estimated area overhead on the DRAM die is [TBD-M11: Area Value].
+To evaluate the area overhead, we implement these modules in Verilog and synthesize them using Synopsys Design Compiler with a 7~nm predictive process design kit (ASAP7). Because DRAM processes are fundamentally optimized for capacitor integration rather than logic routing, they typically exhibit a $10\times$ lower logic density than equivalent logic processes. Applying this $10\times$ density penalty, we scale the synthesized area to a 1z-nm class DRAM process. Consequently, the estimated area overhead on the DRAM die is $20.11\%$.
 % END-SOURCE-EN: 236
 
 \subsection{Overall Performance}
@@ -26,13 +26,13 @@ T_{\text{async VLA}}=t_{\text{AE,solo}}+t_{\text{VLM,solo}}-t_{\text{overlap}}
 =\frac{1}{f_{\text{AE}}}
 \label{eq:ae-interval}
 \end{equation}
- where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ denote the standalone execution times of the AE and the VLM, respectively, and $t_{\mathrm{overlap}}$ represents the effective overlapping time between the current VLM frame and the preceding AE frame. Figure~\ref{fig:async-vla-performance} compares $T_{\mathrm{async\ VLA}}$ across configurations a--e. Configuration a includes the serial and dual-stream Thor GPU baselines. Starting from the serial baseline, configurations b--e cumulatively enable PIM offloading, rank-partitioned GPU--PIM concurrency, token-wise layout with in-bank RoPE, and input preloading with epoch-exclusive scheduling, respectively. Configuration e is the full \sys{} design.
+ where $t_{\mathrm{AE,solo}}$ and $t_{\mathrm{VLM,solo}}$ denote the standalone execution times of the AE and the VLM, respectively, and $t_{\mathrm{overlap}}$ represents the effective overlapping time between the current VLM frame and the preceding AE frame. Figure~\ref{fig:async-vla-performance} compares $T_{\mathrm{async\ VLA}}$ across configurations a--e for $\pi_{0.5}$ and GR00T N1.6. Configuration a includes the serial and dual-stream Thor GPU baselines. Starting from the serial baseline, configurations b--e cumulatively enable PIM offloading, rank-partitioned GPU--PIM concurrency, token-wise layout with in-bank RoPE, and input preloading with epoch-exclusive scheduling, respectively. GR00T does not use RoPE, so d adds only the token-wise layout for this model. Configuration e is the full \sys{} design. The GR00T workload uses three $640\times480$ input images, an action horizon of 15, and four denoising steps; each model retains its evaluated workload settings.
 % END-USER-REVISED from SOURCE-EN 247
 
 \input{figures/async-vla-performance}
 
 % USER-REVISED from SOURCE-EN 248--253: retained configurations a--e.
-We make the following key observations: \begin{enumerate} \item \textbf{PIM Acceleration:} Offloading the AE's linear operators to the PIM architecture achieves an AE output frequency $1.15\times$ that of the GPU-only serial baseline, even under strictly serialized execution (Configuration b).
+For $\pi_{0.5}$, we make the following key observations: \begin{enumerate} \item \textbf{PIM Acceleration:} Offloading the AE's linear operators to the PIM architecture achieves an AE output frequency $1.15\times$ that of the GPU-only serial baseline, even under strictly serialized execution (Configuration b).
 
 \item \textbf{Rank Partitioning and Concurrency:} Enabling concurrent execution with PIM-head scheduling (Configuration c) reduces the AE output cycle from $122.88\,\mathrm{ms}$ to $86.77\,\mathrm{ms}$, a $29.4\%$ reduction relative to b.
 
@@ -42,6 +42,9 @@ We make the following key observations: \begin{enumerate} \item \textbf{PIM Acce
 
 \end{enumerate}
 % END-USER-REVISED from SOURCE-EN 248--254
+
+% USER-ADDED: GR00T N1.6 comparison from the 2026-11-18 important-data archive.
+For GR00T N1.6, configurations b--e reduce the output cycle from $104.58\,\mathrm{ms}$ to $78.36\,\mathrm{ms}$, $77.82\,\mathrm{ms}$, and $74.41\,\mathrm{ms}$, respectively. The final configuration delivers $13.44\,\mathrm{Hz}$. The archived standalone GPU means are $45.58\,\mathrm{ms}$ for the AE and $58.55\,\mathrm{ms}$ for the VLM; their sum gives a derived serial baseline of $104.13\,\mathrm{ms}$ and an AE output-rate gain of $1.40\times$. This sum is marked with a dagger in Figure~\ref{fig:async-vla-performance}; the archive contains no GR00T dual-stream baseline.
 
 \subsection{Discussion: Decoupling the VLM and AE}
 \label{sec:evaluation-c}

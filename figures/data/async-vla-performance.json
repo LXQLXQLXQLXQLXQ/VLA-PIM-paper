@@ -1,13 +1,165 @@
 {
-  "source": "Existing tables/performance.tex and tables/configs.tex, before the 2026-11-17 chart revision; no new measurements.",
+  "schema_version": 2,
   "metric": "T_async VLA",
   "unit": "ms",
-  "configurations": [
-    {"label": "a-serial", "original_label": "a-serial", "cycle_ms": 141.29, "details": ["Thor GPU", "Serial"]},
-    {"label": "a-dual", "original_label": "a-dual", "cycle_ms": 137.07, "details": ["Thor GPU", "Dual-stream"]},
-    {"label": "b", "original_label": "b", "cycle_ms": 122.88, "details": ["Feature-wise", "GPU RoPE", "Streaming", "Serial GPU–PIM"]},
-    {"label": "c", "original_label": "c", "cycle_ms": 86.77, "details": ["Feature-wise", "GPU RoPE", "Streaming", "Concurrent", "PIM-head"]},
-    {"label": "d", "original_label": "e", "cycle_ms": 83.57, "details": ["Token-wise", "In-bank RoPE", "Streaming", "Concurrent", "PIM-head"]},
-    {"label": "e (VLA-PIM)", "original_label": "g", "cycle_ms": 77.68, "details": ["Token-wise", "In-bank RoPE", "Input-preloaded", "Concurrent", "Epoch-exclusive"]}
+  "models": [
+    {
+      "key": "pi05",
+      "label": "π0.5",
+      "source": "Existing tables/performance.tex and tables/configs.tex, before the 2026-11-17 chart revision; no new measurements.",
+      "horizon": 50,
+      "configurations": [
+        {
+          "label": "a-serial",
+          "original_label": "a-serial",
+          "cycle_ms": 141.29,
+          "details": [
+            "Thor GPU",
+            "Serial"
+          ]
+        },
+        {
+          "label": "a-dual",
+          "original_label": "a-dual",
+          "cycle_ms": 137.07,
+          "details": [
+            "Thor GPU",
+            "Dual-stream"
+          ]
+        },
+        {
+          "label": "b",
+          "original_label": "b",
+          "cycle_ms": 122.88,
+          "details": [
+            "Feature-wise",
+            "GPU RoPE",
+            "Streaming",
+            "Serial GPU–PIM"
+          ]
+        },
+        {
+          "label": "c",
+          "original_label": "c",
+          "cycle_ms": 86.77,
+          "details": [
+            "Feature-wise",
+            "GPU RoPE",
+            "Streaming",
+            "Concurrent",
+            "PIM-head"
+          ]
+        },
+        {
+          "label": "d",
+          "original_label": "e",
+          "cycle_ms": 83.57,
+          "details": [
+            "Token-wise",
+            "In-bank RoPE",
+            "Streaming",
+            "Concurrent",
+            "PIM-head"
+          ]
+        },
+        {
+          "label": "e (VLA-PIM)",
+          "original_label": "g",
+          "cycle_ms": 77.68,
+          "details": [
+            "Token-wise",
+            "In-bank RoPE",
+            "Input-preloaded",
+            "Concurrent",
+            "Epoch-exclusive"
+          ]
+        }
+      ]
+    },
+    {
+      "key": "gr00t_n16",
+      "label": "GR00T N1.6",
+      "horizon": 15,
+      "cameras": 3,
+      "raw_image_size_wh": [
+        640,
+        480
+      ],
+      "denoising_steps": 4,
+      "rope": "none",
+      "configurations": [
+        {
+          "label": "a-serial",
+          "original_label": "derived-serial",
+          "cycle_ms": 104.12645282745362,
+          "kind": "sum_of_measured_standalone_phase_means",
+          "phase_means_ms": {
+            "ae": 45.578651428222656,
+            "vlm": 58.547801399230956
+          }
+        },
+        {
+          "label": "a-dual",
+          "original_label": null,
+          "cycle_ms": null,
+          "kind": "unavailable_in_archive"
+        },
+        {
+          "label": "b",
+          "original_label": "n16-b",
+          "cycle_ms": 104.57966296400001,
+          "kind": "native_simulator_timestamp",
+          "variant": "gr00t_n16-feature_before"
+        },
+        {
+          "label": "c",
+          "original_label": "n16-c",
+          "cycle_ms": 78.358496734,
+          "kind": "native_simulator_timestamp",
+          "variant": "gr00t_n16-feature_before"
+        },
+        {
+          "label": "d",
+          "original_label": "n16-d",
+          "cycle_ms": 77.823911774,
+          "kind": "native_simulator_timestamp",
+          "variant": "gr00t_n16-token_before"
+        },
+        {
+          "label": "e (VLA-PIM)",
+          "original_label": "n16-f",
+          "cycle_ms": 74.409591774,
+          "kind": "native_simulator_timestamp",
+          "variant": "gr00t_n16-token_after"
+        }
+      ],
+      "provenance": {
+        "archive_directory": "Important data/gr00t-n16-h15-640x480-2026-11-18",
+        "source_files_sha256": {
+          "matrix/evaluation-b-g.csv": "d8b1da299416aaf8b201864d8cd1bb6ecdb681e217c577492aa833db9d54fc8b",
+          "matrix/summary.json": "b76c69154e1a5eb5ce9ed13da9fb87ef0127da95b04bbde0e6ecaf9b0049664f",
+          "local-evidence-checks.json": "35e3cd9b37c43e9fae7c8b7252fb007e09de106de484f89be628198944f15ddb",
+          "matrix/640x480-checks.json": "87c524a0a1bf25417c813fd8ea6823768512cae9baa48d04ed4be243973ebf47",
+          "ARCHIVE_MANIFEST.json": "5a5c590a9944f9b80d5993742dc0790bf8e0212fb7b8e67edd7294cbf8878125"
+        },
+        "thor_archive": "thor-captures.tar.gz",
+        "thor_members_sha256": {
+          "thor/sim640x480-20261118/ae-latency.json": "ef2bb62ba9af1b6254daf52573cd2a5be4ae66ec2e5ddf2df5025790a5deb02b",
+          "thor/sim640x480-20261118/capture-summary.json": "b4da37b8be55e32f40cc7b6fe76c921ac3f5f7e8d2f0b5130b71f94824796b07"
+        },
+        "configuration_mapping": {
+          "n16-b": "b",
+          "n16-c": "c",
+          "n16-d": "d",
+          "n16-f": "e"
+        },
+        "notes": [
+          "GR00T does not use RoPE; d adds token-wise layout and e adds preloading.",
+          "a-serial is a sum of separately measured phase means, not an independently measured end-to-end serial run.",
+          "No GR00T a-dual measurement is included in the archive.",
+          "Each model retains its archived workload settings; this is a within-model method comparison."
+        ]
+      }
+    }
   ]
 }
