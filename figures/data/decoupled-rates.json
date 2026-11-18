@@ -4,16 +4,34 @@
   "unit": "Hz",
   "model": "pi0.5 MHA8, BF16, H=16, 10 denoising steps",
   "configurations": [
-    {"label": "Thor\ndual-stream", "ae_hz": 5.068, "vlm_hz": 10.136,
-     "source": "pim_vla_simulator@xinyao_1115 reference/2026-11-15/thor/mha8/continuous-ae-compile-profile-options.json results.with_vlm (ae_chunk_hz 5.0681, vlm_hz 10.1362)"},
-    {"label": "2 × Thor\nVLM / AE", "ae_hz": 13.570, "vlm_hz": 14.970,
-     "source": "AE: same file results.ae_only.ae_chunk_hz 13.5698; VLM: 1 / 66.803 ms compiled ViT+VLM solo (README calibration target)"},
-    {"label": "VLA-PIM\nstreaming (d)", "ae_hz": 17.60, "vlm_hz": 10.45,
-     "source": "Unchanged from the previous figure; raw simulation not in the xinyao_1115 branch"},
-    {"label": "VLA-PIM\npreload (e)", "ae_hz": 14.57, "vlm_hz": 12.56,
-     "source": "Unchanged from the previous figure; raw simulation not in the xinyao_1115 branch"}
+    {
+      "label": "Thor\ndual-stream",
+      "ae_hz": 5.068,
+      "vlm_hz": 10.136,
+      "source": "pim_vla_simulator@xinyao_1115 reference/2026-11-15/thor/mha8/continuous-ae-compile-profile-options.json results.with_vlm (ae_chunk_hz 5.0681, vlm_hz 10.1362)",
+      "label_meaning": "Decoupled dual-stream: independent VLM and AE loops sharing one Thor"
+    },
+    {
+      "label": "2 × Thor\nVLM / AE",
+      "ae_hz": 13.57,
+      "vlm_hz": 14.97,
+      "source": "AE: same file results.ae_only.ae_chunk_hz 13.5698; VLM: 1 / 66.803 ms compiled ViT+VLM solo (README calibration target)",
+      "label_meaning": "Two-GPU: VLM loop on one Thor, AE loop on a second Thor"
+    },
+    {
+      "label": "VLA-PIM\nstreaming (d)",
+      "ae_hz": 17.6,
+      "vlm_hz": 10.45,
+      "source": "Unchanged from the previous figure; raw simulation not in the xinyao_1115 branch"
+    },
+    {
+      "label": "VLA-PIM\npreload (e)",
+      "ae_hz": 14.57,
+      "vlm_hz": 12.56,
+      "source": "Unchanged from the previous figure; raw simulation not in the xinyao_1115 branch"
+    }
   ],
   "notes": [
-    "2026-11-18: Thor dual-stream changed from 5.13/10.13 Hz (MHA8 compile run in thor/mqa/continuous-ae-summary.json, whose AE-only rate is 13.71 Hz) to 5.07/10.14 Hz so that both Thor bars come from the same run as the 13.57 Hz AE-only rate."
+    "2026-11-18: dual-stream values changed from 5.13/10.13 Hz (MHA8 compile, default options) to 5.07/10.14 Hz (MHA8 compile with the profile options designated in the simulator README). The two-GPU configuration is a different setup and is not expected to match."
   ]
 }
