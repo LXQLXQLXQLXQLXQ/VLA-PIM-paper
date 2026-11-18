@@ -4,7 +4,7 @@
   "figure": 5,
   "manuscript_page": 6,
   "style": {
-    "family": "DejaVu Sans",
+    "family": "Arial",
     "weight": "normal",
     "title_pt": 8,
     "labels_and_legend_pt": 7,
@@ -65,13 +65,13 @@
   },
   "visual_review": "Inspected exported PNG and compiled manuscript page 6; no clipping or overlap.",
   "sha256": {
-    "figures/fig_layout_dq.pdf": "e1eb6760684c4457a24a28399ebaa794065a01c1e5b623bf9779e4eab3caa9cb",
-    "figures/fig_layout_dq.png": "766cdb3d93e0dd012d3b6f6e55e6fe5596d726f0cd7ae6f190f85cc0699916e0",
-    "figures/fig_layout_dq.svg": "6642bd11feb7ddb8984856d39c86e1a953fabf2a45d0749c9645caf0d9db5025",
-    "figures/fig_layout_dq.tif": "a197ea6e7ccecfdf1590d8f959503b06da5ee785271feedc5aa6ebe0bc4fe9b7",
-    "figures/plot-layout-dq.py": "e87f0e99f83693219df2900bac0fa1c102f71fc98372ffc44d57216933135dec"
+    "figures/fig_layout_dq.pdf": "28c0725a577d5e031e29886a04663033bea0a4b3bddfcb9a0b4655bb3668ba68",
+    "figures/fig_layout_dq.png": "ce0ccc46acd6fee2da61cc1e3321edece17e2cda23c3fdb9fa7d627881fb068d",
+    "figures/fig_layout_dq.svg": "217b528a9d702da30955351fa6c8c2f6ea38023fbd1690b97bbc271d3a0d83ff",
+    "figures/fig_layout_dq.tif": "43e443fe60aab891cc194bf396a9c719d8ab475810f097aaf425f4bd9f90b16c",
+    "figures/plot-layout-dq.py": "01a8fe920aa0bf552cd0839bad31cc0c8e46a55503e49130883727a6b507c137"
   },
-  "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-bar-values-20261118T181305",
+  "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-8-arial-20261118T182217",
   "follow_up": "Reduce only the seven numbers inside stacked bars from 7 pt to 6 pt; other text retains its existing size.",
   "push_integration": {
     "remote_head_merged": "283f34b",
@@ -79,5 +79,6 @@
     "title_compile_fix": "Provide texorpdfstring fallback when hyperref is not loaded",
     "preview_rebuilt_after_merge": true,
     "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-bar-values-20261118T181305/push-integration"
-  }
+  },
+  "font_update": "Arial replaces DejaVu Sans in all of Figures 5–8; see notes/fig5-8-arial-2026-11-18.json."
 }

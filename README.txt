@@ -16,6 +16,9 @@ VLA-PIM 论文
 7. 总体性能对比 → figures/async-vla-performance.tex（单栏）。
 8. 解耦频率 → figures/decoupled-rates.tex（单栏）。
 
+图5–8统一使用Arial，包括数学符号和下标；PNG/TIFF位图均为600 dpi，TIFF采用无损LZW压缩。
+四个绘图脚本共用 figures/figure_style.py。重绘时需在系统中安装Arial，或将 VLA_PIM_FONT_DIR 指向含Arial常规、斜体、粗体和粗斜体字体文件的目录；缺少Arial时脚本会报错。
+
 总体性能图已扩展为单列宽度内的左右两张独立小图：(a) π0.5；(b) GR00T N1.6。
 两图共用纵轴刻度，指标标注为 T_Async，a-s/a-d 表示串行/双流 GPU 基线。
 GR00T 数据来自 Important data/gr00t-n16-h15-640x480-2026-11-18；原 n16-b/c/d/f 映射为 b/c/d/e，不含 RoPE。

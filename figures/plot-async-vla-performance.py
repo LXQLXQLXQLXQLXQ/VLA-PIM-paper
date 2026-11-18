@@ -9,6 +9,7 @@ import argparse
 import json
 import shutil
 from pathlib import Path
+from figure_style import use_arial, export_tiff
 
 import matplotlib
 matplotlib.use('Agg')
@@ -39,6 +40,7 @@ def main():
     args = parser.parse_args()
     data = json.loads(args.data.read_text())
     models = data['models']
+    use_arial()
     plt.rcParams.update({
         'font.size': 8, 'axes.labelsize': 8,
         'axes.spines.top': False, 'axes.spines.right': False,
@@ -96,6 +98,8 @@ def main():
                     bbox_inches='tight', pad_inches=0.025)
     shutil.copyfile(args.out/'fig_async_vla_performance.png',
                     args.out/'fig7_async_vla_performance.png')
+    export_tiff(args.out/'fig7_async_vla_performance.png',
+                args.out/'fig7_async_vla_performance.tif')
     plt.close(fig)
     print('Rendered pi0.5 left panel and GR00T N1.6 right panel in one column; '
           'GR00T serial is derived and compiled dual-stream AE p50 is included.')

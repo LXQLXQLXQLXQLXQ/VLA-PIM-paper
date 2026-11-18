@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-18",
+  "request": "Use Arial for every label in Figures 5, 6, 7 and 8",
+  "font": "Arial",
+  "math_font": "Arial / Arial Italic",
+  "all_fonts_embedded": true,
+  "pdf_fonts": {
+    "fig_layout_dq.pdf": [
+      "ArialMT"
+    ],
+    "fig7_step_timeline.pdf": [
+      "ArialMT"
+    ],
+    "fig_async_vla_performance.pdf": [
+      "ArialMT",
+      "Arial-ItalicMT"
+    ],
+    "fig_decoupled_rate.pdf": [
+      "ArialMT"
+    ]
+  },
+  "font_size_settings_preserved": true,
+  "fig5_bar_values_pt": 6,
+  "data_unchanged": true,
+  "data_sha256": {
+    "figures/data/layout-dq-20261117.json": "afcbcf5027b73b0b199bb2c7bb399f406b2252f3580be0e6a716681b2b932a06",
+    "figures/data/timeline.json": "908d760e8f320258780ee8f59d0077d61db5585962fd8c1a02352fdefbd00dec",
+    "figures/data/streaming-input-gap.json": "bfdc413f9b4b594e99f1ac7cda08d4d71351c7d50def28448d20d4c38ab90b74",
+    "figures/data/async-vla-performance.json": "1e033b8cdbbccda5508176858680f05d0138096ad603356c8042ca2f39a4759b",
+    "figures/data/decoupled-rates.json": "2f5d69b7e55b616db21758d9e719cafcaa507677a9cf75d6a35ae585b3725cef"
+  },
+  "all_figure_text_preserved": true,
+  "manuscript_text_preserved": true,
+  "font_source": "https://sourceforge.net/projects/corefonts/files/the%20fonts/final/arial32.exe/download",
+  "font_package_sha256": "85297a4d146e9c87ac6f74822734bdee5f4b2a722d7eaa584b7f2cbf76f478f6",
+  "font_files_bundled_with_repository": false,
+  "reproduce": "Install Arial or set VLA_PIM_FONT_DIR to its font directory, then run each figures/plot-*.py script.",
+  "exports": [
+    {
+      "figure": "fig_layout_dq",
+      "pixels": [
+        2100,
+        1290
+      ],
+      "dpi": 600,
+      "tiff_compression": "LZW",
+      "png_tiff_pixels_identical": true
+    },
+    {
+      "figure": "fig6_timeline",
+      "pixels": [
+        4295,
+        1146
+      ],
+      "dpi": 600,
+      "tiff_compression": "LZW",
+      "png_tiff_pixels_identical": true
+    },
+    {
+      "figure": "fig7_async_vla_performance",
+      "pixels": [
+        2090,
+        1056
+      ],
+      "dpi": 600,
+      "tiff_compression": "LZW",
+      "png_tiff_pixels_identical": true
+    },
+    {
+      "figure": "fig8_decoupled_rate",
+      "pixels": [
+        2100,
+        1050
+      ],
+      "dpi": 600,
+      "tiff_compression": "LZW",
+      "png_tiff_pixels_identical": true
+    }
+  ],
+  "compile": {
+    "engine": "pdfLaTeX",
+    "passes": 2,
+    "pages": 8,
+    "overfull_boxes": 0,
+    "undefined_references": false,
+    "missing_characters": 0
+  },
+  "visual_review": "Inspected all four exported PNGs and manuscript pages 6 and 7; no clipping or overlap.",
+  "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig5-8-arial-20261118T182217",
+  "sha256": {
+    "figures/fig_layout_dq.tif": "43e443fe60aab891cc194bf396a9c719d8ab475810f097aaf425f4bd9f90b16c",
+    "figures/fig_decoupled_rate.pdf": "646c2818074b696bcd1b3f7abc8ccbb62d622907fff36ade9cdf98875908d9a1",
+    "figures/fig7_step_timeline.png": "139b5c6be8e6c06876d86d49693c43b9a147861664312ab230239b66875f252a",
+    "figures/fig_layout_dq.png": "ce0ccc46acd6fee2da61cc1e3321edece17e2cda23c3fdb9fa7d627881fb068d",
+    "figures/plot-layout-dq.py": "01a8fe920aa0bf552cd0839bad31cc0c8e46a55503e49130883727a6b507c137",
+    "figures/fig8_decoupled_rate.tif": "3f515b55766cd6ec142d41f8e4a3ded2804e05263f5f2f5f06aa3a516ccffd13",
+    "figures/fig_decoupled_rate.png": "40a96f039866b4d9979f0d2482efa7988a48f07c766e55246287664a8d331726",
+    "figures/plot-timeline.py": "b4ac50b5aae35dff997fd3c5178fddc242e696aad5aa2101ecbda28b9c98f782",
+    "figures/fig7_async_vla_performance.png": "fe360ed18e1dd053b77bba2d390a8e5f2bd28a77b7e2b755129ecfddb87f0985",
+    "figures/fig_layout_dq.pdf": "28c0725a577d5e031e29886a04663033bea0a4b3bddfcb9a0b4655bb3668ba68",
+    "figures/plot-decoupled-rates.py": "ceda7079f52caf43585492539a225358d37dfabafcbb9a205c9c241698a5d9c5",
+    "figures/fig7_async_vla_performance.tif": "6912d70f4ed72522899b5fe8c977d003860c21b2fd31e58876c2ccec589ae890",
+    "figures/fig_async_vla_performance.png": "fe360ed18e1dd053b77bba2d390a8e5f2bd28a77b7e2b755129ecfddb87f0985",
+    "figures/fig6_timeline.tif": "f129d2fe368ba46b535b6e46190d84604cb07bd3465b01e86cedf6387e0eebfb",
+    "figures/plot-async-vla-performance.py": "7a37e8aae37478eb2ddd7c3ad47a394a4765ef447fe978dd445198dc1902e45f",
+    "figures/fig_async_vla_performance.pdf": "bc8aa4c809a9f4efa335f56163bf6e49f5f20108fb5d85f397dd8151a8f5f256",
+    "figures/fig8_decoupled_rate.png": "40a96f039866b4d9979f0d2482efa7988a48f07c766e55246287664a8d331726",
+    "figures/fig_layout_dq.svg": "217b528a9d702da30955351fa6c8c2f6ea38023fbd1690b97bbc271d3a0d83ff",
+    "figures/fig6_timeline.png": "139b5c6be8e6c06876d86d49693c43b9a147861664312ab230239b66875f252a",
+    "figures/fig7_step_timeline.pdf": "1b163db5a8cea15a7c5ec00a71a9779d23db9739d9e9e190321ebbf3ebaa9a95",
+    "figures/figure_style.py": "752c0a1184db34d4bbba558c3f83c8a19bb1724e3e1bc28dff525e128e0a93dc"
+  }
+}

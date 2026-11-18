@@ -1,0 +1,201 @@
+{
+  "clock_ps": 938,
+  "case": "combined-e",
+  "channel": 0,
+  "step": 0,
+  "layer": 0,
+  "read_excluded_example": {
+    "left": {
+      "direction": "W",
+      "stage": "down",
+      "command": "WR",
+      "start_ck": 359546,
+      "end_ck": 359548,
+      "stage_id": 8
+    },
+    "right": {
+      "direction": "W",
+      "stage": "down",
+      "command": "WR",
+      "start_ck": 359562,
+      "end_ck": 359564,
+      "stage_id": 8
+    },
+    "gap_ck": 14
+  },
+  "both_excluded_example": {
+    "left": {
+      "direction": "W",
+      "stage": "qkv",
+      "command": "WR",
+      "start_ck": 52566,
+      "end_ck": 52568,
+      "stage_id": 0
+    },
+    "right": {
+      "direction": "W",
+      "stage": "qkv",
+      "command": "WR",
+      "start_ck": 52571,
+      "end_ck": 52573,
+      "stage_id": 0
+    },
+    "gap_ck": 3
+  },
+  "cross_rank_dq_edges_ck": {
+    "RR": 2,
+    "RW": 2,
+    "WR": 11,
+    "WW": 1
+  },
+  "gpu_burst_ck": 2,
+  "required_vlm_window_ck": {
+    "R": 15,
+    "W": 4
+  },
+  "scopes": {
+    "all_input_WW": {
+      "positive_gap_count": 1240200,
+      "gap_counts_up_to_15_ck": {
+        "1": 0,
+        "2": 607454,
+        "3": 12153,
+        "4": 16428,
+        "5": 3115,
+        "6": 228,
+        "7": 26,
+        "8": 26,
+        "9": 40,
+        "10": 37,
+        "11": 14,
+        "12": 27,
+        "13": 911,
+        "14": 8744,
+        "15": 19599
+      },
+      "longest_gap_excluding_both_ck": 3,
+      "longest_gap_excluding_read_ck": 14
+    },
+    "first_layer_input_WW": {
+      "positive_gap_count": 6890,
+      "gap_counts_up_to_15_ck": {
+        "1": 0,
+        "2": 3383,
+        "3": 56,
+        "4": 22,
+        "5": 11,
+        "6": 8,
+        "7": 3,
+        "8": 13,
+        "9": 8,
+        "10": 3,
+        "11": 3,
+        "12": 10,
+        "13": 13,
+        "14": 100,
+        "15": 108
+      },
+      "longest_gap_excluding_both_ck": 3,
+      "longest_gap_excluding_read_ck": 14
+    },
+    "qkv_stage0_WW": {
+      "positive_gap_count": 511,
+      "gap_counts_up_to_15_ck": {
+        "1": 0,
+        "2": 15,
+        "3": 36,
+        "4": 22,
+        "5": 10,
+        "6": 8,
+        "7": 3,
+        "8": 13,
+        "9": 8,
+        "10": 2,
+        "11": 3,
+        "12": 10,
+        "13": 13,
+        "14": 99,
+        "15": 106
+      },
+      "longest_gap_excluding_both_ck": 3,
+      "longest_gap_excluding_read_ck": 14
+    }
+  },
+  "definition": "Native PIM burst times held fixed. A 14 CK WR-to-WR gap excludes a VLM RD (15 CK minimum), but permits a WR by DQ timing alone (4 CK minimum). This is not a measured GPU SM pause.",
+  "source_trace": "experiments/2026-11-16/results/combined-e/repeat-1/dq-bursts.csv",
+  "source_trace_sha256": "29a409a3350516f86757cd53d514d2a640f127b7cd4c9cf5ae57d6786ba59ca9",
+  "source_matrix": "experiments/2026-11-16/source/reference/spec/command-pair-matrix.json",
+  "source_matrix_sha256": "e016cb00d939550bd1592e41bfe34974601609f1ed2a33f9d36e6cb054d404e3",
+  "zoom": {
+    "stage": "down",
+    "stage_id": 8,
+    "gap_ck": 14,
+    "left": {
+      "direction": "W",
+      "stage": "down",
+      "command": "WR",
+      "start_ck": 359546,
+      "end_ck": 359548,
+      "stage_id": 8
+    },
+    "right": {
+      "direction": "W",
+      "stage": "down",
+      "command": "WR",
+      "start_ck": 359562,
+      "end_ck": 359564,
+      "stage_id": 8
+    },
+    "bursts": [
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359538,
+        "end_ck": 359540,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359542,
+        "end_ck": 359544,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359546,
+        "end_ck": 359548,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359562,
+        "end_ck": 359564,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359566,
+        "end_ck": 359568,
+        "stage_id": 8
+      },
+      {
+        "direction": "W",
+        "stage": "down",
+        "command": "WR",
+        "start_ck": 359570,
+        "end_ck": 359572,
+        "stage_id": 8
+      }
+    ],
+    "definition": "Six consecutive native input WR bursts; GPU RD row shows required DQ timing rather than observed GPU requests."
+  }
+}

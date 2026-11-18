@@ -8,6 +8,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+from figure_style import use_arial, export_tiff
 
 os.environ.setdefault("MPLCONFIGDIR", "/scratch/xinyaowang/dq-traffic-matplotlib")
 os.environ.setdefault("XDG_CACHE_HOME", "/scratch/xinyaowang/dq-traffic-cache")
@@ -15,7 +16,6 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
-from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 BANKS = 16
@@ -44,8 +44,7 @@ def save(fig, output, name):
         fig.savefig(output / f"{name}.{suffix}", dpi=600, facecolor="white")
     svg = output / f"{name}.svg"
     svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
-    with Image.open(output / f"{name}.png") as png:
-        png.convert("RGB").save(output / f"{name}.tif", compression="tiff_lzw", dpi=(600, 600))
+    export_tiff(output / f"{name}.png", output / f"{name}.tif")
     plt.close(fig)
 
 def traffic_panel(fig, data):
@@ -133,8 +132,8 @@ def main():
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     data = json.loads((HERE / "data/layout-dq-20261117.json").read_text())["cases"]
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": TITLE_SIZE,
-                         "font.weight": "normal", "mathtext.fontset": "dejavusans",
+    use_arial()
+    plt.rcParams.update({"font.size": TITLE_SIZE, "font.weight": "normal",
                          "pdf.fonttype": 42, "ps.fonttype": 42,
                          "svg.fonttype": "none", "text.color": INK})
     fig = plt.figure(figsize=(3.5, 2.15))
