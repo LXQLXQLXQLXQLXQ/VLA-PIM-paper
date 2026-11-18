@@ -36,3 +36,8 @@ Table I 已按每个 x64 PIM 封装补齐 VLA-PIM、LP-Spec、AHASD 和 Samsung 
 历史修改和原始数据来源记录仍保存在 notes/ 与 Git 历史中。
 
 Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然后重新编译。
+
+完整面积数据已放在文末功耗/能耗说明之后，独立附录 Complete Area Overhead Data（第9–10页）。
+- sections/area-overhead-complete.tex：四模块分项、全部十组综合记录、匹配基线、DRAM折算、物理组织与敏感度、时序和验证条件。
+- notes/area-overhead-sources/：两份原始报告逐字节副本；notes/area-overhead-synthesis.csv：全部综合记录；notes/area-overhead-data.json：输入和计算结果。
+- 正文 M11 仅填入20.11%，正文其他文字、最新图表及功耗/能耗说明保持不变。

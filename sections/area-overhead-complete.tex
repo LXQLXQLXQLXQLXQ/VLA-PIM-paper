@@ -1,0 +1,109 @@
+% Complete evidence from both user-supplied 2026-11-15 area reports.
+% Original reports: notes/area-overhead-sources/; arithmetic: notes/area-overhead-data.json.
+% Keep this input last, after References and the preliminary energy note.
+\clearpage
+\appendix[Complete Area Overhead Data]
+\label{app:area-overhead}
+This appendix collects the numerical data, synthesis conditions, normalization assumptions, and verification limits from the two supplied area reports dated November 15, 2026. The independently synthesized blocks are combined as bank-equivalent areas; they are not an integrated, placed-and-routed bank implementation.
+
+\subsection{Synthesis Setup and Implemented Blocks}
+The SystemVerilog RTL is checked with Synopsys VCS V-2023.12-SP2-4. Synthesis uses Design Compiler W-2024.09-SP5 and ASAP7 7.5-track revision~28 RVT TT NLDM at $0.7\,\mathrm{V}$ and $25\,^{\circ}\mathrm{C}$. Initial synthesis uses \texttt{compile -map\_effort medium}; the selected $533\,\mathrm{MHz}$ MAC and RoPE additionally use \texttt{compile\_ultra -retime}. Clock uncertainty is $5\%$ of the period, I/O delay is $10\%$, input slew is $25\,\mathrm{ps}$, and output load is $0.5\,\mathrm{fF}$. All reported timing values are in ps. The Liberty DFFASRHQNx1 cell area of $0.37908\,\mu\mathrm{m}^{2}$ agrees with its $1\times$ LEF dimensions of $1.404\times0.27\,\mu\mathrm{m}$, excluding a $4\times$ LEF scaling ambiguity.
+
+Each MAC contains 16 BF16 inputs exactly expanded to FP32, 16 multipliers, a four-level FP32 addition tree, an FP32 partial-sum adder, and weight registers. RoPE processes one element pair per cycle using four multipliers and two FP32 add/subtract units, with BF16 round-to-nearest-even output. Sine and cosine coefficients are inputs; trigonometric-function generation is excluded. Arithmetic uses DesignWare with IEEE compliance set to~1; the top-level interface does not export exception flags.
+
+Both buffers are standard-cell DFF arrays including read/write selection logic and output registers, without SRAM macros or CACTI estimates. The input RF is $32\times256$ bits ($1\,\mathrm{KiB}$, 1R1W). The output RF is $64\times256$ bits ($2\,\mathrm{KiB}$, 2R1W), with $32$-bit word write enable. Double buffering partitions the existing $1\,\mathrm{KiB}$ input capacity; it does not add another $1\,\mathrm{KiB}$. Preloaded data, KV storage, and coefficient tables within DRAM arrays are not counted as added SRAM.
+
+\par\smallskip
+{\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Selected block} & \shortstack{\textbf{Cell area}\\($\mu\mathrm{m}^{2}$/bank)} & \shortstack{\textbf{Target}\\(MHz)} & \shortstack{\textbf{Slack}\\(ps)} \\
+\midrule
+MAC, BF16 $\times16$ & 2,999.86 & 533.05 & 0.19 \\
+RoPE, one pair/cycle & 785.05 & 1066.10 & $-70.33$ \\
+Input RF, 1~KiB & 3,859.66 & 1066.10 & 3.67 \\
+Output RF, 2~KiB & 9,023.80 & 1066.10 & 0.18 \\
+\bottomrule
+\end{tabular}\par}\smallskip
+The MAC and both RFs meet synthesis setup constraints; RoPE does not. The four selected blocks total $16{,}668.4\,\mu\mathrm{m}^{2}$/bank ($0.016668\,\mathrm{mm}^{2}$). The report gives $0.266694\,\mathrm{mm}^{2}$ for 16 banks and $4.267102\,\mathrm{mm}^{2}$ for 256 active banks, all in ASAP7 logic. Buffers contribute $77.3\%$ of the total; the output buffer contributes $54.1\%$, RoPE $4.7\%$, and the MAC approximately $18.0\%$.
+
+\subsection{All Synthesis Runs}
+All ten records, including unsuccessful timing configurations, are retained below. Run names omit the common \texttt{actpim\_} module prefix. Every listed run reports zero black boxes and zero errors.
+\par\smallskip
+{\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Run/module} & \shortstack{\textbf{Cell area}\\($\mu\mathrm{m}^{2}$)} & \shortstack{\textbf{Target}\\(MHz)} & \shortstack{\textbf{Slack}\\(ps)} \\
+\midrule
+\texttt{firstpass/input\_1k} & 3859.66 & 1066.10 & 3.67 \\
+\texttt{firstpass/input\_512b} & 1927.78 & 1066.10 & 130.76 \\
+\texttt{firstpass/output\_128b} & 726.40 & 1066.10 & 39.17 \\
+\texttt{firstpass/output\_2k} & 9023.80 & 1066.10 & 0.18 \\
+\texttt{firstpass/rope\_pair} & 803.58 & 1066.10 & $-653.73$ \\
+\texttt{k1/mac16} & 3054.17 & 266.52 & 54.36 \\
+\texttt{k2/mac16} & 4324.65 & 533.05 & $-479.25$ \\
+\texttt{k4/mac16} & 4291.78 & 1066.10 & $-1436.83$ \\
+\texttt{retime/rope\_pair} & 785.05 & 1066.10 & $-70.33$ \\
+\texttt{retime\_k2/mac16} & 2999.86 & 533.05 & 0.19 \\
+\bottomrule
+\end{tabular}\par}\smallskip
+
+\subsection{Matched Baseline and Logic-Process Increments}
+The constructed baseline uses the same \texttt{retime\_k2} BF16/FP32 MAC, no RoPE, and $512\,\mathrm{B}$ input/$128\,\mathrm{B}$ output RFs with identical port organization. Its input and output RF areas are $1927.78$ and $726.40\,\mu\mathrm{m}^{2}$/bank. The report gives a baseline total of $5654.05\,\mu\mathrm{m}^{2}$/bank and an increment of $11014.32\,\mu\mathrm{m}^{2}$/bank. The increment is $0.176229\,\mathrm{mm}^{2}$ for 16 banks and $2.819665\,\mathrm{mm}^{2}$ for 256 banks. Relative to these baseline blocks alone, the increase is $194.8\%$; this is not a whole-die increase. The capacities borrow published Samsung specifications, but this comparison is not a replica of a commercial Samsung device. The identical MAC is counted once and adds zero incremental area.
+
+The displayed component inputs are rounded to $0.01\,\mu\mathrm{m}^{2}$. Summing them gives $16{,}668.37\,\mu\mathrm{m}^{2}$ for the target, $5654.04\,\mu\mathrm{m}^{2}$ for the baseline, and $11014.33\,\mu\mathrm{m}^{2}$ for the increment. The $0.01\,\mu\mathrm{m}^{2}$ differences from the reported baseline/increment totals do not change any displayed DRAM-area or percentage result.
+
+\subsection{DRAM-Process Normalization and Area Breakdown}
+AttAcc reports a softmax estimate of $63.4\,\mathrm{mm}^{2}$ in 1z-nm DRAM in Section~4.1 (printed p.~109), and $1.38\,\mathrm{mm}^{2}$ in 7~nm logic in Section~7.7 (printed p.~115)~\cite{attacc}. The supplied report infers the effective multiplier
+\[
+s=\frac{63.4}{1.38}=45.94202899.
+\]
+This inferred ratio is not a universal constant stated by AttAcc. Applying it uniformly to the present arithmetic and DFF arrays is a coarse assumption, not measured LPDDR peripheral-process calibration. The $10\times$ density difference refers to processes of the same feature size; it is neither the complete 7~nm-to-1z conversion nor an additional factor to multiply into $s$. The 1z designation is not assigned an exact geometric feature size.
+
+With $N$ installed datapaths and per-bank ASAP7 areas $a_{\mathrm{t}}$ and $a_{\mathrm{b}}$ in $\mu\mathrm{m}^{2}$, normalized areas in $\mathrm{mm}^{2}$ are
+\[
+A_{\mathrm{t}}=\frac{Na_{\mathrm{t}}s}{10^{6}},\qquad
+A_{\mathrm{b}}=\frac{Na_{\mathrm{b}}s}{10^{6}},\qquad
+\Delta A=A_{\mathrm{t}}-A_{\mathrm{b}}.
+\]
+The main reference assumes $N=16$ per physical die and $D=60.92\,\mathrm{mm}^{2}$ for a 16~Gb LPDDR5 die, following LP-Spec's experimental setup~\cite{lp_spec}. LP-Spec cites Y.-H.~Kim \emph{et al.}, ISSCC~2021 paper~25.2. Its quoted value was checked; the original ISSCC die micrograph was not independently obtained. The supplied report calls this LP-Spec Section~V-A; the cited arXiv v1 places it in Section~VI-A.
+\par\smallskip
+{\centering\footnotesize\setlength{\tabcolsep}{5pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Block} & \shortstack{\textbf{Target}\\($\mathrm{mm}^{2}$)} & \shortstack{\textbf{Baseline}\\($\mathrm{mm}^{2}$)} & \shortstack{\textbf{Added}\\($\mathrm{mm}^{2}$)} \\
+\midrule
+MAC & 2.205 & 2.205 & 0.000 \\
+RoPE & 0.577 & 0.000 & 0.577 \\
+Input RF & 2.837 & 1.417 & 1.420 \\
+Output RF & 6.633 & 0.534 & 6.099 \\
+\midrule
+\textbf{Total} & \textbf{12.252} & \textbf{4.156} & \textbf{8.096} \\
+\textbf{Relative to $D$} & \textbf{20.11\%} & \textbf{6.82\%} & \textbf{13.29\%} \\
+\bottomrule
+\end{tabular}\par}\smallskip
+The three denominator conventions are $A_{\mathrm{t}}/D$ for total evaluated blocks, $\Delta A/D$ for added area relative to bare DRAM, and $\Delta A/(D+A_{\mathrm{b}})$ for added area relative to the reference augmented with the matched baseline. They give $20.11\%$, $13.29\%$, and $12.44\%$, respectively. These are reference-normalized estimates, not measured full-chip overheads.
+
+\subsection{Physical Organization and Sensitivity Scenarios}
+The simulated configuration is 8~Gb/channel-rank, so the $60.92\,\mathrm{mm}^{2}$ 16~Gb reference cannot be treated as its measured die area. A channel-rank need not equal a physical die. The supplied Micron organization includes dual-$\times16$ dies: if both channels each install 16 datapaths, there are 32 per die. Installing PIM on only one channel uses the actual installed count; disabling a circuit does not remove its area. The scenarios below retain the same inferred multiplier.
+\par\smallskip
+{\centering\scriptsize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\textbf{Scenario ($D$ in $\mathrm{mm}^{2}$)} & \shortstack{$A_{\mathrm{t}}/D$\\(\%)} & \shortstack{$\Delta A/D$\\(\%)} & \shortstack{$\Delta A/(D+A_{\mathrm{b}})$\\(\%)} \\
+\midrule
+16 datapaths, $D=60.92$ & 20.11 & 13.29 & 12.44 \\
+32 datapaths, $D=60.92$ & 40.22 & 26.58 & 23.39 \\
+16 datapaths, $D=30.46$ & 40.22 & 26.58 & 23.39 \\
+\bottomrule
+\end{tabular}\par}\smallskip
+The $30.46\,\mathrm{mm}^{2}$ denominator assumes an 8~Gb die has half the reference area; it is a sensitivity scenario, not measured 8~Gb data. For $N=16$ and $D=60.92\,\mathrm{mm}^{2}$, varying the multiplier by $\pm25\%$ produces $15.08\%$--$25.14\%$ total area and $9.97\%$--$16.61\%$ added area relative to bare DRAM. These ranges are not confidence intervals. Current results do not support a claim that the complete design adds only a few percent of die area.
+
+\subsection{Verification, Timing, and Accounting Limits}
+The reported RTL checks pass 512 MAC cases and 512 RoPE cases, including consecutive initiation-interval-one (II=1) inputs. RF checks cover every address, dual reads, and word write enable. Separate logs document numerical checks of retimed netlists; functional simulation without SDF does not replace timing signoff.
+
+The MAC has six end-to-end stages and II=1. For $M$ consecutive inputs, ideal completion requires $M+5$ compute cycles, rather than the performance model's zero pipeline-tail assumption. External RF/scheduling handles partial-sum feedback; consecutive updates to the same output must respect its feedback interval, while II=1 requires interleaving independent partial sums. RoPE retains four end-to-end stages and II=1, but its selected configuration misses the $1066.10\,\mathrm{MHz}$ target by $70.33\,\mathrm{ps}$. Positive MAC/RF slacks are synthesis setup results only, without CTS, routing, or hold closure; the small RF margins do not guarantee physical implementation.
+
+System-level logic totals assume $16$ channels, one active PIM rank per channel, and $16$ banks per rank ($256$ banks). If a memory rank also installs the hardware, its area must be counted separately. Estimates use raw standard-cell area without a placement-utilization multiplier. They exclude DRAM arrays, rank-level controllers, cross-bank broadcast/reduction networks, PHY/PLL, clock trees, and routing. Excluded costs are not assumed to be zero. Area scaling establishes neither DRAM-process frequency nor power. Logic-process area is not used directly as DRAM-die area, and package dimensions are not the die-area denominator.
+
+The experiment directory is \path{/fact_data/shiyuhuang/projects/actpim-hw-overhead/}; its project-shell environment is specified by \path{scripts/env.sh}. Reported EDA runs used an \texttt{eda/enterprise} Slurm CPU allocation with 8 CPUs and $32\,\mathrm{GiB}$ RAM, without a GPU. The original supplied reports, SHA-256 hashes, complete ten-run CSV, and normalization inputs are bundled under \path{notes/area-overhead-sources/}, \path{notes/area-overhead-synthesis.csv}, and \path{notes/area-overhead-data.json}.
