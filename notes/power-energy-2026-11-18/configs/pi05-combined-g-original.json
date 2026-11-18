@@ -1,0 +1,22 @@
+{
+  "ae_schedule_path": "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-16/evidence/compiled-single-read-matrix.683RuH/g/ae.json",
+  "calibration": {
+    "alpha": 0.5,
+    "window": 1024,
+    "write_high": 768,
+    "write_low": 256
+  },
+  "case": "g",
+  "dataflow": "fused",
+  "layout": "token",
+  "mac_freq_mult": 2,
+  "mode": "concurrent",
+  "program_path": "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-16/evidence/compiled-single-read-matrix.683RuH/g/pim-program.json",
+  "rope": "local",
+  "run_kind": "combined",
+  "spec_path": "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-16/configs/spec-k2.json",
+  "vlm_path": "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-16/evidence/compiled-single-read-matrix.683RuH/compiled/vlm.json",
+  "vlm_release": "uniform",
+  "vlm_gpu_quantum_us": 2,
+  "dram_power_stats": true
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "name": "Micron LPDDR5X-8533 x16 single-die AAT IDD proxy",
+  "source": {
+    "url": "https://datasheet.lcsc.com/datasheet/pdf/aca5dde2901b6a275f6a101110463b61.pdf?productCode=C20566345",
+    "revision": "B, November 2022",
+    "part_family": [
+      "MT62F1G64D4",
+      "MT62F2G64D8"
+    ],
+    "table": 8,
+    "pages": [
+      20,
+      21
+    ],
+    "temperature_grade": "AAT",
+    "parameter_die_density_Gbit": 16,
+    "simulator_die_density_Gbit": 8,
+    "access": "Table verified using web PDF reader; direct file download returned HTTP 403."
+  },
+  "voltage_V": {
+    "VDD1": 1.8,
+    "VDD2H": 1.05,
+    "VDD2L": 0.9,
+    "VDDQ": 0.5
+  },
+  "current_mA": {
+    "IDD0": {
+      "VDD1": 3.3,
+      "VDD2H": 31,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    },
+    "IDD2N": {
+      "VDD1": 1.6,
+      "VDD2H": 18,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    },
+    "IDD3N": {
+      "VDD1": 1.9,
+      "VDD2H": 23,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    },
+    "IDD4R": {
+      "VDD1": 12,
+      "VDD2H": 490,
+      "VDD2L": 0.2,
+      "VDDQ": 126
+    },
+    "IDD4W": {
+      "VDD1": 11,
+      "VDD2H": 340,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    },
+    "IDD5": {
+      "VDD1": 23,
+      "VDD2H": 165,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    },
+    "IDD5AB": {
+      "VDD1": 3.2,
+      "VDD2H": 27,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    },
+    "IDD5PB": {
+      "VDD1": 3.2,
+      "VDD2H": 27,
+      "VDD2L": 0.2,
+      "VDDQ": 0.6
+    }
+  },
+  "background_policy": "native per-bank active/refresh time histograms, rho=0.5",
+  "row_policy": "actual effective activation counts; combined incremental ACT/PRE energy",
+  "refresh_policy": "duration-based refresh increments; convert average IDD5PB to paired-bank burst current",
+  "pim_array_proxy": "one ordinary x16 BL16 core-column energy per accessed bank; MAC rows are reuse, not extra DRAM reads",
+  "excluded": [
+    "GPU/SoC compute",
+    "PIM compute units",
+    "registers/SRF/output buffers",
+    "host PHY/controller",
+    "PMIC losses"
+  ],
+  "caveats": [
+    "Currents except IDD4RQ are worst-case specifications; IDD4RQ is a 25 C typical reference at 5 pF, RON 40 ohm.",
+    "Nominal voltages multiplied by the specified currents are a modeling proxy, not a measured average or guaranteed physical upper bound.",
+    "16-Gbit current parameters are used on the unchanged 8-Gbit simulator organization.",
+    "Ordinary DRAM core-column energy is a proxy for PIM internal access; vendor PIM-array power is unavailable.",
+    "AAT current values do not imply that the simulated workload runs at a particular temperature."
+  ]
+}

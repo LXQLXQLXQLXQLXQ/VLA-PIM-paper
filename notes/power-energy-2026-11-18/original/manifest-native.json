@@ -1,0 +1,24 @@
+{
+  "purpose": "freeze CPU simulation inputs and power/plot calculation code",
+  "sha256": {
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/bin/libramulator.so": "50f310686e015ebb2e213bebfa8151194a2f4ca697ab6be1da511cd9843f2837",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/bin/pim_vla_sim": "6b3c6d0296f993a7a34015269f85fbb0411a966a7a08c27e5b84f5951688446e",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/configs/micron-8533-aat-proxy.json": "6b0ffe81086c9848df00d76eb2e5b60a9203ed21217a95d3e02d5ae65326beb8",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/configs/combined-g.json": "8730a7530bee80b27d7fa4ad5c4955cde2aab9727458121169b17e7d66e68bb2",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/configs/pim-logic-power-533mhz.json": "bd06a01d22c87444c441ddb0ae126cfcb1f73cfbaa3dc50a140aee61271ebdd0",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/configs/spec-k2.json": "21570a850552378f2c057be178b0833de5fc413a7bcdedd245d1abb38293f3ca",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/configs/smoke-off.json": "d82dd9adcf29344f13ef3bb39fcffb2956994873e6babb18b91d7fe51d691f16",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/configs/smoke-on.json": "4d5fcbe43f3764b564e001d6ae4264a81bb0d0b0e08c0119678e8aafe9a82017",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/inputs/smoke-vlm.json": "25d2ca26e57e042bfa1826c3a87db2cd96beecd9633d34efa7101bbbd994ed18",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/inputs/ae-gr00t_n16-token_after.json": "cefd605acde9ba93f4a98427427e675a1135689f90afdc244990557e3623a9d2",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/inputs/smoke-ae.json": "413a36611c5aea79becbf9926198a2975a5155b389a9829097e49d5da49b009e",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/inputs/gr00t_n16-token_after.json": "8af242afe45778094e0c49c0fb2c6aa21ef707adf9f20a74cdeea77cad187eee",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/inputs/vlm.json": "c07cedffebb04fbb66184b584160494951b6abc58b49900118c49b28ea55b607",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/source/observer/pim_controller.cpp": "6c4edc0e2aeb6ac2e84ad0b5d95e8447812bba100a457f6de6d012d0d79f9bb0",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/source/observer/pim_power_stats.h": "a703fb6925aecb7bf9f9be521508579dcfee96df3437d13140c391f5fa1e7b00",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/source/observer/pim_vla_frontend.cpp": "ed9c91bbc11ade585d3463be2d5ef7826b4ad34adac4428550ad8ec5f0544dc6",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/source/g_power_report.py": "6409cd21809f731d0978dee7f03618c9c26e72d891662f1ad4457f03e367ab9e",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/source/report_and_plot.py": "1495b4423acd98dc7ba94bf23deaa3dccf3c0caf1cbb92cc406505c2993b7927",
+    "/fact_data/xinyaowang/PIM_for_VLA/experiments/2026-11-18-gr00t-power/evidence/original-raw.json": "7d82e65517bca28b699fe0d47a360c28e4567c66a228a467ca529113e581551e"
+  }
+}

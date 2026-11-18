@@ -1,0 +1,74 @@
+{
+  "raw_samples_reintegrated_independently": true,
+  "all_rails_match_recorded_energy": true,
+  "all_windows_bracketed": true,
+  "window_count": 3,
+  "rounds": [
+    {
+      "round": 1,
+      "max_sample_gap_ms": 167.042372,
+      "rails": {
+        "VIN": {
+          "reintegrated_energy_J": 2472.521926708866,
+          "stored_energy_J": 2472.521926708866
+        },
+        "VDD_GPU": {
+          "reintegrated_energy_J": 1300.2117433284939,
+          "stored_energy_J": 1300.2117433284939
+        },
+        "VDD_CPU_SOC_MSS": {
+          "reintegrated_energy_J": 418.39656789802615,
+          "stored_energy_J": 418.39656789802615
+        },
+        "VIN_SYS_5V0": {
+          "reintegrated_energy_J": 419.3262055753776,
+          "stored_energy_J": 419.3262055753776
+        }
+      }
+    },
+    {
+      "round": 2,
+      "max_sample_gap_ms": 56.140631,
+      "rails": {
+        "VIN": {
+          "reintegrated_energy_J": 2492.515546069624,
+          "stored_energy_J": 2492.515546069624
+        },
+        "VDD_GPU": {
+          "reintegrated_energy_J": 1308.4051121121338,
+          "stored_energy_J": 1308.4051121121338
+        },
+        "VDD_CPU_SOC_MSS": {
+          "reintegrated_energy_J": 423.051353028337,
+          "stored_energy_J": 423.051353028337
+        },
+        "VIN_SYS_5V0": {
+          "reintegrated_energy_J": 422.29651383648707,
+          "stored_energy_J": 422.29651383648707
+        }
+      }
+    },
+    {
+      "round": 3,
+      "max_sample_gap_ms": 64.961581,
+      "rails": {
+        "VIN": {
+          "reintegrated_energy_J": 2488.7908079271874,
+          "stored_energy_J": 2488.7908079271874
+        },
+        "VDD_GPU": {
+          "reintegrated_energy_J": 1317.9636673552407,
+          "stored_energy_J": 1317.9636673552407
+        },
+        "VDD_CPU_SOC_MSS": {
+          "reintegrated_energy_J": 427.4393074073808,
+          "stored_energy_J": 427.4393074073808
+        },
+        "VIN_SYS_5V0": {
+          "reintegrated_energy_J": 424.89918183536633,
+          "stored_energy_J": 424.89918183536633
+        }
+      }
+    }
+  ]
+}

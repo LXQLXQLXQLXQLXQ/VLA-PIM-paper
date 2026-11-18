@@ -1,0 +1,15 @@
+{
+  "duration_ms": 77.67767382200002,
+  "reference_energy_J": 0.98475561905175,
+  "reference_average_power_W": 12.677460209587863,
+  "physical_power_calibrated": false,
+  "PIM_energy_parameterization": {
+    "definition": "P_total = fixed_W + alpha_read * PIM_read_reference_W + alpha_write * PIM_write_reference_W",
+    "fixed_W": 7.5380900633642005,
+    "PIM_read_reference_W": 4.885828057521327,
+    "PIM_write_reference_W": 0.2535420887023382,
+    "reference_alpha_read": 1,
+    "reference_alpha_write": 1,
+    "warning": "The alpha values are not supplied or calibrated by the Micron datasheet; reference power is a modeling scenario, not a validated PIM hardware result."
+  }
+}

@@ -59,6 +59,13 @@ Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然�
 - notes/area-overhead-sources/：两份原始报告逐字节副本；notes/area-overhead-synthesis.csv：全部综合记录；notes/area-overhead-data.json：输入和计算结果。
 - 正文 M11 仅填入20.11%，正文其他文字、最新图表及功耗/能耗说明保持不变。
 
+π0.5 / GR00T 功耗与能耗数据及复现脚本（2026-11-19）：
+- 数据归档、原始采样、DRAM统计、计算假设和复算说明：notes/power-energy-2026-11-18/README.md。
+- 汇总数据：figures/data/power-energy-comparison.json、.csv、.zh-CN.md。
+- 图：figures/power-energy-ratios.png、.pdf、.svg；绘图入口：figures/plot-power-energy-ratios.py。
+- 标准库核对入口：notes/power-energy-2026-11-18/scripts/verify_power_data.py。
+- 本次上传未将新图插入正文；Overleaf 从 GitHub Pull 后即可使用上述文件。
+
 Fig5–8 绘图脚本与数据
 
 所有路径均相对仓库根目录；这四张图可仅使用本仓库中的脚本和JSON快照重绘，无需父目录中的仿真仓库或实验结果。

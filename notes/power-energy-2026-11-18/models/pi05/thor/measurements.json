@@ -1,0 +1,1630 @@
+{
+  "host": "fact-thor",
+  "gpu": "NVIDIA Thor",
+  "sm_count": 20,
+  "cuda_visible_devices": "GPU-a7c66ad2-6dbb-0ab8-c1a2-37ba6dba3600",
+  "pid": 8026,
+  "started": "2026-11-17T20:15:02.883429+08:00",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "power_mode": "NV Power Mode: MAXN\n0",
+  "l4t": "# R39 (release), REVISION: 2.0, GCID: 45755727, BOARD: generic, EABI: aarch64, DATE: Mon Jun  1 09:28:48 PM UTC 2026",
+  "interval_ms": 50,
+  "ae_compile_options": {
+    "triton.cudagraphs": false,
+    "emulate_precision_casts": true
+  },
+  "vlm_compile_options": {
+    "max_autotune": true,
+    "triton.cudagraphs": false,
+    "triton.unique_kernel_names": true,
+    "emulate_precision_casts": true
+  },
+  "workload": {
+    "checkpoint": "/var/tmp/hf-cache/hub/models--lerobot--pi05_base/snapshots/b211f3d44c36b6acfcf7ae94a64e8e96f75a64ba/model.safetensors",
+    "source_weights": 812,
+    "checkpoint_bytes": 14467030080,
+    "gemma_overlay_sha256": "17eeb54e277939e58cd6f8a92719a275e36baf0c9f463b2754227d42f87aedde",
+    "precision": "bfloat16",
+    "horizon": 16,
+    "steps": 10,
+    "batch_size": 1,
+    "images_per_frame": 3,
+    "text_tokens": 200,
+    "q_heads": 8,
+    "kv_heads": 8,
+    "head_dim": 256,
+    "conversion": {
+      "kind": "synthetic_physical_MHA8",
+      "query_heads": 8,
+      "kv_heads": 8,
+      "head_dim": 256,
+      "attention_width": 2048,
+      "q_o_unchanged": true,
+      "non_kv_parameters_unchanged": true,
+      "changes": [
+        {
+          "family": "vlm",
+          "layer": 0,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 0,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 1,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 1,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 2,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 2,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 3,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 3,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 4,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 4,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 5,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 5,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 6,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 6,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 7,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 7,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 8,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 8,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 9,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 9,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 10,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 10,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 11,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 11,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 12,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 12,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 13,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 13,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 14,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 14,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 15,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 15,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 16,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 16,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 17,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "vlm",
+          "layer": 17,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            2048
+          ],
+          "new_shape": [
+            2048,
+            2048
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 8388608
+        },
+        {
+          "family": "expert",
+          "layer": 0,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 0,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 1,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 1,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 2,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 2,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 3,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 3,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 4,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 4,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 5,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 5,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 6,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 6,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 7,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 7,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 8,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 8,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 9,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 9,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 10,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 10,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 11,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 11,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 12,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 12,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 13,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 13,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 14,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 14,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 15,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 15,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 16,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 16,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 17,
+          "projection": "k_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        },
+        {
+          "family": "expert",
+          "layer": 17,
+          "projection": "v_proj",
+          "old_shape": [
+            256,
+            1024
+          ],
+          "new_shape": [
+            2048,
+            1024
+          ],
+          "dtype": "torch.bfloat16",
+          "contiguous": true,
+          "physical_storage_bytes": 4194304
+        }
+      ],
+      "note": "Only K/V weights are tiled into eight physically stored heads. Original Q/O, residual widths, FFNs and ViT are unchanged. Not a trained MHA8 policy."
+    }
+  },
+  "blocks": [
+    {
+      "mode": "serial",
+      "start_monotonic_ns": 194317500487,
+      "end_monotonic_ns": 224317500487,
+      "seconds": 30.0,
+      "ae_count": 219,
+      "vlm_count": 219,
+      "ae_hz": 7.3,
+      "vlm_hz": 7.3,
+      "stream_interval_overlap_s": 0.0,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 94.76305422410832,
+          "energy_j": 2842.8916267232494,
+          "p95_sample_w": 140.0986,
+          "max_sample_w": 145.904
+        },
+        "VDD_GPU": {
+          "mean_w": 48.665543855623966,
+          "energy_j": 1459.966315668719,
+          "p95_sample_w": 50.524,
+          "max_sample_w": 50.918
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 18.455411633155602,
+          "energy_j": 553.6623489946682,
+          "p95_sample_w": 18.954,
+          "max_sample_w": 19.349
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 16.54340248152881,
+          "energy_j": 496.3020744458642,
+          "p95_sample_w": 16.662,
+          "max_sample_w": 16.662
+        }
+      },
+      "power_samples": 564,
+      "round": 1,
+      "vin_j_per_ae_chunk": 12.981240304672372,
+      "gpu_j_per_ae_chunk": 6.666512856934791
+    },
+    {
+      "mode": "fresh_cache",
+      "start_monotonic_ns": 228621157962,
+      "end_monotonic_ns": 258621157962,
+      "seconds": 30.0,
+      "ae_count": 221,
+      "vlm_count": 222,
+      "ae_hz": 7.366666666666666,
+      "vlm_hz": 7.4,
+      "stream_interval_overlap_s": 6.425501709,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 96.84922777091587,
+          "energy_j": 2905.4768331274763,
+          "p95_sample_w": 141.528,
+          "max_sample_w": 148.364
+        },
+        "VDD_GPU": {
+          "mean_w": 49.52913386653381,
+          "energy_j": 1485.8740159960144,
+          "p95_sample_w": 51.708,
+          "max_sample_w": 52.103
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 19.102389821346147,
+          "energy_j": 573.0716946403844,
+          "p95_sample_w": 19.744,
+          "max_sample_w": 20.533
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 16.951295087848113,
+          "energy_j": 508.5388526354434,
+          "p95_sample_w": 17.068,
+          "max_sample_w": 17.17
+        }
+      },
+      "power_samples": 567,
+      "round": 1,
+      "vin_j_per_ae_chunk": 13.146953996051929,
+      "gpu_j_per_ae_chunk": 6.723411837086037
+    },
+    {
+      "mode": "independent",
+      "start_monotonic_ns": 262964912638,
+      "end_monotonic_ns": 292964912638,
+      "seconds": 30.0,
+      "ae_count": 148,
+      "vlm_count": 317,
+      "ae_hz": 4.933333333333334,
+      "vlm_hz": 10.566666666666666,
+      "stream_interval_overlap_s": 29.997915272,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 111.09725226478031,
+          "energy_j": 3332.9175679434093,
+          "p95_sample_w": 138.8355,
+          "max_sample_w": 148.792
+        },
+        "VDD_GPU": {
+          "mean_w": 60.85464822707391,
+          "energy_j": 1825.6394468122173,
+          "p95_sample_w": 61.945,
+          "max_sample_w": 62.34
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 20.248498875026456,
+          "energy_j": 607.4549662507937,
+          "p95_sample_w": 20.533,
+          "max_sample_w": 20.928
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 17.99900431734854,
+          "energy_j": 539.9701295204562,
+          "p95_sample_w": 18.186,
+          "max_sample_w": 18.215
+        }
+      },
+      "power_samples": 566,
+      "round": 1,
+      "vin_j_per_ae_chunk": 22.519713296914926,
+      "gpu_j_per_ae_chunk": 12.335401667650117
+    },
+    {
+      "mode": "fresh_cache",
+      "start_monotonic_ns": 297272095177,
+      "end_monotonic_ns": 327272095177,
+      "seconds": 30.0,
+      "ae_count": 221,
+      "vlm_count": 222,
+      "ae_hz": 7.366666666666666,
+      "vlm_hz": 7.4,
+      "stream_interval_overlap_s": 6.424875255,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 98.875302476937,
+          "energy_j": 2966.25907430811,
+          "p95_sample_w": 143.33919999999998,
+          "max_sample_w": 149.268
+        },
+        "VDD_GPU": {
+          "mean_w": 50.23192386086874,
+          "energy_j": 1506.9577158260622,
+          "p95_sample_w": 52.103,
+          "max_sample_w": 52.497
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 19.47928738876937,
+          "energy_j": 584.3786216630812,
+          "p95_sample_w": 20.147,
+          "max_sample_w": 20.937
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 17.486923594653383,
+          "energy_j": 524.6077078396015,
+          "p95_sample_w": 17.576,
+          "max_sample_w": 17.604
+        }
+      },
+      "power_samples": 567,
+      "round": 2,
+      "vin_j_per_ae_chunk": 13.421986761575159,
+      "gpu_j_per_ae_chunk": 6.818813193783087
+    },
+    {
+      "mode": "independent",
+      "start_monotonic_ns": 331612104910,
+      "end_monotonic_ns": 361612104910,
+      "seconds": 30.0,
+      "ae_count": 148,
+      "vlm_count": 317,
+      "ae_hz": 4.933333333333334,
+      "vlm_hz": 10.566666666666666,
+      "stream_interval_overlap_s": 29.997884992,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 112.55229107505222,
+          "energy_j": 3376.568732251567,
+          "p95_sample_w": 140.8487,
+          "max_sample_w": 148.554
+        },
+        "VDD_GPU": {
+          "mean_w": 61.5507411114631,
+          "energy_j": 1846.5222333438928,
+          "p95_sample_w": 62.75625,
+          "max_sample_w": 63.155
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 20.56321407682002,
+          "energy_j": 616.8964223046006,
+          "p95_sample_w": 20.928,
+          "max_sample_w": 21.323
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 18.305492842217813,
+          "energy_j": 549.1647852665344,
+          "p95_sample_w": 18.418,
+          "max_sample_w": 18.418
+        }
+      },
+      "power_samples": 564,
+      "round": 2,
+      "vin_j_per_ae_chunk": 22.81465359629437,
+      "gpu_j_per_ae_chunk": 12.476501576647925
+    },
+    {
+      "mode": "serial",
+      "start_monotonic_ns": 365930755464,
+      "end_monotonic_ns": 395930755464,
+      "seconds": 30.0,
+      "ae_count": 220,
+      "vlm_count": 219,
+      "ae_hz": 7.333333333333333,
+      "vlm_hz": 7.3,
+      "stream_interval_overlap_s": 0.0,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 98.29367585714796,
+          "energy_j": 2948.810275714439,
+          "p95_sample_w": 143.773,
+          "max_sample_w": 149.734
+        },
+        "VDD_GPU": {
+          "mean_w": 50.220453859629856,
+          "energy_j": 1506.6136157888957,
+          "p95_sample_w": 52.124,
+          "max_sample_w": 52.519
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 19.530346223866253,
+          "energy_j": 585.9103867159876,
+          "p95_sample_w": 20.147,
+          "max_sample_w": 21.332
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 17.368144348684915,
+          "energy_j": 521.0443304605475,
+          "p95_sample_w": 17.4,
+          "max_sample_w": 17.502
+        }
+      },
+      "power_samples": 566,
+      "round": 2,
+      "vin_j_per_ae_chunk": 13.403683071429267,
+      "gpu_j_per_ae_chunk": 6.848243708131344
+    },
+    {
+      "mode": "independent",
+      "start_monotonic_ns": 400257441929,
+      "end_monotonic_ns": 430257441929,
+      "seconds": 30.0,
+      "ae_count": 148,
+      "vlm_count": 316,
+      "ae_hz": 4.933333333333334,
+      "vlm_hz": 10.533333333333333,
+      "stream_interval_overlap_s": 29.9978999,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 113.75107481761904,
+          "energy_j": 3412.5322445285715,
+          "p95_sample_w": 142.84079999999997,
+          "max_sample_w": 152.708
+        },
+        "VDD_GPU": {
+          "mean_w": 62.0848636721207,
+          "energy_j": 1862.5459101636209,
+          "p95_sample_w": 63.155,
+          "max_sample_w": 63.549
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 20.869228112642496,
+          "energy_j": 626.0768433792749,
+          "p95_sample_w": 21.323,
+          "max_sample_w": 21.718
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 18.465206834255994,
+          "energy_j": 553.9562050276799,
+          "p95_sample_w": 18.52,
+          "max_sample_w": 18.622
+        }
+      },
+      "power_samples": 565,
+      "round": 3,
+      "vin_j_per_ae_chunk": 23.057650300868726,
+      "gpu_j_per_ae_chunk": 12.584769663267709
+    },
+    {
+      "mode": "serial",
+      "start_monotonic_ns": 434567698142,
+      "end_monotonic_ns": 464567698142,
+      "seconds": 30.0,
+      "ae_count": 219,
+      "vlm_count": 219,
+      "ae_hz": 7.3,
+      "vlm_hz": 7.3,
+      "stream_interval_overlap_s": 0.0,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 99.40465711824598,
+          "energy_j": 2982.1397135473794,
+          "p95_sample_w": 146.9049,
+          "max_sample_w": 152.836
+        },
+        "VDD_GPU": {
+          "mean_w": 50.68984702217719,
+          "energy_j": 1520.6954106653156,
+          "p95_sample_w": 52.519,
+          "max_sample_w": 53.308
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 19.717409108402993,
+          "energy_j": 591.5222732520898,
+          "p95_sample_w": 20.147,
+          "max_sample_w": 21.727
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 17.496248879906627,
+          "energy_j": 524.8874663971989,
+          "p95_sample_w": 17.604,
+          "max_sample_w": 17.604
+        }
+      },
+      "power_samples": 560,
+      "round": 3,
+      "vin_j_per_ae_chunk": 13.617076317567943,
+      "gpu_j_per_ae_chunk": 6.943814660572218
+    },
+    {
+      "mode": "fresh_cache",
+      "start_monotonic_ns": 468871086856,
+      "end_monotonic_ns": 498871086856,
+      "seconds": 30.0,
+      "ae_count": 221,
+      "vlm_count": 222,
+      "ae_hz": 7.366666666666666,
+      "vlm_hz": 7.4,
+      "stream_interval_overlap_s": 6.446535633,
+      "output_check": {
+        "max_abs": 0.0,
+        "relative_rms": 0.0,
+        "finite": true,
+        "accepted": true
+      },
+      "power": {
+        "VIN": {
+          "mean_w": 100.83086352973443,
+          "energy_j": 3024.925905892033,
+          "p95_sample_w": 145.9074,
+          "max_sample_w": 151.06
+        },
+        "VDD_GPU": {
+          "mean_w": 51.31329224894172,
+          "energy_j": 1539.3987674682517,
+          "p95_sample_w": 53.308,
+          "max_sample_w": 53.703
+        },
+        "VDD_CPU_SOC_MSS": {
+          "mean_w": 20.038076522052187,
+          "energy_j": 601.1422956615655,
+          "p95_sample_w": 20.542,
+          "max_sample_w": 20.542
+        },
+        "VIN_SYS_5V0": {
+          "mean_w": 17.811075385348133,
+          "energy_j": 534.332261560444,
+          "p95_sample_w": 17.909,
+          "max_sample_w": 17.909
+        }
+      },
+      "power_samples": 562,
+      "round": 3,
+      "vin_j_per_ae_chunk": 13.687447537973,
+      "gpu_j_per_ae_chunk": 6.965605282661772
+    }
+  ],
+  "compiled_graphs": 4,
+  "power_mode_after": "NV Power Mode: MAXN\n0",
+  "finished": "2026-11-17T20:20:27.492328+08:00"
+}

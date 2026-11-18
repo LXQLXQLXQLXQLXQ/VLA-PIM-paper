@@ -1,0 +1,31 @@
+2026-11-18T23:25:30+08:00
+fact-thor
+Wed Nov 18 23:25:31 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 595.78                 Driver Version: 595.78         CUDA Version: 13.2     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA Thor                    Off |   00000000:01:00.0 Off |                  N/A |
+| N/A   32C  N/A               2W /  N/A  | Not Supported          |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3521      G   /usr/lib/xorg/Xorg                       18MiB |
+|    0   N/A  N/A            3603      G   /usr/bin/gnome-shell                      5MiB |
++-----------------------------------------------------------------------------------------+
+NV Power Mode: MAXN
+0
+Python 3.12.3
+f9f848e18aa3dd24df0fdd374ae5566c09a942ec944c7d2c493c6e81ba7e9d4c  source/thor/tools/bench_gr00t_dual_stream.py
+14a3a4535fa18eca960e085bb855e813746c15551363ec172b5c595cfcbe83f1  source/thor/tools/bench_gr00t_power.py
+c3d3005b759159eb3a7420a13d0db38dfb36f3ac9f27cf0daf6603aae80147fc  source/thor/tools/capture_gr00t_thor.py
+94f981bf7c48c5c3db11171a60f0981b76ab40fdf6eece84e3f66e4f3da0a414  source/thor/workloads/__init__.py
+18d15497dbc8329cf165088ec935cd4255cfeeddbdb1cb57adab3b404f2810e2  source/thor/workloads/models.py
