@@ -20,7 +20,6 @@
 % END-SOURCE-EN: 47
 
 \input{figures/microarchitecture}
-\input{tables/isa}
 
 \subsection{Input-Preloaded Microarchitecture}
 \label{sec:architecture-b}
@@ -35,7 +34,7 @@ Let $X,Y,Z\in\{\mathrm{RD},\mathrm{WR}\}$ denote the preceding PIM access, the i
 % USER-FORMAT: SOURCE-EN 114--122; keep the equation on one line and
 % move the read/write latency definitions into the following paragraph.
 \begin{equation}
-t_{X-Y-Z}=t_{XY}+t_{YZ}+L_Z-L_X-\frac{BL}{n_{\min}},
+t_{X-Y-Z}=t_{XY}+t_{YZ}+L_Z-L_X-\frac{BL}{n_{\min}}
 \label{eq:pim-gpu-pim-gap}
 \end{equation}
 % SOURCE-EN: 123; latency definitions moved here from the display above.
@@ -43,18 +42,15 @@ where $L_{\mathrm{RD}}=RL$, $L_{\mathrm{WR}}=WL$, and $t_{XY}$ is the minimum cr
 % END-SOURCE-EN: 123
 
 % SOURCE-EN: 124
-\begin{itemize}
 % END-SOURCE-EN: 124
 
 % SOURCE-EN: 125
-\item \textbf{Both ranks keep WCK synchronized:} $t_{XY}$ is set by cross-rank column command timing and R/W turnaround, yielding $t_{X-Y-Z}$ of $4$--$14\,\mathrm{CK}$ depending on the R/W combination.
+\textbf{Both ranks keep WCK synchronized:} $t_{XY}$ is set by cross-rank column command timing and R/W turnaround, yielding $t_{X-Y-Z}$ of $4$--$14\,\mathrm{CK}$ depending on the R/W combination.
 % END-SOURCE-EN: 125
 
 % SOURCE-EN: 126
-\item \textbf{The target rank needs WCK resynchronization:} A CAS(\texttt{WS\_RD}/\texttt{WS\_WR}) command must first resynchronize the target rank, so $t_{XY}$ depends on the completion of the preceding transfer, the WCK postamble, and the synchronization preparation time:
+\textbf{The target rank needs WCK resynchronization:} A CAS(\texttt{WS\_RD}/\texttt{WS\_WR}) command must first resynchronize the target rank, so $t_{XY}$ depends on the completion of the preceding transfer, the WCK postamble, and the synchronization preparation time:
 % END-SOURCE-EN: 126
-\end{itemize}
-
 % SOURCE-EN: 127
 % USER-FORMAT: compact fractions and local spacing keep the full equation
 % on one line within the IEEE column, including its equation number.
@@ -65,13 +61,13 @@ where $L_{\mathrm{RD}}=RL$, $L_{\mathrm{WR}}=WL$, and $t_{XY}$ is the minimum cr
 \begin{equation}
 t_{XY}=L_X+\tfrac{BL}{n_{\max}}
 +\left\lceil\tfrac{t_{\mathrm{WCKPST}}-0.5t_{\mathrm{WCK}}}{t_{\mathrm{CK}}}\right\rceil
--\tfrac{t_{\mathrm{WCKENL},Y}}{t_{\mathrm{CK}}}+1,
+-\tfrac{t_{\mathrm{WCKENL},Y}}{t_{\mathrm{CK}}}+1
 \label{eq:rank-resync-command-gap}
 \end{equation}
 \endgroup
 where $t_{\mathrm{WCKPST}}$ is the WCK postamble, $t_{\mathrm{WCKENL},Y}$ is the synchronization preparation latency for the read or write, and the trailing $1\,\mathrm{CK}$ is the interval between the CAS command and the following RD/WR. In this case, $t_{X-Y-Z}$ grows to $24\text{--}40\,\mathrm{CK}$.
 % END-SOURCE-EN: 127
-
+\input{tables/isa}
 % SOURCE-EN: 128
 Ramulator simulation of streaming inputs, even with WCK synchronization maintained, shows that about $50.6\%$ of the gaps between adjacent PIM data bursts are too narrow for a single GPU read or write. Exploiting the remaining gaps would require the memory controller (MC) to perform data-bus slot-reservation arbitration, predicting from the R/W direction and data return timing whether a GPU burst fits each window, which substantially complicates the arbitration logic.
 % END-SOURCE-EN: 128
