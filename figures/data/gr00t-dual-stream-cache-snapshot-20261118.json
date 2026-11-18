@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "source": "User-supplied measurement summary in this conversation, 2026-11-18",
+  "model": "GR00T N1.6",
+  "workload": {
+    "camera_views": 3,
+    "raw_image_wh": [
+      640,
+      480
+    ],
+    "vit_input_wh": [
+      336,
+      252
+    ],
+    "action_horizon": 15,
+    "denoising_steps": 4
+  },
+  "cache_protocol": {
+    "at_ae_start": "Snapshot the latest fully completed cross-KV cache",
+    "during_ae_inference": "Retain the same cache version for the complete inference",
+    "vlm_loop": "May refresh the cache concurrently; AE does not adopt a later version mid-inference"
+  },
+  "latency_statistic": "p50",
+  "latency_unit": "ms",
+  "timing": "uninstrumented",
+  "modes": {
+    "eager": {
+      "cached_ae_solo_p50_ms": 45.71,
+      "dual_stream_ae_p50_ms": 109.46,
+      "dual_stream_vlm_kv_p50_ms": 107.48,
+      "dual_stream_ae_chunk_per_s": 9.04,
+      "vlm_refresh_hz": 9.49,
+      "derived_ae_latency_slowdown": 2.3946619995624587,
+      "derived_mean_ae_output_period_ms": 110.61946902654869
+    },
+    "compile": {
+      "cached_ae_solo_p50_ms": 39.52,
+      "dual_stream_ae_p50_ms": 98.27,
+      "dual_stream_vlm_kv_p50_ms": 110.53,
+      "dual_stream_ae_chunk_per_s": 10.42,
+      "vlm_refresh_hz": 9.24,
+      "derived_ae_latency_slowdown": 2.4865890688259107,
+      "derived_mean_ae_output_period_ms": 95.96928982725528
+    }
+  },
+  "reported_trace_observation": "Kernel execution genuinely overlaps, but AE does not retain its solo speed.",
+  "metric_notes": [
+    "AE inference latency p50 is distinct from the inverse of aggregate AE throughput.",
+    "This latest-completed-cache protocol is distinct from the coupled one-VLM-pass/one-AE-chunk baseline described for pi0.5."
+  ]
+}

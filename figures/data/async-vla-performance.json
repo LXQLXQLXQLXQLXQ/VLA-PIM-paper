@@ -125,9 +125,20 @@
         },
         {
           "label": "a-dual",
-          "original_label": null,
+          "original_label": "compile_latest_completed_cross_kv",
           "cycle_ms": null,
-          "kind": "unavailable_in_archive"
+          "kind": "measured_dual_stream_ae_latency_p50",
+          "plot_ms": 98.27,
+          "execution_mode": "compile",
+          "latency_statistic": "p50",
+          "timing": "uninstrumented",
+          "measurement_source": "figures/data/gr00t-dual-stream-cache-snapshot-20261118.json",
+          "cached_ae_solo_p50_ms": 39.52,
+          "dual_stream_vlm_kv_p50_ms": 110.53,
+          "ae_chunk_per_s": 10.42,
+          "vlm_refresh_hz": 9.24,
+          "cache_protocol": "At each AE start, lock the latest fully completed cross-KV cache and retain that version for the complete inference.",
+          "metric_note": "plot_ms is the user-selected AE inference latency p50; cycle_ms remains null because an output/pair-cycle p50 was not supplied. The inverse of aggregate AE throughput is a different statistic."
         },
         {
           "label": "b",
@@ -181,10 +192,16 @@
         "notes": [
           "GR00T does not use RoPE; d adds token-wise layout and e adds preloading.",
           "a-serial is a sum of separately measured phase means, not an independently measured end-to-end serial run.",
-          "No GR00T a-dual measurement is included in the archive.",
-          "Each model retains its archived workload settings; this is a within-model method comparison."
+          "Each model retains its archived workload settings; this is a within-model method comparison.",
+          "2026-11-18 supplement: a-dual is plotted at the user-selected compile-mode AE latency p50 of 98.27 ms, supplied separately from the original archive.",
+          "The supplemental measurement uses three 640x480 views resized to 336x252, H=15, four denoising steps, and a latest-completed cross-KV cache snapshot pinned throughout each AE inference.",
+          "The raw measurement snapshot retains eager and compile timings, rates, and the distinction between p50 inference latency and the mean interval derived from aggregate throughput."
         ]
-      }
+      },
+      "vit_input_wh": [
+        336,
+        252
+      ]
     }
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "selected_configuration": "GR00T N1.6 / a-dual / compile",
+  "selected_plot_ms": 98.27,
+  "displayed_bar_label": "98",
+  "source_data": "figures/data/gr00t-dual-stream-cache-snapshot-20261118.json",
+  "user_requested_no_extra_annotation": true,
+  "all_other_bar_values_preserved": true,
+  "fig6_and_fig8_preserved": true,
+  "figure_number": "7",
+  "page": "7",
+  "png": {
+    "pixels": [
+      2098,
+      1058
+    ],
+    "dpi": [
+      599.9988,
+      599.9988
+    ]
+  },
+  "png_embedded_in_manuscript": true,
+  "compile_exit_codes": [
+    0,
+    0
+  ],
+  "compile_checks": {
+    "Overfull": 0,
+    "undefined": 0,
+    "multiply defined": 0,
+    "Missing character": 0,
+    "LaTeX Warning": 0
+  },
+  "review_directory": "/fact_data/xinyaowang/PIM_for_VLA/essay/reviews/fig7-gr00t-dual-stream-20261118T164737"
+}

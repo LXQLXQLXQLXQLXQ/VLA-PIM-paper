@@ -1,6 +1,6 @@
 \begin{figure}[!t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig7_async_vla_performance.png}
-\caption{Asynchronous VLA inference cycle (lower is better): (a) $\pi_{0.5}$ ($H=16$); (b) GR00T N1.6 ($H=15$), on the same vertical scale. Labels a-s/a-d denote the single-GPU serial/dual-stream baselines. Configurations b--e add PIM offloading, concurrency, token-wise layout (plus in-bank RoPE for $\pi_{0.5}$), and preloading. Arrows show the AE rate gain of e over a-s. $\dagger$: no dual-stream result is shown for GR00T.}
+\caption{Asynchronous VLA inference cycle (lower is better): (a) $\pi_{0.5}$ ($H=16$); (b) GR00T N1.6 ($H=15$), on the same vertical scale. Labels a-s/a-d denote the single-GPU serial/dual-stream baselines. Configurations b--e add PIM offloading, concurrency, token-wise layout (plus in-bank RoPE for $\pi_{0.5}$), and preloading. Arrows show the AE rate gain of e over a-s. $\dagger$: serial baseline derived from separately measured phase means.}
 \label{fig:async-vla-performance}
 \end{figure}

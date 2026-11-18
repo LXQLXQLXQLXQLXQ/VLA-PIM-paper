@@ -17,12 +17,12 @@ VLA-PIM 论文
 8. 解耦频率 → figures/decoupled-rates.tex（单栏）。
 
 总体性能图已扩展为单列宽度内的左右两张独立小图：(a) π0.5；(b) GR00T N1.6。
-两图共用纵轴刻度，指标为 T_async VLA（async 与 VLA 之间为空格），a-s/a-d 表示串行/双流 GPU 基线。
+两图共用纵轴刻度，指标标注为 T_Async，a-s/a-d 表示串行/双流 GPU 基线。
 GR00T 数据来自 Important data/gr00t-n16-h15-640x480-2026-11-18；原 n16-b/c/d/f 映射为 b/c/d/e，不含 RoPE。
-GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）；双流基线缺测，标为 N/A。
+GR00T 串行基线由归档 AE/VLM 单跑均值相加得到 104.13 ms（†）；双流柱补入用户指定的 compile AE p50 98.27 ms（柱顶按整数显示 98）。
 最终配置的 AE rate 倍率：π0.5 为 1.82× / 1.76×（相对串行/双流），GR00T 为 1.40×（相对推导串行基线）。
 绘图脚本：figures/plot-async-vla-performance.py；数据快照：figures/data/async-vla-performance.json。
-数据来源和验证见 notes/performance-chart-gr00t-2026-11-18.json。
+原始数据来源和验证见 notes/performance-chart-gr00t-2026-11-18.json；双流补充数据见 figures/data/gr00t-dual-stream-cache-snapshot-20261118.json。
 π0.5 六组结果已与 H=16 原始 Thor/仿真归档逐项核对，修正 JSON 中误写的 horizon=50；图注和正文已明确 H=16。
 核对依据和原始文件哈希见 notes/performance-chart-pi05-h16-2026-11-18.json。
 
