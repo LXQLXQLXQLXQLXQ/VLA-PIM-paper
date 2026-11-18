@@ -31,6 +31,8 @@ The prefix and suffix KV in the AE also have different lifetimes. The prefix KV 
 
 % SOURCE-EN: 215 (rewritten for the preemptive scheduler)
 Building on this microarchitecture and dataflow, \sys{} enables parallel execution through GPU--PIM co-scheduling. Rather than arbitrating individual memory requests, it assigns DQ bus ownership to the GPU or the PIM at kernel granularity. This coarse-grained allocation avoids the complex arbitration, frequent rank switching, and bus turnaround latency caused by interleaving host and PIM commands. Figure~\ref{fig:timeline} shows the execution sequence within one denoising step.
+
+For $\pi_{0.5}$ with WCK resynchronized at every rank switch, combining all the above techniques reduces the total number of cross-rank switches from $11.845$ million to $28.8$ thousand, about $411\times$ fewer, and increases the fraction of the DQ bus occupied by the GPU during PIM computation by $34\%$. Together, these effects improve both speedup and energy efficiency.
 % END-SOURCE-EN: 215
 
 % END-SOURCE-EN: 215
