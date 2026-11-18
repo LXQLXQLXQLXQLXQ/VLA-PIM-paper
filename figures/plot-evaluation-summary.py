@@ -21,6 +21,9 @@ from matplotlib.patches import Patch
 HERE = Path(__file__).resolve().parent
 # IEEEtran's 516 TeX points of text width, converted to PDF points.
 FIGURE_WIDTH = 516 * 72 / 72.27
+FIGURE_HEIGHT = 108  # PDF points, including ticks and headings
+PLOT_BOTTOM, PLOT_TOP = 13, 96
+HEADING_OFFSET = 4.5  # points above the top of the plot
 BAR_WIDTH = 12.5
 WITHIN_GROUP_GAP = 3.5
 BETWEEN_GROUP_GAP = 12
@@ -41,16 +44,20 @@ def one_decimal(value):
     return str(Decimal(str(value)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP))
 
 
-def panel(figure, left, width, letter, ylabel, maximum, ticks, grid_color):
+def panel(figure, left, width, letter, ylabel, tick_step, *, y_start=0):
     # Use real PDF points for the horizontal data scale in every panel.
-    ax = figure.add_axes([left / FIGURE_WIDTH, 0.15, width / FIGURE_WIDTH, 0.65])
-    figure.text(left / FIGURE_WIDTH, 0.975, letter,
-                weight="bold", ha="left", va="top")
-    ax.set(xlim=(0, width), ylim=(0, maximum), yticks=ticks)
+    ax = figure.add_axes([left / FIGURE_WIDTH, PLOT_BOTTOM / FIGURE_HEIGHT,
+                          width / FIGURE_WIDTH, (PLOT_TOP - PLOT_BOTTOM) / FIGURE_HEIGHT])
+    ax.annotate(letter, (0, 1), xycoords="axes fraction", xytext=(-3, HEADING_OFFSET),
+                textcoords="offset points", weight="bold", ha="right", va="center")
+    # Four equal intervals in each panel keep the horizontal guides aligned
+    # even though the three axes use different units.
+    ax.set(xlim=(0, width), ylim=(y_start, y_start + 4.16 * tick_step),
+           yticks=[y_start + i * tick_step for i in range(5)])
     ax.set_ylabel(ylabel, labelpad=2.0, color=INK)
     ax.tick_params(axis="x", length=2.5, width=0.65, pad=3)
     ax.tick_params(axis="y", length=2, pad=2)
-    ax.yaxis.grid(True, color=grid_color, linewidth=0.6)
+    ax.yaxis.grid(True, color="#dbdddf", linewidth=0.5, linestyle=(0, (2.5, 2)))
     return ax
 
 
@@ -65,8 +72,8 @@ def bar_positions(ax, group_count, bars_per_group):
 
 
 def model_heading(ax, xs, model_name):
-    ax.text((xs[0] + xs[-1]) / 2, 1.115, model_name, transform=ax.get_xaxis_transform(),
-            ha="center", va="center")
+    ax.annotate(model_name, ((xs[0] + xs[-1]) / 2, 1), xycoords=ax.get_xaxis_transform(),
+                xytext=(0, HEADING_OFFSET), textcoords="offset points", ha="center", va="center")
 
 
 def comparison_arrow(ax, xs, baseline, final, *, decimals=2, label_dy=0, label_gap=1.5):
@@ -82,7 +89,7 @@ def comparison_arrow(ax, xs, baseline, final, *, decimals=2, label_dy=0, label_g
 
 
 def inference_cycle(figure, models):
-    ax = panel(figure, 27, 202, "(a)", "Async. cycle (ms)", 164, [0, 50, 100, 150], "#e6e5e1")
+    ax = panel(figure, 27, 202, "(a)", "Async. cycle (ms)", 25, y_start=50)
     labels = ["a-s", "a-d", "b", "c", "d", "e"]
     ticks = []
     groups = bar_positions(ax, len(models), len(labels))
@@ -103,13 +110,14 @@ def inference_cycle(figure, models):
 
 def color_key(ax, colors, labels):
     handles = [Patch(facecolor=color, label=label) for color, label in zip(colors, labels, strict=True)]
-    ax.legend(handles=handles, loc="center", bbox_to_anchor=(0.5, 1.115),
+    heading_y = 1 + HEADING_OFFSET / (PLOT_TOP - PLOT_BOTTOM)
+    ax.legend(handles=handles, loc="center", bbox_to_anchor=(0.5, heading_y),
               ncols=2, frameon=False, borderaxespad=0, handlelength=1.0,
               handletextpad=0.4, columnspacing=0.85)
 
 
 def chunk_energy(figure, models):
-    ax = panel(figure, 257, 73, "(b)", "Energy Consumption (J)", 16, [0, 5, 10, 15], "#e7e9ec")
+    ax = panel(figure, 257, 73, "(b)", "Energy Consumption (J)", 4)
     groups = bar_positions(ax, len(models), 2)
     for xs, model_name, model in zip(groups, (PI05, "GR00T N1.6"), models, strict=True):
         gpu, pim = model["baseline_energy_J"], model["estimated_g_energy_J"]
@@ -121,7 +129,7 @@ def chunk_energy(figure, models):
 
 
 def decoupled_rates(figure, configs):
-    ax = panel(figure, 357, 155, "(c)", "Decoupled rates (Hz)", 20.2, [0, 5, 10, 15, 20], "#e5e5e5")
+    ax = panel(figure, 357, 155, "(c)", "Decoupled rates (Hz)", 5)
     groups = bar_positions(ax, len(configs), 2)
     for xs, config in zip(groups, configs, strict=True):
         values = [config["ae_hz"], config["vlm_hz"]]
@@ -142,7 +150,7 @@ def main():
         "xtick.color": AXIS, "ytick.color": AXIS, "axes.axisbelow": True,
         "axes.spines.top": False, "axes.spines.right": False,
     })
-    figure = plt.figure(figsize=(FIGURE_WIDTH / 72, 2.10), facecolor="white")
+    figure = plt.figure(figsize=(FIGURE_WIDTH / 72, FIGURE_HEIGHT / 72), facecolor="white")
     inference_cycle(figure, load_data("async-vla-performance.json")["models"])
     chunk_energy(figure, load_data("power-energy-comparison.json")["models"])
     decoupled_rates(figure, load_data("decoupled-rates.json")["configurations"])
