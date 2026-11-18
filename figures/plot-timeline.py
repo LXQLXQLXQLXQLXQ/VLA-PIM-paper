@@ -1,166 +1,256 @@
 #!/usr/bin/env python3
-"""Render Figure 6 from the repository-contained native-data snapshots.
+"""Draw two normalized AE-layer timelines with nonpreemptive VLM kernels.
 
-Plotter and processed inputs restored from c8e45c5's figures/fig7 bundle.
-The historical output filename is retained for the manuscript's timeline.tex.
+An active VLM kernel finishes before pending AE GPU work starts. Each panel
+spans step 0, layer 0, independently normalized to the same drawing width.
+Narrow kernel blocks are widened for labels; kernels 2 and 16 use the same
+initial compression in both panels. Kernel 2 retains its further 35%
+shortening; its following AE interval is drawn compactly with an external
+orange label. QK^T keeps its enlarged width. All lanes share a monotone
+transform; native CK timestamps stay intact.
 """
 import argparse
 import json
 import shutil
 from pathlib import Path
+
 from figure_style import use_arial, export_tiff
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, ConnectionPatch
+import numpy as np
+from matplotlib.patches import Rectangle
 
-BLUE, ORANGE = '#2a78d6', '#eb6834'
-GREENS = ('#1baf7a', '#12734f')
-INK, GRID = '#52514e', '#e6e5e1'
+BLUE = '#2a78d6'
+GREEN_EDGE, GREEN_FILL = '#c6e6d5', '#12734f'
+INK = '#52514e'
+AE_FILL = '#eb6834'
+KERNEL_WIDTH_FACTOR = 0.65
+COMPRESSED_KERNELS = {2, 16}
+QKT_WIDTH_FACTOR = 1.5
+KERNEL2_FURTHER_FACTOR = 0.65
+FIRST_AE_WIDTH_FACTOR = 0.2
+STAGE_LABELS = {
+    'qkv': 'QKV\nProjection',
+    'qkt': r'$\mathrm{QK}^{\mathrm{T}}$',
+    'pv': 'PV',
+    'o': 'O\nProjection',
+    'gate_up': 'FFN Gate/Up',
+    'down': 'FFN Down',
+}
 
 
-def save(fig, out, name):
-    fig.savefig(out / (name + '.pdf'), bbox_inches='tight', pad_inches=0.04)
-    fig.savefig(out / (name + '.png'), dpi=600, bbox_inches='tight', pad_inches=0.04)
-    shutil.copyfile(out / (name + '.png'), out / 'fig6_timeline.png')
-    export_tiff(out / 'fig6_timeline.png', out / 'fig6_timeline.tif')
-    plt.close(fig)
+def display_transform(case):
+    """Normalize AE extent and reserve enough width to label every kernel.
+
+    This adjusts the schematic display, not the native times. Minimum
+    widths are 6 pt / 9.5 pt in the 418 pt plotting area. Other intervals
+    share the remaining drawing width proportionally.
+    """
+    origin, finish = case['lo_ck'], case['hi_ck']
+    boundaries = {origin, finish}
+    minima, numbers = {}, {}
+    for kernel in case['vlm_kernels']:
+        start, end = kernel['start_ck'], kernel['end_ck']
+        assert origin <= start < end <= finish
+        boundaries.update((start, end))
+        minima[(start, end)] = 0.0145 if kernel['number'] < 10 else 0.023
+        numbers[(start, end)] = kernel['number']
+    native = np.array(sorted(boundaries), dtype=float)
+    lengths = np.diff(native) / (finish - origin)
+    minimum = np.array([minima.get((a, b), 0.0)
+                        for a, b in zip(native[:-1], native[1:])])
+    low, high = 0.0, 1.0
+    for _ in range(60):
+        scale = (low + high) / 2
+        if np.maximum(scale * lengths, minimum).sum() > 1:
+            high = scale
+        else:
+            low = scale
+    widths = np.maximum(low * lengths, minimum)
+    compressed = np.array([numbers.get((a, b)) in COMPRESSED_KERNELS
+                           for a, b in zip(native[:-1], native[1:])])
+    previous = widths.copy()
+    widths[compressed] *= KERNEL_WIDTH_FACTOR
+    released = (previous[compressed] - widths[compressed]).sum()
+    widths[~compressed] *= 1 + released / previous[~compressed].sum()
+    assert np.allclose(widths[compressed], previous[compressed]*KERNEL_WIDTH_FACTOR)
+    assert np.all(widths >= minimum)
+    display = np.r_[0, np.cumsum(widths)]
+    display[-1] = 1.0
+    # Widen QK^T locally inside its containing VLM kernel. Redistribute
+    # display width only within that kernel so every VLM block keeps its
+    # existing width and both panels use exactly the same QK^T multiplier.
+    stage = next(e for e in case['events'] if e['kind'] == 'pim' and e['name'] == 'qkt')
+    container = next(k for k in case['vlm_kernels']
+                     if k['start_ck'] <= stage['start_ck'] < stage['end_ck'] <= k['end_ck'])
+    knots = np.unique(np.r_[native, stage['start_ck'], stage['end_ck']])
+    positions = np.interp(knots, native, display)
+    widths = np.diff(positions)
+    in_stage = (knots[:-1] >= stage['start_ck']) & (knots[1:] <= stage['end_ck'])
+    in_container = (knots[:-1] >= container['start_ck']) & (knots[1:] <= container['end_ck'])
+    rest = in_container & ~in_stage
+    stage_width, rest_width = widths[in_stage].sum(), widths[rest].sum()
+    extra = stage_width * (QKT_WIDTH_FACTOR - 1)
+    assert rest_width > extra
+    widths[in_stage] *= QKT_WIDTH_FACTOR
+    widths[rest] *= 1 - extra / rest_width
+    native = knots
+    display = np.r_[0, np.cumsum(widths)]
+    display[-1] = 1.0
+    # Move display width from kernel 2 into its following AE interval.
+    # Prefer its post-QK^T waiting portion, retaining 10% of that portion;
+    # take any remainder before QK^T so the enlarged QK^T block stays intact.
+    kernel2 = next(k for k in case['vlm_kernels'] if k['number'] == 2)
+    kernel3 = next(k for k in case['vlm_kernels'] if k['number'] == 3)
+    in_kernel2 = ((native[:-1] >= kernel2['start_ck']) &
+                  (native[1:] <= kernel2['end_ck']))
+    after_qkt = in_kernel2 & (native[:-1] >= stage['end_ck'])
+    before_qkt = in_kernel2 & (native[1:] <= stage['start_ck'])
+    ae_gap = ((native[:-1] >= kernel2['end_ck']) &
+              (native[1:] <= kernel3['start_ck']))
+    original_kernel2_width = widths[in_kernel2].sum()
+    transferred = original_kernel2_width * (1 - KERNEL2_FURTHER_FACTOR)
+    post_width = widths[after_qkt].sum()
+    post_transfer = min(transferred, post_width * 0.9)
+    widths[after_qkt] *= 1 - post_transfer / post_width
+    remaining = transferred - post_transfer
+    pre_width = widths[before_qkt].sum()
+    assert pre_width > remaining
+    widths[before_qkt] *= 1 - remaining / pre_width
+    widths[ae_gap] *= 1 + transferred / widths[ae_gap].sum()
+    assert np.isclose(widths[in_kernel2].sum(),
+                      original_kernel2_width * KERNEL2_FURTHER_FACTOR)
+    # Compact the first AE block without restoring the longer kernel 2.
+    # Spread the released width over the other VLM blocks, retaining the
+    # requested kernel-2/kernel-16 widths and the enlarged QK^T width.
+    released = widths[ae_gap].sum() * (1 - FIRST_AE_WIDTH_FACTOR)
+    widths[ae_gap] *= FIRST_AE_WIDTH_FACTOR
+    receivers = np.zeros(len(widths), dtype=bool)
+    for kernel in case['vlm_kernels']:
+        if kernel['number'] in COMPRESSED_KERNELS:
+            continue
+        receivers |= ((native[:-1] >= kernel['start_ck']) &
+                      (native[1:] <= kernel['end_ck']))
+    widths[receivers] *= 1 + released / widths[receivers].sum()
+    display = np.r_[0, np.cumsum(widths)]
+    display[-1] = 1.0
+    assert np.all(np.diff(display) > 0)
+    return lambda ck: np.interp(ck, native, display)
 
 
-def timeline(data, out, detail):
-    tick = data['clock_ps'] / 1e6
-    fig = plt.figure(figsize=(7.2, 2.15))
-    grid = fig.add_gridspec(2, 2, width_ratios=(3.6, 1), hspace=0.40, wspace=0.13)
-    fig.subplots_adjust(left=0.08, right=0.99, top=0.88, bottom=0.08)
-    example = detail['zoom']
-    selected_start = example['left']['end_ck']
-    selected_end = example['right']['start_ck']
-    assert selected_end-selected_start == example['gap_ck']
-    assert example['gap_ck'] < detail['required_vlm_window_ck']['R']
-    overview = []
-    for index, case in enumerate(data['timeline_cases']):
-        ax = fig.add_subplot(grid[index, 0])
-        overview.append(ax)
-        us = lambda ck: (ck-case['lo_ck']) * tick
-        ax.set_ylim(-0.45, 1.55)
-        ax.set_xlim(0, us(case['hi_ck']))
-        for e in case['events']:
-            if e['kind'] != 'pim':
+def ae_gpu_intervals(case):
+    """Merge adjacent native AE GPU operators into contiguous orange blocks."""
+    intervals = []
+    for event in case['events']:
+        if event['kind'] != 'gpu':
+            continue
+        start, end = event['start_ck'], event['end_ck']
+        if intervals and intervals[-1][1] == start:
+            intervals[-1] = (intervals[-1][0], end)
+        else:
+            intervals.append((start, end))
+    return intervals
+
+
+def validate_case(case):
+    kernels = case['vlm_kernels']
+    assert [k['number'] for k in kernels] == list(range(1, len(kernels) + 1))
+    assert len(kernels) == case['completed_vlm_kernels']
+    assert all(a['end_ck'] <= b['start_ck']
+               for a, b in zip(kernels, kernels[1:]))
+    gpu = [e for e in case['events'] if e['kind'] == 'gpu']
+    for kernel in kernels:
+        assert kernel['end_ck'] <= case['hi_ck']
+        assert not kernel.get('paused_us', 0)
+        assert all(min(kernel['end_ck'], e['end_ck']) <=
+                   max(kernel['start_ck'], e['start_ck']) for e in gpu)
+    for previous, event in zip(case['events'], case['events'][1:]):
+        if event['kind'] == 'gpu' and event['start_ck'] > previous['end_ck']:
+            assert any(k['end_ck'] == event['start_ck'] for k in kernels)
+
+
+def timeline(data):
+    fig, axes = plt.subplots(2, 1, figsize=(7.2, 3.15))
+    fig.subplots_adjust(left=0.175, right=0.985, top=0.865, bottom=0.035, hspace=0.48)
+    for ax, case in zip(axes, data['timeline_cases']):
+        validate_case(case)
+        x = display_transform(case)
+        for event in case['events']:
+            if event['kind'] != 'pim':
                 continue
-            lo, hi = us(e['start_ck']), us(e['end_ck'])
-            ax.broken_barh([(lo, hi-lo)], (0.55, 0.90),
-                           facecolor=BLUE, edgecolor='white', linewidth=0.5, zorder=3)
-            if hi-lo > 14:
-                label = e['name'].replace('_', '/')
-                text = ax.text((lo+hi)/2, 1, label, ha='center', va='center',
-                               fontsize=7.5, linespacing=0.95, color='white', zorder=4)
-                renderer = fig.canvas.get_renderer()
-                available = ax.transData.transform((hi, 0))[0]-ax.transData.transform((lo, 0))[0]
-                if text.get_window_extent(renderer).width > available-1:
-                    text.set_rotation(90)
-        ax.vlines([us(s) for s, e in case['pim_dq_bursts_ck']], -0.225, 0.225,
-                  colors=INK, linewidth=0.18, zorder=3)
-        if index == 0:
-            middle = us((selected_start+selected_end)/2)
-            # Overview locator only: native burst positions are preserved in the zoom.
-            ax.add_patch(Rectangle((middle-5, -0.31), 10, 0.62, fill=False,
-                                   edgecolor=ORANGE, linewidth=0.9, zorder=5))
-        ax.set_yticks([0, 1])
-        ax.set_yticklabels(['PIM DQ', 'PIM stages'], fontsize=6.2)
-        ax.set_xticks([])
+            start, end = x(event['start_ck']), x(event['end_ck'])
+            ax.add_patch(Rectangle((start, 1.71), end-start, 0.58,
+                                   facecolor=BLUE, edgecolor='white', lw=0.5, zorder=3))
+            if event['name'] in STAGE_LABELS:
+                label = STAGE_LABELS[event['name']]
+                ax.text((start+end)/2, 2, label,
+                        ha='center', va='center',
+                        fontsize=7.2 if '\n' in label else 8,
+                        linespacing=0.9, color='white', zorder=4)
+        ax.vlines([x(start) for start, end in case['pim_dq_bursts_ck']],
+                  0.71, 1.29, colors=INK, linewidth=0.06, zorder=3)
+        kernel2 = next(k for k in case['vlm_kernels'] if k['number'] == 2)
+        for start_ck, end_ck in ae_gpu_intervals(case):
+            start, end = x(start_ck), x(end_ck)
+            ax.add_patch(Rectangle((start, -0.29), end-start, 0.58,
+                                   facecolor=AE_FILL, edgecolor='white',
+                                   lw=0.7, zorder=4))
+            if start_ck == kernel2['end_ck']:
+                ax.text((start+end)/2, 1.5, 'AE Non-Linear',
+                        ha='center', va='center', fontsize=7,
+                        color=AE_FILL, zorder=5)
+        for kernel in case['vlm_kernels']:
+            start, end = x(kernel['start_ck']), x(kernel['end_ck'])
+            ax.add_patch(Rectangle((start, -0.29), end-start, 0.58,
+                                   facecolor=GREEN_FILL, edgecolor=GREEN_EDGE,
+                                   lw=0.7, zorder=4, joinstyle='miter'))
+            ax.text((start+end)/2, 0, str(kernel['number']), ha='center',
+                    va='center', fontsize=6.7, color='white', zorder=5)
+        ax.set(xlim=(0, 1), ylim=(-0.44, 2.45), xticks=[], xlabel='')
+        ax.set_yticks([0, 1, 2])
+        ax.set_yticklabels(['GPU Kernels', 'PIM DQ bursts', 'PIM stages'], fontsize=7.5)
+        ax.tick_params(axis='y', length=3, width=0.7, pad=5)
         ax.spines['bottom'].set_visible(False)
-        ax.grid(axis='y', visible=False)
-        title = case['title'].replace(' (d)', '').replace(' (VLA-PIM, e)', '')
-        ax.set_title(title, loc='left', pad=3, fontsize=6.8)
+        ax.spines['left'].set_linewidth(0.75)
+        ax.grid(False)
+        ax.set_title(case['title'], loc='left', fontsize=8.3, pad=6)
+        ax.set_title(f"{case['completed_vlm_kernels']} VLM kernels completed",
+                     loc='right', fontsize=7.6, color=GREEN_FILL, pad=6)
+    assert len(fig.axes) == 2
+    assert all(not ax.get_xticks().size and not ax.get_xlabel() and
+               not ax.spines['bottom'].get_visible() for ax in axes)
+    assert axes[0].get_position().x0 == axes[1].get_position().x0
+    assert axes[0].get_position().x1 == axes[1].get_position().x1
+    return fig
 
-    zoom = fig.add_subplot(grid[:, 1])
-    zoom.set_ylim(0, 1)
-    # Derive lane centers/heights from the overview positions in figure space.
-    # Native DQ aligns with (a)'s DQ; the request aligns with (b)'s PIM stages.
-    def aligned_y(ax, y):
-        return zoom.transAxes.inverted().transform(ax.transData.transform((0, y)))[1]
-    dq_y, request_y = aligned_y(overview[0], 0), aligned_y(overview[1], 1)
-    dq_height = aligned_y(overview[0], 0.225)-aligned_y(overview[0], -0.225)
-    request_height = aligned_y(overview[1], 1.45)-aligned_y(overview[1], 0.55)
-    dq_bottom, request_bottom = dq_y-dq_height/2, request_y-request_height/2
-    origin = example['bursts'][0]['start_ck']
-    length = example['bursts'][-1]['end_ck']-origin
-    gap_start, gap_end = selected_start-origin, selected_end-origin
-    guard_wr_rd = detail['cross_rank_dq_edges_ck']['WR']
-    burst = detail['gpu_burst_ck']
-    guard_rd_wr = detail['cross_rank_dq_edges_ck']['RW']
-    required_end = gap_start+guard_wr_rd+burst+guard_rd_wr
-    assert required_end-gap_end == 1
-    zoom.axvspan(gap_start, gap_end, color='#fff0e5', zorder=0)
-    for b in example['bursts']:
-        zoom.add_patch(Rectangle((b['start_ck']-origin, dq_bottom), b['end_ck']-b['start_ck'],
-                                 dq_height, facecolor=INK, edgecolor='white', linewidth=0.3))
-    zoom.text(0, dq_y+dq_height/2+0.035, 'DQ (WR)', fontsize=5.8, color=INK)
-    dimension_y = dq_y+dq_height/2+0.13
-    zoom.annotate('', xy=(gap_start, dimension_y), xytext=(gap_end, dimension_y),
-                  arrowprops={'arrowstyle':'<->', 'color':INK, 'lw':0.9})
-    zoom.text((gap_start+gap_end)/2, dimension_y+0.045,
-              f'{example["gap_ck"]} CK', ha='center', fontsize=5.8, color=INK)
-    zoom.text(0, request_y+request_height/2+0.07, 'VLM Request', fontsize=5.8, color=INK)
-    segments = [(gap_start, guard_wr_rd, '#f5ca9d'),
-                (gap_start+guard_wr_rd, burst, GREENS[0]),
-                (gap_start+guard_wr_rd+burst, guard_rd_wr, '#f5ca9d')]
-    for start, duration, color in segments:
-        zoom.add_patch(Rectangle((start, request_bottom), duration, request_height,
-                                 facecolor=color, edgecolor='white', linewidth=0.4))
-    zoom.add_patch(Rectangle((gap_start, request_bottom), required_end-gap_start, request_height,
-                             fill=False, edgecolor=ORANGE, linestyle='--', linewidth=0.8))
-    zoom.add_patch(Rectangle((gap_end, request_bottom), required_end-gap_end, request_height,
-                             facecolor='#e34a33', edgecolor='#e34a33', hatch='///', alpha=0.65))
-    zoom.vlines(gap_end, request_bottom-0.10, dq_y+dq_height/2,
-                color=INK, ls=':', lw=0.8)
-    zoom.annotate('2 CK\nData burst',
-                  xy=(gap_start+guard_wr_rd+burst/2, request_y+request_height/2),
-                  xytext=(gap_start+1, request_y+0.20), ha='center', va='bottom',
-                  fontsize=5.5, color=INK,
-                  bbox={'facecolor':'white', 'edgecolor':'none', 'pad':0.6},
-                  arrowprops={'arrowstyle':'->', 'color':INK, 'lw':0.8, 'linestyle':'--'})
-    zoom.annotate('1 CK short for\nrank switching', xy=(required_end-0.5, request_y),
-                  xytext=(length, request_y+0.20), ha='right', va='bottom', fontsize=5.5, color=INK,
-                  bbox={'facecolor':'white', 'edgecolor':'none', 'pad':0.6},
-                  arrowprops={'arrowstyle':'->', 'color':INK, 'lw':0.8, 'linestyle':'--'})
-    zoom.text((gap_start+required_end)/2, request_bottom-0.035,
-              '11 + 2 + 2\n= 15 CK > 14 CK', fontsize=5.5,
-              ha='center', va='top', linespacing=1.15, color=INK)
-    zoom.set_xlim(-0.7, length+0.7)
-    zoom.set_xticks([])
-    zoom.set_yticks([])
-    zoom.spines['left'].set_visible(False)
-    zoom.spines['bottom'].set_visible(False)
-    zoom.grid(visible=False)
-    zoom.set_title('Down input zoom', loc='left', pad=3, fontsize=6.8)
-    fig.add_artist(ConnectionPatch(
-        xyA=(((selected_start+selected_end)/2-data['timeline_cases'][0]['lo_ck'])*tick+5, 0),
-        xyB=(-0.6, dq_y), coordsA=overview[0].transData, coordsB=zoom.transData,
-        axesA=overview[0], axesB=zoom, color=INK, lw=0.9, linestyle=(0, (4, 3)),
-        arrowstyle='-|>', mutation_scale=10, shrinkA=1, shrinkB=1))
-    save(fig, out, 'fig7_step_timeline')
+
+def save(fig, out):
+    options = dict(bbox_inches='tight', pad_inches=0.04, facecolor='white')
+    fig.savefig(out/'fig7_step_timeline.pdf', **options)
+    fig.savefig(out/'fig7_step_timeline.svg', **options)
+    fig.savefig(out/'fig7_step_timeline.png', dpi=600, **options)
+    shutil.copyfile(out/'fig7_step_timeline.png', out/'fig6_timeline.png')
+    export_tiff(out/'fig6_timeline.png', out/'fig6_timeline.tif')
+    plt.close(fig)
 
 
 def main():
     here = Path(__file__).resolve().parent
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--data', type=Path, default=here/'data/timeline.json')
-    parser.add_argument('--detail-data', type=Path, default=here/'data/streaming-input-gap.json')
+    parser.add_argument('--data', type=Path, default=here/'data/timeline-vlm-priority.json')
     parser.add_argument('--out', type=Path, default=here)
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     use_arial()
-    plt.rcParams.update({'font.size':7.5, 'axes.titlesize':8.2,
-        'axes.labelsize':7.5, 'axes.spines.top':False, 'axes.spines.right':False,
-        'axes.edgecolor':INK, 'xtick.color':INK, 'ytick.color':INK,
-        'axes.grid':True, 'grid.color':GRID, 'grid.linewidth':0.6,
-        'axes.axisbelow':True, 'legend.frameon':False,
-        'pdf.fonttype':42, 'ps.fonttype':42})
-    timeline(json.loads(args.data.read_text()), args.out,
-             json.loads(args.detail_data.read_text()))
-    print('Rendered Figure 6: vector PDF and 600 dpi PNG.')
+    plt.rcParams.update({'font.size':7.5, 'axes.spines.top':False,
+        'axes.spines.right':False, 'axes.edgecolor':INK, 'ytick.color':INK,
+        'legend.frameon':False, 'pdf.fonttype':42, 'ps.fonttype':42,
+        'svg.fonttype':'none'})
+    data = json.loads(args.data.read_text())
+    save(timeline(data), args.out)
+    print('Rendered Figure 6: two panels, numbered kernels, no horizontal axes.')
 
 
 if __name__ == '__main__':

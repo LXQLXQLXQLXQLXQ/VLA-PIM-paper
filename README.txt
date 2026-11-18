@@ -58,3 +58,24 @@ Overleaf：Integrations → GitHub → Pull GitHub changes into Overleaf，然�
 - sections/area-overhead-complete.tex：四模块分项、全部十组综合记录、匹配基线、DRAM折算、物理组织与敏感度、时序和验证条件。
 - notes/area-overhead-sources/：两份原始报告逐字节副本；notes/area-overhead-synthesis.csv：全部综合记录；notes/area-overhead-data.json：输入和计算结果。
 - 正文 M11 仅填入20.11%，正文其他文字、最新图表及功耗/能耗说明保持不变。
+
+Fig5–8 绘图脚本与数据
+
+所有路径均相对仓库根目录；这四张图可仅使用本仓库中的脚本和JSON快照重绘，无需父目录中的仿真仓库或实验结果。
+- Fig5：figures/plot-layout-dq.py；数据 figures/data/layout-dq-20261117.json。
+- Fig6（当前双面板、VLM kernel 编号版）：figures/plot-timeline.py；数据 figures/data/timeline-vlm-priority.json。
+- Fig7：figures/plot-async-vla-performance.py；数据 figures/data/async-vla-performance.json；GR00T双流补充快照 figures/data/gr00t-dual-stream-cache-snapshot-20261118.json。
+- Fig8：figures/plot-decoupled-rates.py；数据 figures/data/decoupled-rates.json。
+- 共用模块：figures/figure_style.py，配置Arial文字/公式字体并导出600 dpi无损TIFF。
+- 历史Fig6数据：figures/data/timeline.json、figures/data/streaming-input-gap.json，为旧版带DQ放大图保留，当前脚本不读取这两份快照。
+
+运行环境：Python 3.10+、Matplotlib 3.10+、NumPy、Pillow，以及Arial字体（常规、斜体、粗体、粗斜体）。
+Arial字体文件不随仓库分发；若系统未安装Arial，先将环境变量 VLA_PIM_FONT_DIR 指向字体文件目录。
+在仓库根目录运行：
+  python figures/plot-layout-dq.py
+  python figures/plot-timeline.py
+  python figures/plot-async-vla-performance.py
+  python figures/plot-decoupled-rates.py
+默认输出到 figures/；可加 --out 输出目录，以便预览而不覆盖现有图片。
+注意：Fig6脚本保留历史文件名 fig7_step_timeline.pdf/png/svg；论文实际使用的位图别名为 fig6_timeline.png/tif。
+Overleaf从GitHub拉取后会保存这些源文件；LaTeX编译使用已导出的图片，不会自动执行Python脚本。
