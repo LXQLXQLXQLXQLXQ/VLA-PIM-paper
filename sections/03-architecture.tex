@@ -36,12 +36,10 @@ t_{XY}=L_X+\tfrac{BL}{n_{\max}}
 \endgroup
 where $t_{\mathrm{WCKPST}}$ is the WCK postamble, $t_{\mathrm{WCKENL\_}Y}$ is the synchronization preparation latency for the read or write, and the trailing $1\,\mathrm{CK}$ is the interval between the CAS command and the following RD/WR. In this case, $t_{X-Y-Z}$ grows to $24$--$40\,\mathrm{CK}$.
 
-\input{tables/isa}
-
 Ramulator simulation of streaming inputs, even with WCK synchronization maintained, shows that about $50.6\%$ of the gaps between adjacent PIM data bursts are too narrow for a single GPU read or write. Exploiting the remaining gaps would require the MC to perform data-bus slot-reservation arbitration, predicting from the R/W direction and data return timing whether a GPU burst fits each window, which substantially complicates the arbitration logic.
 
 To suit rank-level partitioning, \sys{} adds a direct datapath from the row buffer to the input buffer in each bank, enabling input preloading (\textbf{Fig.~\ref{fig:microarchitecture}}). Concentrating input transfers at the start of each operator frees the DQ bus for the GPU throughout PIM computation, giving it a long, contiguous access window. Because the fragmented gaps merge into a single window, the MC no longer needs fine-grained arbitration.
-
+\input{tables/isa}
 A remaining concern is whether PIM commands on the shared C/A bus interfere with GPU accesses. Since AE linear operators are dominated by skinny GEMMs, a single RD command drives MAC operations for $M$ input rows, keeping PIM command density low. With input preloading, the PIM rank uses only about $13.5\%$ of the C/A bus during the computation window, when it does not occupy the DQ bus. Even if C/A conflicts delay GPU commands, total latency rises by only $0.51\%$, so C/A contention is negligible.
 
 \input{figures/layout-dq}

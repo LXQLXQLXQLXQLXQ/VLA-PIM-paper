@@ -4,9 +4,5 @@
 \label{sec:conclusion}
 
 % SOURCE-EN: 288
-This paper presents \sys{}, an architecture that executes VLM memory accesses on the GPU concurrently with AE computation on the PIM in edge LPDDR memory systems. Rank-level partitioning keeps every channel available for GPU data requests. The DQ-aware dataflow, comprising a token-wise layout and in-bank RoPE, reduces the AE's total DQ traffic by $14.3\%$, and the input-preloading microarchitecture with kernel-granularity co-scheduling consolidates the remaining transfers, allowing the GPU to sustain high bandwidth during PIM computation.
-% END-SOURCE-EN: 288
-
-% SOURCE-EN: 289
-Rather than accelerating the AE in isolation, this design targets efficient execution overlap while sustaining continuous GPU memory service. Evaluated with NVIDIA Thor measurements and cycle-accurate Ramulator simulation, \sys{} achieves $1.82\times$ and $1.76\times$ the AE inference frequency of the serial and dual-stream Thor baselines, respectively.
+This paper presents \sys{}, a GPU--LPDDR5X-PIM system that overlaps VLM execution on the GPU with AE computation in PIM for edge VLA inference. Rank-level partitioning keeps every channel available to the GPU, the DQ-aware dataflow reduces the AE's DQ traffic, and the input-preloading microarchitecture consolidates the PIM transfers into contiguous GPU access windows. Overall, \sys{} achieves a $1.82\times$ speedup and a $2.52\times$ energy reduction over the serial GPU baseline. As embodied intelligence models scale up, their memory-bound components will further strain edge memory bandwidth, making heterogeneous GPU--PIM systems such as \sys{} increasingly essential.
 % END-SOURCE-EN: 289
